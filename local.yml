@@ -5,6 +5,16 @@ volumes:
   local_postgres_data_backups: {}
 
 services:
+  nuxt:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    image: transparencyportal_local_nuxt
+    container_name: nuxt
+    depends_on:
+      - django
+    ports:
+      - "3000:3000"
   django:
     build:
       context: ./server
@@ -14,7 +24,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/app:z
+      - ./server:/app:z
     env_file:
       - ./server/.envs/.local/.django
       - ./server/.envs/.local/.postgres
@@ -38,7 +48,7 @@ services:
     image: transparencyportal_local_docs
     container_name: docs
     build:
-      context: .
+      context: ./server
       dockerfile: ./compose/local/docs/Dockerfile
     env_file:
       - ./server/.envs/.local/.django
