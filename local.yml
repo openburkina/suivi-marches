@@ -1,0 +1,61 @@
+version: '3'
+
+volumes:
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+
+services:
+  nuxt:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    image: transparencyportal_local_nuxt
+    container_name: nuxt
+    depends_on:
+      - django
+    ports:
+      - "3000:3000"
+  django:
+    build:
+      context: ./server
+      dockerfile: ./compose/local/django/Dockerfile
+    image: transparencyportal_local_django
+    container_name: django
+    depends_on:
+      - postgres
+    volumes:
+      - ./server:/app:z
+    env_file:
+      - ./server/.envs/.local/.django
+      - ./server/.envs/.local/.postgres
+    ports:
+      - "8000:8000"
+    command: /start
+
+  postgres:
+    build:
+      context: ./server
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: transparencyportal_production_postgres
+    container_name: postgres
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data:Z
+      - local_postgres_data_backups:/backups:z
+    env_file:
+      - ./server/.envs/.local/.postgres
+
+  docs:
+    image: transparencyportal_local_docs
+    container_name: docs
+    build:
+      context: ./server
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./server/.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./transparencyportal:/app/transparencyportal:z
+    ports:
+      - "7000:7000"
+    command: /start-docs
