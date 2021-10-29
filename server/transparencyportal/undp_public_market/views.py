@@ -3,11 +3,13 @@ from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
+from master_tables.models import Organisation, OperatingUnit
+
 
 
 from . import models
 from . import serializers
-from .serializers import OfferListingField, LessorListingField, OfferDateListingField, OfferAgreementListingField, DisbursmentListingField
+from .serializers import OfferListingField, LessorListingField,OfferField, OfferDateListingField, OfferAgreementListingField, DisbursmentListingField
 
 
 class ViewsetOffer(viewsets.ModelViewSet):
@@ -31,7 +33,7 @@ class ViewsetDisbursment(viewsets.ModelViewSet):
 
 
 class OfferList(generics.ListAPIView):
-    queryset = models.Offer.objects.all()
-    serializer_class = LessorListingField
+    queryset = Organisation.objects.all()
+    serializer_class = OfferField
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['status']
+    #filters_fields = ['status']

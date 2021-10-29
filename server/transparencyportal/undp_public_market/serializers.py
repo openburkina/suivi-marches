@@ -40,17 +40,10 @@ class DisbursmentListingField(serializers.ModelSerializer):
 
 # Offer Serializer
 class OfferField(serializers.ModelSerializer):
-
+organisation = serializers.StringRelatedField(many=True)
     class Meta:
         model = Organisation
         fields = (
-                    'id',
-                    'title',
-                    'organisation',
-                    'description',
-                    'contact_email',
-                    'contact_website',
-                    'operating_unit',
-                    'status',
-                    'budget',
+                    'org_name',
+                    'organisation'
                 )
