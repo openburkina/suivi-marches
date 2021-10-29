@@ -14,7 +14,7 @@ services:
     depends_on:
       - django
     ports:
-      - "3000:3000"
+      - "3000:3001"
   django:
     build:
       context: ./server
@@ -29,7 +29,7 @@ services:
       - ./server/.envs/.local/.django
       - ./server/.envs/.local/.postgres
     ports:
-      - "8000:8000"
+      - "8000:8001"
     command: /start
 
   postgres:
