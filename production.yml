@@ -8,31 +8,31 @@ volumes:
 services:
   django:
     build:
-      context: .
+      context: ./server
       dockerfile: ./compose/production/django/Dockerfile
     image: transparencyportal_production_django
     depends_on:
       - postgres
       - redis
     env_file:
-      - ./.envs/.production/.django
-      - ./.envs/.production/.postgres
+      - ./server/.envs/.production/.django
+      - ./server/.envs/.production/.postgres
     command: /start
 
   postgres:
     build:
-      context: .
+      context: ./server
       dockerfile: ./compose/production/postgres/Dockerfile
     image: transparencyportal_production_postgres
     volumes:
       - production_postgres_data:/var/lib/postgresql/data:Z
       - production_postgres_data_backups:/backups:z
     env_file:
-      - ./.envs/.production/.postgres
+      - ./server/.envs/.production/.postgres
 
   traefik:
     build:
-      context: .
+      context: ./server
       dockerfile: ./compose/production/traefik/Dockerfile
     image: transparencyportal_production_traefik
     depends_on:
