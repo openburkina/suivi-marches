@@ -1,9 +1,8 @@
 <template>
-  <Tutorial/>
+<div class="mr-5 grey--text display-2">Hahha</div>
 </template>
-
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({})
+<script>
+export default {
+   
+}
 </script>
