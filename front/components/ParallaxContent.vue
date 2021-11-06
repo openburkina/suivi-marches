@@ -26,7 +26,6 @@
         </div>
        
      <v-btn-toggle
-        v-model="toggle_exclusive"
         mandatory
         color="primary"
         background-color="indigo"

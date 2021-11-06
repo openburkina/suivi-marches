@@ -1,10 +1,5 @@
 <template>
   <v-app>
-    <v-parallax
-    height="750"
-    width="10"
-    :src="require('@/assets/img/bgHero.jpg')"
-    >
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -29,7 +24,6 @@
         dense
       >
         <v-list-item-group
-          v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
           <v-list-item to="/">
@@ -62,12 +56,15 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-
+    <v-parallax
+    height="750"
+    :src="require('~/assets/img/bgHero.jpg')"
+    >
     <v-app-bar
       
       height="70"
       elevation="0"
-      class="px-15 transparent"
+      class="transparent"
      
     >
     <v-avatar
@@ -75,20 +72,21 @@
       class="mt-5"
       >
     <img
-       :src="require('@/assets/img/icon3.png')" height="40" width="40"
+       :src="require('~/assets/img/icon3.png')" height="40" width="40"
       >
     </v-avatar>
       <v-spacer />
       <v-app-bar-nav-icon
         v-if="isXs"
-        class="ml-4"
+        class="ml-2"
+        color="white"
         @click.stop="drawer = !drawer"
       />
       <div v-else>
-        <v-btn text to="/" >
+        <v-btn to="/" text>
           <span class="mr-2 white--text">Home</span>
         </v-btn>
-        <v-btn text to="/about">
+        <v-btn to="/about" text>
           <span class="mr-2  white--text">Projects</span>
         </v-btn>
         <v-btn text>
@@ -105,15 +103,14 @@
         bottom
         origin="center center"
         transition="fab-transition"
-        text="true"
+        
         nudge-bottom="40"
         open-on-hover :close-on-content-click="false"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-          
+          text
           class="white--text"
-          text="true"
             v-bind="attrs"
             v-on="on"
           >
