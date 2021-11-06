@@ -1,5 +1,10 @@
 <template>
   <v-app>
+    <v-parallax
+    height="750"
+    width="10"
+    :src="require('@/assets/img/bgHero.jpg')"
+    >
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -19,35 +24,60 @@
 
       <v-divider />
 
-      <v-list dense>
-        <v-list-item
-          v-for="([icon, text, link], i) in items"
-          :key="i"
-          link
-          @click="$vuetify.goTo(link)"
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item-icon class="justify-center">
-            <v-icon>{{ icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title class="subtitile-1 ml-2">{{
-              text
-            }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+          <v-list-item to="/">
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/about">
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Projects</v-list-item-title>
+          </v-list-item>
+          
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Donors</v-list-item-title>
+          </v-list-item>
+          
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>SUSTAINABLE DEVELOPMENT GOALS</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
     <v-app-bar
-      app
-     
+      
+      height="70"
       elevation="0"
       class="px-15 transparent"
      
     >
-      <v-toolbar-title class="grey--text display-2">
-      Cafdo
-      </v-toolbar-title>
+    <v-avatar
+      size="90"
+      class="mt-5"
+      >
+    <img
+       :src="require('@/assets/img/icon3.png')" height="40" width="40"
+      >
+    </v-avatar>
       <v-spacer />
       <v-app-bar-nav-icon
         v-if="isXs"
@@ -55,26 +85,72 @@
         @click.stop="drawer = !drawer"
       />
       <div v-else>
-        <v-btn text to="/inspire">
-          <span class="mr-2">Home</span>
+        <v-btn text to="/" >
+          <span class="mr-2 white--text">Home</span>
         </v-btn>
         <v-btn text to="/about">
-          <span class="mr-2">Sobre</span>
+          <span class="mr-2  white--text">Projects</span>
         </v-btn>
         <v-btn text>
-          <span class="mr-2">Download</span>
+          <span class="mr-2  white--text">Donors</span>
         </v-btn>
         <v-btn text>
-          <span class="mr-2">Preços</span>
+          <span class="mr-2  white--text">SUSTAINABLE DEVELOPMENT GOALS</span>
         </v-btn>
-        <v-btn rounded outlined text>
-          <span class="mr-2">Contatez-nous</span>
+        <v-btn text>
+          <span class="mr-2  white--text">OUR APPROACHES</span>
+        
         </v-btn>
+            <v-menu
+        bottom
+        origin="center center"
+        transition="fab-transition"
+        text="true"
+        nudge-bottom="40"
+        open-on-hover :close-on-content-click="false"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+          
+          class="white--text"
+          text="true"
+            v-bind="attrs"
+            v-on="on"
+          >
+           More
+          <v-icon class="ml-4"> mdi-chevron-down</v-icon>
+          </v-btn>
+        </template>
+        <v-card>
+          <v-list-item-content class="justify-center">
+            <div class="mx-auto text-center">
+             
+              <v-btn
+                depressed
+                text
+              >
+               About us
+              </v-btn>
+              <v-divider class="my-3"></v-divider>
+              <v-btn
+                depressed
+                text
+              >
+                Download
+              </v-btn>
+              
+            </div>
+          </v-list-item-content>
+        </v-card>
+          
+      </v-menu>
       </div>
     </v-app-bar>
+    <Parallax />
+    </v-parallax>
     <v-main>
-      <v-container>
-        <Nuxt />
+      <v-container fluid>
+       <nuxt />
       </v-container>
     </v-main>
   </v-app>
@@ -85,13 +161,7 @@ export default {
   data: () => ({
     drawer: null,
     isXs: false,
-    items: [
-      ["mdi-home-outline", "Home", "/inspire"],
-      ["mdi-information-outline", "Sobre", "#features"],
-      ["mdi-download-box-outline", "Download", "#download"],
-      ["mdi-currency-usd", "Preços", "#pricing"],
-      ["mdi-email-outline", "Contatos", "#contact"],
-    ],
+    
   }),
   watch: {
     isXs(value) {
