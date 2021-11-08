@@ -1,5 +1,5 @@
 <template>
-  <div>HAHHAHAHA</div>
+  <div class="grey--text font-weight-bold display-4">About Page</div>
 </template>
 
 <script>

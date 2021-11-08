@@ -33,14 +33,14 @@
             <v-list-item-title>Home</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/about">
+          <v-list-item to="projet">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Projects</v-list-item-title>
           </v-list-item>
           
-          <v-list-item>
+          <v-list-item to="/donors">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -86,16 +86,16 @@
         <v-btn to="/" text>
           <span class="mr-2 white--text">Home</span>
         </v-btn>
-        <v-btn to="/about" text>
+        <v-btn to="/projet" text>
           <span class="mr-2  white--text">Projects</span>
         </v-btn>
-        <v-btn text>
+        <v-btn text to="/donors">
           <span class="mr-2  white--text">Donors</span>
         </v-btn>
-        <v-btn text>
+        <v-btn text to="sustainable">
           <span class="mr-2  white--text">SUSTAINABLE DEVELOPMENT GOALS</span>
         </v-btn>
-        <v-btn text>
+        <v-btn text to="/approche">
           <span class="mr-2  white--text">OUR APPROACHES</span>
         
         </v-btn>
@@ -125,6 +125,7 @@
               <v-btn
                 depressed
                 text
+                to="/about"
               >
                About us
               </v-btn>
@@ -132,6 +133,7 @@
               <v-btn
                 depressed
                 text
+                to="download"
               >
                 Download
               </v-btn>
