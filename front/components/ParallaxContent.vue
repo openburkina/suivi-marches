@@ -1,10 +1,12 @@
 <template>
-<v-container>
+<div>
         <p class="white--text font-weight-bold mx-auto display-1">
         UNDP Transparency Portal
         </p>
         <p class="white--text mx-auto">
             In UNDP, we are committed to eradicating poverty, fighting climate change and reducing
+        </p>
+        <p class="white--text mx-auto">
             inequalities and exclusion around the world. Discover how, with the help of our partners, we work 
             day to day to make this a reality.
         </p>
@@ -61,5 +63,5 @@
             </v-btn>
         </v-hover>
     </v-btn-toggle>
-</v-container>
+</div>
 </template>

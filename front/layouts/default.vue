@@ -11,7 +11,7 @@
             
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title class="title">Calango</v-list-item-title>
+            <v-list-item-title class="title">Cafdo</v-list-item-title>
             <v-list-item-subtitle>WEB</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -47,7 +47,7 @@
             <v-list-item-title>Donors</v-list-item-title>
           </v-list-item>
           
-          <v-list-item>
+          <v-list-item to="/sustainable">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -57,19 +57,17 @@
       </v-list>
     </v-navigation-drawer>
     <v-parallax
-    height="750"
-    :src="require('~/assets/img/bgHero.jpg')"
+      height="750"
+      :src="require('~/assets/img/bgHero.jpg')"
     >
     <v-app-bar
-      
-      height="70"
+      height="90"
       elevation="0"
-      class="transparent"
-     
+      fixed
+      v-bind:color="scrollPosition>28?'light-blue darken-4':'transparent'"
     >
     <v-avatar
       size="90"
-      class="mt-5"
       >
     <img
        :src="require('~/assets/img/icon3.png')" height="40" width="40"
@@ -92,7 +90,7 @@
         <v-btn text to="/donors">
           <span class="mr-2  white--text">Donors</span>
         </v-btn>
-        <v-btn text to="sustainable">
+        <v-btn text to="/sustainable">
           <span class="mr-2  white--text">SUSTAINABLE DEVELOPMENT GOALS</span>
         </v-btn>
         <v-btn text to="/approche">
@@ -133,7 +131,7 @@
               <v-btn
                 depressed
                 text
-                to="download"
+                to="/download"
               >
                 Download
               </v-btn>
@@ -149,9 +147,24 @@
     </v-parallax>
     <v-main>
       <v-container fluid>
-       <nuxt />
+       <Nuxt />
+     
+       {{ scrollPosition }}
       </v-container>
     </v-main>
+    <v-scale-transition>
+      <v-btn
+        fab
+        dark
+        fixed
+        bottom
+        right
+        color="secondary"
+      
+      >
+        <v-icon>mdi-arrow-up</v-icon>
+      </v-btn>
+    </v-scale-transition>
   </v-app>
 </template>
 
@@ -160,7 +173,8 @@ export default {
   data: () => ({
     drawer: null,
     isXs: false,
-    
+    scrollPosition: null,
+
   }),
   watch: {
     isXs(value) {
@@ -170,17 +184,27 @@ export default {
         }
       }
     },
+    
   },
   
+ 
   mounted() {
     this.onResize();
     window.addEventListener("resize", this.onResize, { passive: true });
+    window.addEventListener('scroll', this.updateScroll);
+
   },
    methods: {
     onResize() {
       this.isXs = window.innerWidth < 850;
     },
+    updateScroll() {
+       this.scrollPosition = window.scrollY
+       console.log(this.scrollPosition)
+    }
+    
   },
+  
 
 };
 </script>
@@ -189,8 +213,5 @@ export default {
   transition: 0.6s;
 }
 
-.expand {
-  height: 80px !important;
-  padding-top: 10px;
-}
 </style>
+
