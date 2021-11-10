@@ -149,7 +149,6 @@
       <v-container fluid>
        <Nuxt />
      
-       {{ scrollPosition }}
       </v-container>
     </v-main>
     <v-scale-transition>
@@ -200,7 +199,6 @@ export default {
     },
     updateScroll() {
        this.scrollPosition = window.scrollY
-       console.log(this.scrollPosition)
     }
     
   },
