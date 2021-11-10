@@ -7,12 +7,10 @@
     >
       <v-list>
         <v-list-item>
-          <v-list-item-avatar>
-            
-          </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title class="title">Cafdo</v-list-item-title>
-            <v-list-item-subtitle>WEB</v-list-item-subtitle>
+              <img
+                :src="require('~/assets/img/pnud.png')" height="100"
+              >
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -66,12 +64,10 @@
       fixed
       v-bind:color="scrollPosition>28?'light-blue darken-4':'transparent'"
     >
-    <v-avatar
-      size="90"
-      >
-    <img
-       :src="require('~/assets/img/icon3.png')" height="40" width="40"
-      >
+    <v-avatar size="80">
+        <img
+          :src="require('~/assets/img/logo.png')" height="60" width="80"
+        >
     </v-avatar>
       <v-spacer />
       <v-app-bar-nav-icon
