@@ -30,14 +30,7 @@
       <v-tab-item>
         <v-card flat>
           <!-- <v-card-text class="display-2">Recipient country Page</v-card-text> -->
-          <div id="map-wrap" style="height: 80vh">
-            <client-only>
-              <l-map :zoom=13 :center="[55.9464418,8.1277591]">
-                <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
-                <l-marker :lat-lng="[55.9464418,8.1277591]"></l-marker>
-              </l-map>
-            </client-only>
-          </div>
+         <Leaflet />
         </v-card>
       </v-tab-item>
 

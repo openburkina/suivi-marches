@@ -54,17 +54,13 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <v-parallax
-      height="750"
-      :src="require('~/assets/img/bgHero.jpg')"
-    >
     <v-app-bar
-      height="90"
-      elevation="0"
+      app
       fixed
-      v-bind:color="scrollPosition>28?'light-blue darken-4':'transparent'"
+      height="90"
+      v-bind:elevation="scrollPosition>28?4:0"
+      v-bind:color="scrollPosition<28?'transparent':'light-blue darken-4'"
     >
-   
         <img
           :src="require('~/assets/img/logo.png')" height="60" width="50"
         >
@@ -97,7 +93,6 @@
         bottom
         origin="center center"
         transition="fab-transition"
-        
         nudge-bottom="40"
         open-on-hover :close-on-content-click="false"
       >
@@ -139,12 +134,16 @@
       </v-menu>
       </div>
     </v-app-bar>
+    <v-parallax
+      height="700"
+      color="transparent"
+      :srcset="require('~/assets/img/bgHero.jpg')"
+    >
     <Parallax />
     </v-parallax>
     <v-main>
-      <v-container fluid>
+      <v-container>
        <Nuxt />
-     
       </v-container>
     </v-main>
     <v-scale-transition>
@@ -155,7 +154,6 @@
         bottom
         right
         color="secondary"
-      
       >
         <v-icon>mdi-arrow-up</v-icon>
       </v-btn>
@@ -168,6 +166,7 @@ export default {
   data: () => ({
     drawer: null,
     isXs: false,
+    
     scrollPosition: null,
 
   }),
@@ -206,6 +205,5 @@ export default {
 .v-toolbar {
   transition: 0.6s;
 }
-
 </style>
 

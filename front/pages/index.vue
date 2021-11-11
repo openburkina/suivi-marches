@@ -1,10 +1,10 @@
 <template>
-    <v-container>
+    <v-sheet>
         <Tabs />
         <div class="grey--text font-weight-bold display-4">
            
         </div>
-    </v-container>
+    </v-sheet>
 </template>
 <script>
 export default {
