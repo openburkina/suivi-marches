@@ -27,6 +27,7 @@
             <v-btn icon size="60"><v-icon size="60" color="white">mdi-menu-right</v-icon></v-btn>
         </div>
        
+       
      <v-btn-toggle
         mandatory
         color="primary"

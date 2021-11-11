@@ -29,30 +29,38 @@
      <v-tabs-items v-model="tab">
       <v-tab-item>
         <v-card flat>
-          <v-card-text>Recipient country Page</v-card-text>
+          <!-- <v-card-text class="display-2">Recipient country Page</v-card-text> -->
+          <div id="map-wrap" style="height: 80vh">
+            <client-only>
+              <l-map :zoom=13 :center="[55.9464418,8.1277591]">
+                <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
+                <l-marker :lat-lng="[55.9464418,8.1277591]"></l-marker>
+              </l-map>
+            </client-only>
+          </div>
         </v-card>
       </v-tab-item>
 
     <v-tab-item>
         <v-card flat>
-          <v-card-text>Donors page</v-card-text>
+          <v-card-text class="display-2">Donors page</v-card-text>
         </v-card>
       </v-tab-item>
       <v-tab-item>
         <v-card flat>
-          <v-card-text>Our focus Page</v-card-text>
+          <v-card-text class="display-2">Our focus Page</v-card-text>
         </v-card>
       </v-tab-item>
 
     <v-tab-item >
             <v-card flat>
-              <v-card-text>focussignature solution page</v-card-text>
+              <v-card-text class="display-2">focussignature solution page</v-card-text>
             </v-card>
           </v-tab-item>
 
     <v-tab-item>
         <v-card flat>
-          <v-card-text>SDGs page</v-card-text>
+          <v-card-text class="display-2">SDGs page</v-card-text>
         </v-card>
       </v-tab-item>
 
@@ -64,10 +72,7 @@
     data () {
       return {
         tab: null,
-        items: [
-          'web', 'shopping', 'videos', 'images', 'news',
-        ],
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+       
       }
     },
   }

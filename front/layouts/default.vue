@@ -64,11 +64,11 @@
       fixed
       v-bind:color="scrollPosition>28?'light-blue darken-4':'transparent'"
     >
-    <v-avatar size="80">
+   
         <img
-          :src="require('~/assets/img/logo.png')" height="60" width="80"
+          :src="require('~/assets/img/logo.png')" height="60" width="50"
         >
-    </v-avatar>
+  
       <v-spacer />
       <v-app-bar-nav-icon
         v-if="isXs"
