@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  layout: 'empty',
+  layout: 'error-layout',
   props: {
     error: {
       type: Object,

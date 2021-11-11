@@ -1,8 +1,16 @@
 <template>
   <v-app>
+      <v-parallax
+        height="700"
+        :src="require('~/assets/img/bgHero.jpg')"
+      >
+      <Parallax />
+    </v-parallax>
     <v-navigation-drawer
       v-model="drawer"
+      :mini-variant="miniVariant"
       app
+      fixed
       temporary
     >
       <v-list>
@@ -134,13 +142,6 @@
       </v-menu>
       </div>
     </v-app-bar>
-    <v-parallax
-      height="700"
-      color="transparent"
-      :srcset="require('~/assets/img/bgHero.jpg')"
-    >
-    <Parallax />
-    </v-parallax>
     <v-main>
       <v-container>
        <Nuxt />
@@ -166,7 +167,7 @@ export default {
   data: () => ({
     drawer: null,
     isXs: false,
-    
+    miniVariant:false,
     scrollPosition: null,
 
   }),
