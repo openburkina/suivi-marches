@@ -74,13 +74,16 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "transparencyportal.users.apps.UsersConfig",
+    # Extension Marché Public
+    'ocds_release',
+    'ocds_tender',
     # Your stuff: custom apps go here
-    'undp_projects',
-    'undp_outputs',
-    'master_tables',
-    'undp_donors',
-    # 'undp_purchase_orders',
     'undp_admin',
+    # 'undp_projects',
+    # 'undp_outputs',
+    # 'master_tables',
+    # 'undp_donors',
+    # 'undp_purchase_orders',
     # 'undp_extra_features',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
