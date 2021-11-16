@@ -75,6 +75,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "transparencyportal.users.apps.UsersConfig",
     # Extension Marché Public
+    'ocds_master_tables',
     'ocds_release',
     'ocds_tender',
     # Your stuff: custom apps go here
