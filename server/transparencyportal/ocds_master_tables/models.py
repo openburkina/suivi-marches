@@ -55,6 +55,10 @@ class Item(models.Model):
     description = models.TextField(null=True, blank=True)
     classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True) # object
     quantity = models.IntegerField(null=True, blank=True)
+    unit = models.OneToOneField('Unit', on_delete=models.DO_NOTHING, null=True, blank=True)
+
+class ItemAdditionalClassification(Classification):
+    ref_item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
 class Milestone(models.Model):
 
