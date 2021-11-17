@@ -52,6 +52,9 @@ class Identifier(models.Model):
     legal_name = models.CharField(max_length=255)
     uri = models.CharField(max_length=255)
 
+class EntityAdditionalIdentifier(Identifier):
+    ref_entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
+
 class Item(models.Model):
     description = models.TextField(null=True, blank=True)
     classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True) # object

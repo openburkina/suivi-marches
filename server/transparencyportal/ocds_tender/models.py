@@ -1,9 +1,9 @@
 from django.db import models
-from ocds_master_tables.models import Document, Buyer, Value, Period, Milestone
+from ocds_master_tables.models import Amendment, Document, Entity, Item, Milestone, Period, Value
 from .constants import TENDER_STATUS, PROCUREMENT_METHOD, AWARD_CRITERIA, SUBMISSION_METHOD
 
 class Tender(models.Model):
-    buyer = models.ForeignKey(Buyer, on_delete=models.DO_NOTHING)
+    buyer = models.ForeignKey(Entity, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     status = models.CharField(max_length=255, choices=TENDER_STATUS)
@@ -20,6 +20,13 @@ class Tender(models.Model):
     has_enquiries = models.BooleanField(default=False)
     eligibility_criteria = models.TextField()
     award_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='award_period')
+    number_of_tenderers = models.PositiveIntegerField()
+    tenderer = models.OneToOneField(Entity, on_delete=models.DO_NOTHING, related_name='tenderer')
+    procuring_entity = models.OneToOneField(Entity, on_delete=models.DO_NOTHING, related_name='procuring_entity')
+    amendment = models.OneToOneField(Amendment, on_delete=models.DO_NOTHING)
+
+class TenderItem(Item):
+    tender = models.ForeignKey(Tender, on_delete=models.CASCADE)
 
 class TenderDocument(Document):
     tender = models.ForeignKey(Tender, on_delete=models.DO_NOTHING)
