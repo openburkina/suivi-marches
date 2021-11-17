@@ -10,11 +10,6 @@ class Amendment(models.Model):
     date = models.DateTimeField()
     rationale = models.TextField()
 
-class Buyer(models.Model):
-    name = models.CharField(max_length=255)
-    contact_point = models.ForeignKey('ContactPoint', on_delete=models.DO_NOTHING)
-    address = models.ForeignKey(Address, on_delete=models.DO_NOTHING)
-
 class Change(models.Model):
     amendment = models.ForeignKey(Amendment, on_delete=models.CASCADE)
     property = models.CharField(max_length=255)
@@ -45,6 +40,12 @@ class Document(models.Model):
     date_modified = models.DateTimeField()
     document_format = models.CharField(max_length=255) # with choices
     language = models.CharField(max_length=255) # with choices
+
+class Entity(models.Model):
+    name = models.CharField(max_length=255)
+    identifier = models.OneToOneField('Identifier', on_delete=models.DO_NOTHING)
+    address = models.OneToOneField('Address', on_delete=models.DO_NOTHING)
+    contact_point = models.OneToOneField('ContactPoint', on_delete=models.DO_NOTHING)
 
 class Identifier(models.Model):
     scheme = models.CharField(max_length=255) # with choices
