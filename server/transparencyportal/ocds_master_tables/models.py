@@ -65,15 +65,14 @@ class ItemAdditionalClassification(Classification):
     ref_item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
 class Milestone(models.Model):
-
-    class Meta:
-        abstract = True
-
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     due_date = models.CharField(max_length=255)
     date_modified = models.CharField(max_length=255)
     status = models.CharField(max_length=255) #
+
+class MilestoneDocument(Document):
+    ref_milestone = models.ForeignKey(Milestone, on_delete=models.CASCADE)
 
 class Period(models.Model):
     start_date = models.DateField()

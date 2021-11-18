@@ -33,6 +33,3 @@ class TenderDocument(Document):
 
 class TenderMilestone(Milestone):
     tender = models.ForeignKey(Tender, on_delete=models.DO_NOTHING)
-
-class MilestoneDocument(Document):
-    milestone = models.ForeignKey(TenderMilestone, on_delete=models.DO_NOTHING)
