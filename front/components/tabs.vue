@@ -38,7 +38,7 @@
       </v-tab-item>
       <v-tab-item>
         <v-card flat>
-          <v-card-text class="display-2">Our focus Page</v-card-text>
+          <v-card-text class="display-2">Our focus Page {{ $store.state.msg }}</v-card-text>
         </v-card>
       </v-tab-item>
 
@@ -58,7 +58,9 @@
 </v-container>
 </template>
 <script>
+  import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
   export default {
+    
     data () {
       return {
         tab: null,
