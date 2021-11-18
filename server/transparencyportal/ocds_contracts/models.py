@@ -1,6 +1,7 @@
 from django.db import models
 from .constants import CONTRACT_STATUS
 from ocds_master_tables.models import Amendment, Document, Item, Period, Value
+from ocds_implementation.models import Implementation
 
 class Contract(models.Model):
     # ref_award = models.OneToOneField(Award, on_delete=models.CASCADE)
@@ -11,6 +12,7 @@ class Contract(models.Model):
     date_signed = models.DateTimeField(null=True, blank=True)
     value = models.OneToOneField(Value, null=True, blank=True, on_delete=models.DO_NOTHING)
     amendment = models.OneToOneField(Amendment, null=True, blank=True, on_delete=models.DO_NOTHING)
+    implementation = models.OneToOneField(Implementation, null=True, blank=True, on_delete=models.DO_NOTHING)
 
 class ContractItem(Item):
     ref_contract = models.ForeignKey(Contract, on_delete=models.CASCADE)

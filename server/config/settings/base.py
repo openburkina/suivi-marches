@@ -79,6 +79,7 @@ LOCAL_APPS = [
     'ocds_release',
     'ocds_tender',
     'ocds_contracts',
+    'ocds_implementation',
     # Your stuff: custom apps go here
     'undp_admin',
     # 'undp_projects',
