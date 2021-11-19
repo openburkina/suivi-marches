@@ -86,3 +86,14 @@ class Unit(models.Model):
 class Value(models.Model):
     amount = models.DecimalField(max_digits=14, decimal_places=2)
     currency = models.CharField(max_length=3)
+
+class Projet(models.Model):
+    titre_projet = models.CharField(max_length=100)
+    description = models.TextField()
+
+class Budget(models.Model):
+    source = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    amount = models.ForeignKey(Value, on_delete=models.DO_NOTHING)
+    projet = models.ForeignKey(Projet, on_delete.models.DO_NOTHING)
+    uri = models.CharField(max_length=255)
