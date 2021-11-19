@@ -21,7 +21,6 @@ class Tender(models.Model):
     eligibility_criteria = models.TextField()
     award_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='award_period')
     number_of_tenderers = models.PositiveIntegerField()
-    tenderer = models.OneToOneField(Entity, on_delete=models.DO_NOTHING, related_name='tenderer')
     procuring_entity = models.OneToOneField(Entity, on_delete=models.DO_NOTHING, related_name='procuring_entity')
     amendment = models.OneToOneField(Amendment, on_delete=models.DO_NOTHING)
 
@@ -33,3 +32,6 @@ class TenderDocument(Document):
 
 class TenderMilestone(Milestone):
     tender = models.ForeignKey(Tender, on_delete=models.DO_NOTHING)
+
+class Tenderer(Entity):
+    ref_tender = models.ForeignKey(Tender, on_delete=models.DO_NOTHING)
