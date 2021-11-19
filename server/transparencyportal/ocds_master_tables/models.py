@@ -1,4 +1,5 @@
 from django.db import models
+from .constants import CLASSIFICATION_SCHEME, DOCUMENT_TYPE
 
 class Address(models.Model):
     country_name = models.CharField(max_length=255)
@@ -16,7 +17,7 @@ class Change(models.Model):
     former_value = models.TextField()
 
 class Classification(models.Model):
-    scheme = models.CharField(max_length=255, null=True, blank=True) # with choices
+    scheme = models.CharField(max_length=255, null=True, blank=True, choices=CLASSIFICATION_SCHEME)
     description = models.TextField()
     uri = models.CharField(max_length=255)
 
@@ -32,7 +33,7 @@ class Document(models.Model):
     class Meta:
         abstract = True
 
-    document_type = models.CharField(max_length=255) # with choices
+    document_type = models.CharField(max_length=255, choices=DOCUMENT_TYPE)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
