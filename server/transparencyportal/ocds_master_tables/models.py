@@ -1,4 +1,5 @@
 from django.db import models
+from .constants import CLASSIFICATION_SCHEME, DOCUMENT_TYPE, MILESTONE_STATUS
 
 class Address(models.Model):
     country_name = models.CharField(max_length=255)
@@ -16,7 +17,7 @@ class Change(models.Model):
     former_value = models.TextField()
 
 class Classification(models.Model):
-    scheme = models.CharField(max_length=255, null=True, blank=True) # with choices
+    scheme = models.CharField(max_length=255, null=True, blank=True, choices=CLASSIFICATION_SCHEME)
     description = models.TextField()
     uri = models.CharField(max_length=255)
 
@@ -32,7 +33,7 @@ class Document(models.Model):
     class Meta:
         abstract = True
 
-    document_type = models.CharField(max_length=255) # with choices
+    document_type = models.CharField(max_length=255, choices=DOCUMENT_TYPE)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
@@ -57,7 +58,7 @@ class EntityAdditionalIdentifier(Identifier):
 
 class Item(models.Model):
     description = models.TextField(null=True, blank=True)
-    classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True) # object
+    classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True)
     quantity = models.IntegerField(null=True, blank=True)
     unit = models.OneToOneField('Unit', on_delete=models.DO_NOTHING, null=True, blank=True)
 
@@ -65,15 +66,19 @@ class ItemAdditionalClassification(Classification):
     ref_item = models.ForeignKey(Item, on_delete=models.CASCADE)
 
 class Milestone(models.Model):
-
-    class Meta:
-        abstract = True
-
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     due_date = models.CharField(max_length=255)
     date_modified = models.CharField(max_length=255)
-    status = models.CharField(max_length=255) #
+    status = models.CharField(max_length=255, choices=MILESTONE_STATUS)
+
+class MilestoneDocument(Document):
+    ref_milestone = models.ForeignKey(Milestone, on_delete=models.CASCADE)
+
+class Organization(models.Model):
+    scheme = models.CharField(max_length=255)
+    legal_name = models.CharField(max_length=255)
+    uri = models.CharField(max_length=255)
 
 class Period(models.Model):
     start_date = models.DateField()
