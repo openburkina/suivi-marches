@@ -1,5 +1,5 @@
 from django.db import models
-from ocds_master_tables.models import Document, Entity, Milestone, Value
+from ocds_master_tables.models import Document, Entity, Milestone, Organization, Value
 
 class Implementation(models.Model):
     pass
@@ -9,8 +9,8 @@ class Transaction(models.Model):
     source = models.CharField(max_length=255)
     date = models.DateTimeField()
     amount = models.OneToOneField(Value, null=True, blank=True, on_delete=models.CASCADE)
-    provider_organization = models.OneToOneField(Entity, related_name='provider_organization', null=True, blank=True, on_delete=models.DO_NOTHING)
-    receiver_organization = models.OneToOneField(Entity, related_name='receiver_organization', null=True, blank=True, on_delete=models.DO_NOTHING)
+    provider_organization = models.OneToOneField(Organization, related_name='provider_organization', null=True, blank=True, on_delete=models.DO_NOTHING)
+    receiver_organization = models.OneToOneField(Organization, related_name='receiver_organization', null=True, blank=True, on_delete=models.DO_NOTHING)
     uri = models.CharField(max_length=255)
 
 class ImplementationMilestone(Milestone):

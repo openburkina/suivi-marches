@@ -74,6 +74,11 @@ class Milestone(models.Model):
 class MilestoneDocument(Document):
     ref_milestone = models.ForeignKey(Milestone, on_delete=models.CASCADE)
 
+class Organization(models.Model):
+    scheme = models.CharField(max_length=255)
+    legal_name = models.CharField(max_length=255)
+    uri = models.CharField(max_length=255)
+
 class Period(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
