@@ -56,3 +56,10 @@ DOCUMENT_TYPE = [
     ('contractSummary', 'Contract summary'),
     ('cancellationDetails', 'Cancellation details')
 ]
+
+MILESTONE_STATUS = [
+    ('scheduled', 'Scheduled'),
+    ('met', 'Met'),
+    ('notMet', 'Not met'),
+    ('partiallyMet', 'Partially met'),
+]

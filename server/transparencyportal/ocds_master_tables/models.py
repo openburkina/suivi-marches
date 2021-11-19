@@ -1,5 +1,5 @@
 from django.db import models
-from .constants import CLASSIFICATION_SCHEME, DOCUMENT_TYPE
+from .constants import CLASSIFICATION_SCHEME, DOCUMENT_TYPE, MILESTONE_STATUS
 
 class Address(models.Model):
     country_name = models.CharField(max_length=255)
@@ -58,7 +58,7 @@ class EntityAdditionalIdentifier(Identifier):
 
 class Item(models.Model):
     description = models.TextField(null=True, blank=True)
-    classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True) # object
+    classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True)
     quantity = models.IntegerField(null=True, blank=True)
     unit = models.OneToOneField('Unit', on_delete=models.DO_NOTHING, null=True, blank=True)
 
@@ -70,7 +70,7 @@ class Milestone(models.Model):
     description = models.CharField(max_length=255)
     due_date = models.CharField(max_length=255)
     date_modified = models.CharField(max_length=255)
-    status = models.CharField(max_length=255) #
+    status = models.CharField(max_length=255, choices=MILESTONE_STATUS)
 
 class MilestoneDocument(Document):
     ref_milestone = models.ForeignKey(Milestone, on_delete=models.CASCADE)
