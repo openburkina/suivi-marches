@@ -78,13 +78,10 @@ LOCAL_APPS = [
     'ocds_master_tables',
     'ocds_release',
     'ocds_tender',
-<<<<<<< HEAD
     'ocds_planning',
-=======
     'ocds_awards',
     'ocds_contracts',
     'ocds_implementation',
->>>>>>> cde114927e8a2a9d6f875d9125a0c4ac6c2449d4
     # Your stuff: custom apps go here
     'undp_admin',
     # 'undp_projects',
@@ -107,7 +104,7 @@ MIGRATION_MODULES = {"sites": "transparencyportal.contrib.sites.migrations"}
 # https://docs.djangoproject.com/en/dev/ref/settings/#authentication-backends
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
+    #"allauth.account.auth_backends.AuthenticationBackend",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"

@@ -1,3 +1,21 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Organization, Period, Unit, Value, Projet, Budget
+admin.site.register(Address)
+admin.site.register(Amendment)
+admin.site.register(Change)
+admin.site.register(Classification)
+admin.site.register(ContactPoint)
+admin.site.register(Entity)
+admin.site.register(Identifier)
+admin.site.register(EntityAdditionalIdentifier)
+admin.site.register(Item)
+admin.site.register(ItemAdditionalClassification)
+admin.site.register(Milestone)
+admin.site.register(MilestoneDocument)
+admin.site.register(Organization)
+admin.site.register(Period)
+admin.site.register(Unit)
+admin.site.register(Value)
+admin.site.register(Projet)
+admin.site.register(Budget)

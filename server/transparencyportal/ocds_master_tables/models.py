@@ -100,5 +100,5 @@ class Budget(models.Model):
     source = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     amount = models.ForeignKey(Value, on_delete=models.DO_NOTHING)
-    projet = models.ForeignKey(Projet, on_delete.models.DO_NOTHING)
+    projet = models.ForeignKey(Projet, on_delete=models.DO_NOTHING)
     uri = models.CharField(max_length=255)
