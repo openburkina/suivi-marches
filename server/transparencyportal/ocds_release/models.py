@@ -7,7 +7,11 @@ from ocds_contracts.models import Contract
 
 from .constants import INITIATION_TYPE, PARTY_ROLE, RELEASE_TAG_CHOICES
 
+class Record(models.Model):
+    compiled_release = models.OneToOneField('Release', on_delete=models.DO_NOTHING)
+
 class Release(models.Model):
+    ref_record = models.ForeignKey(Record, on_delete=models.DO_NOTHING)
     ocid = models.CharField(max_length=255)
     date = models.DateTimeField()
     tag = models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES)
