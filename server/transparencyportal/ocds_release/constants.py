@@ -16,3 +16,20 @@ RELEASE_TAG_CHOICES = [
     ('contractTermination', 'Contract termination'),
     ('compiled', 'Compiled record'),
 ]
+
+INITIATION_TYPE = [
+    ('tender', 'Tender')
+]
+
+PARTY_ROLE = [
+    ('buyer', 'Buyer'),
+    ('procuringEntity', 'Procuring Entity'),
+    ('supplier', 'Supplier'),
+    ('tenderer', 'Tenderer'),
+    ('funder', 'Funder'),
+    ('enquirer', 'Enquirer'),
+    ('payer', 'Payer'),
+    ('payee', 'Payee'),
+    ('reviewBody', 'Review Body'),
+    ('interestedParty', 'Interested Party'),
+]
