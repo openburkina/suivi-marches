@@ -78,6 +78,7 @@ LOCAL_APPS = [
     'ocds_master_tables',
     'ocds_release',
     'ocds_tender',
+    'ocds_awards',
     'ocds_contracts',
     'ocds_implementation',
     # Your stuff: custom apps go here
