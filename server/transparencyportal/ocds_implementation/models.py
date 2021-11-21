@@ -5,13 +5,13 @@ class Implementation(models.Model):
     pass
 
 class Transaction(models.Model):
-    implementation = models.ForeignKey(Implementation, on_delete=models.CASCADE)
-    source = models.CharField(max_length=255)
-    date = models.DateTimeField()
+    implementation = models.ForeignKey(Implementation, on_delete=models.CASCADE, null=True, blank=True)
+    source = models.CharField(max_length=255, null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True)
     amount = models.OneToOneField(Value, null=True, blank=True, on_delete=models.CASCADE)
     provider_organization = models.OneToOneField(Organization, related_name='provider_organization', null=True, blank=True, on_delete=models.DO_NOTHING)
     receiver_organization = models.OneToOneField(Organization, related_name='receiver_organization', null=True, blank=True, on_delete=models.DO_NOTHING)
-    uri = models.CharField(max_length=255)
+    uri = models.CharField(max_length=255, null=True, blank=True)
 
 class ImplementationMilestone(Milestone):
     ref_implementation = models.ForeignKey(Implementation, on_delete=models.CASCADE)
