@@ -23,7 +23,6 @@ urlpatterns = [
 urlpatterns += [
     # API base url
     path("api/", include("config.api_router")),
-    path("tend/", include("ocds_tender.urls")),
     # DRF auth token
     path("auth-token/", obtain_auth_token),
 ]
