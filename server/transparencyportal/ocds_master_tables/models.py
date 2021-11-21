@@ -14,10 +14,10 @@ class Amendment(models.Model):
 class Change(models.Model):
     amendment = models.ForeignKey(Amendment, on_delete=models.CASCADE)
     property = models.CharField(max_length=255)
-    former_value = models.TextField()
+    former_value = models.TextField(null=True, blank=True)
 
 class Classification(models.Model):
-    scheme = models.CharField(max_length=255, null=True, blank=True, choices=CLASSIFICATION_SCHEME)
+    scheme = models.CharField(max_length=255, choices=CLASSIFICATION_SCHEME)
     description = models.TextField()
     uri = models.CharField(max_length=255)
 
@@ -57,9 +57,9 @@ class EntityAdditionalIdentifier(Identifier):
     ref_entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
 
 class Item(models.Model):
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField()
     classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True)
-    quantity = models.IntegerField(null=True, blank=True)
+    quantity = models.IntegerField()
     unit = models.OneToOneField('Unit', on_delete=models.DO_NOTHING, null=True, blank=True)
 
 class ItemAdditionalClassification(Classification):
@@ -81,15 +81,15 @@ class Organization(models.Model):
     uri = models.CharField(max_length=255)
 
 class Period(models.Model):
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateField(null=True, blank=True)
+    end_date = models.DateField(null=True, blank=True)
 
 class Unit(models.Model):
-    name = models.CharField(max_length=255)
-    value = models.OneToOneField('Value', on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    value = models.OneToOneField('Value', on_delete=models.DO_NOTHING, null=True, blank=True)
 
 class Value(models.Model):
-    amount = models.DecimalField(max_digits=14, decimal_places=2)
+    amount = models.DecimalField(max_digits=14, decimal_places=2, null=True, blank=True)
     currency = models.CharField(max_length=3)
 
 class Projet(models.Model):
@@ -97,8 +97,8 @@ class Projet(models.Model):
     description = models.TextField()
 
 class Budget(models.Model):
-    source = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-    amount = models.ForeignKey(Value, on_delete=models.DO_NOTHING)
-    projet = models.ForeignKey(Projet, on_delete=models.DO_NOTHING)
-    uri = models.CharField(max_length=255)
+    source = models.CharField(max_length=255, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
+    amount = models.ForeignKey(Value, on_delete=models.DO_NOTHING, null=True, blank=True)
+    projet = models.ForeignKey(Projet, on_delete=models.DO_NOTHING, null=True, blank=True)
+    uri = models.CharField(max_length=255, null=True, blank=True)
