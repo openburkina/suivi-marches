@@ -2,11 +2,12 @@ from django.db import models
 from .constants import CONTRACT_STATUS
 from ocds_master_tables.models import Amendment, Document, Item, Period, Value
 from ocds_implementation.models import Implementation
+from ocds_awards.models import Award
 
 class Contract(models.Model):
-    # ref_award = models.OneToOneField(Award, on_delete=models.CASCADE)
-    title = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    ref_award = models.OneToOneField(Award, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=CONTRACT_STATUS)
     period = models.OneToOneField(Period, null=True, blank=True, on_delete=models.DO_NOTHING)
     date_signed = models.DateTimeField(null=True, blank=True)
