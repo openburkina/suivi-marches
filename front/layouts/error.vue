@@ -1,14 +1,28 @@
 <template>
   <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
+    <v-container v-if="error.statusCode === 404">
+      <div align="center" class="mb-5">
+        <v-img 
+          max-width="500"
+          :src="require('~/assets/img/adam.png')"
+        />
+        <v-btn
+          color="indigo"
+          dark
+          rounded
+          large
+          class="mt-3"
+          to="/"
+          >
+        <v-icon left large class="mx-5">mdi-arrow-left</v-icon>
+        <span class="font-weight-bold mx-5" id="spn">Go Home</span>   
+        </v-btn>  
+      </div>
+    </v-container>
     <h1 v-else>
       {{ otherError }}
     </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
+   
   </v-app>
 </template>
 
@@ -39,6 +53,9 @@ export default {
 
 <style scoped>
 h1 {
+  font-size: 20px;
+}
+#spn{
   font-size: 20px;
 }
 </style>

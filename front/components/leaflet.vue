@@ -19,6 +19,7 @@
             </l-marker>
             </l-map>
         </client-only>
+
     </div>
 </template>
 
