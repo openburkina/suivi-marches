@@ -3,24 +3,25 @@
         borderless
         rounded
         background-color="white"
+        v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.lg"
     >   
-    <v-btn height="130" width="200" id="id">
+    <v-btn height="130" width="200" id="id" color="primary">
         $6,891.42M
         Budget
     </v-btn>
-    <v-btn height="130" width="200" id="id">
+    <v-btn height="130" width="200" id="id" color="primary">
         $2,930.93M 
         Expense
     </v-btn>
-    <v-btn height="130" width="200" id="id">
+    <v-btn height="130" width="200" id="id" color="primary">
         151
         Countries
     </v-btn>
-    <v-btn height="130" width="200" id="id">
+    <v-btn height="130" width="200" id="id" color="primary">
         4,701
         Projects
     </v-btn>
-    <v-btn height="130" width="200" id="id">
+    <v-btn height="130" width="200" id="id" color="primary">
         1,115
         Donors
     </v-btn>
@@ -29,7 +30,7 @@
 
 <script>
 export default {
-
+    
 }
 </script>
 
@@ -38,8 +39,6 @@ export default {
   transform: scale(1.15);
   border-radius: 10px 10px 10px 10px;
   opacity: 100%;
-  background-color: #5C6BC0;
-  color: white;
   z-index:10;
   
 }

@@ -27,7 +27,8 @@
         <v-btn icon size="60"><v-icon size="60" color="white">mdi-menu-right</v-icon></v-btn>
     </div>
        
-    <ButtonAnimate />
+    <ButtonGroup />
+    <ResponsiveButtonGroup />
     
 </div>
 </template>
