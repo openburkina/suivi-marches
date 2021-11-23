@@ -46,10 +46,8 @@ export default {
   border-radius: 10px 10px 10px 10px;
   opacity: 100%;
   z-index:10;
+  transition: width 1s, height 1s, transform 1s;
   
-}
-.v-btn-toggle{
-    background-color: red;
 }
 
 </style>

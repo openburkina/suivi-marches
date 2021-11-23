@@ -2,7 +2,7 @@
     <v-btn-toggle
         borderless
         rounded
-        background-color="white"
+        background-color="primary"
         v-if="$vuetify.breakpoint.md || $vuetify.breakpoint.lg"
     >   
     <v-btn height="130" width="200" id="id" color="primary">
@@ -35,15 +35,14 @@ export default {
 </script>
 
 <style scoop lang="scss">
+
 #id:hover{
   transform: scale(1.15);
   border-radius: 10px 10px 10px 10px;
   opacity: 100%;
   z-index:10;
-  
-}
-.v-btn-toggle{
-    background-color: red;
+  transition: width 1s, height 1s, transform 1s;
+ 
 }
 
 </style>

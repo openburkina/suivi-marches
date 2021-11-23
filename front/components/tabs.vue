@@ -1,6 +1,6 @@
 <template>
 <v-container>
-    <p class="display-2 text-center mt-5 font-weight-bold">Explore</p>
+    <p class="display-2 text-center mt-5 font-weight-bold">Explore  <span id="explore"></span></p>
     <p class="text-center">Learn more about where and how UNDP is making a difference around the globe. Search by location, donor <br>country, our focus, signature solution or Sustainable Development Goal.</p>
     <v-tabs class="ml-auto " v-model="tab" grow  slider-size="1" hide-slider>
         <v-tab >
@@ -73,5 +73,14 @@
 <style lang="scss" scoped>
 .v-tabs{
   background-color: red ;
+}
+#explore{
+    background-color: #5C6BC0;
+    width: 80px;
+    height: 8px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 30px;
 }
 </style>

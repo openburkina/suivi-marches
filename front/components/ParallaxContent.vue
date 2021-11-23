@@ -1,6 +1,6 @@
 <template>
 <div>
-        <p class="white--text font-weight-bold mx-auto display-1">
+        <p class="white--text font-weight-bold mx-auto display-1 mt-15">
         UNDP Transparency Portal
         </p>
         <p class="white--text mx-auto">
@@ -36,5 +36,7 @@
 <style scoped>
 .v-btn i:hover{
   transform: scale(2.15);
+  transition: width 1s, height 1s, transform 1s;
+
 }
 </style>
