@@ -1,8 +1,10 @@
 from django.db import models
 from ocds_master_tables.models import Amendment, Document, Entity, Item, Period, Value
+from ocds_tender.models import Tender
 from .constants import AWARD_STATUS
 
 class Award(models.Model):
+    ref_tender = models.ForeignKey(Tender, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=AWARD_STATUS, null=True, blank=True)
