@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from transparencyportal.users.api.views import UserViewSet
-from transparencyportal.ocds_release.views import RecordViewSet
+from transparencyportal.ocds_release.views import RecordViewSet, ReleaseViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()
@@ -12,6 +12,7 @@ else:
 
 router.register("users", UserViewSet)
 router.register("records", RecordViewSet)
+router.register("releases", ReleaseViewSet)
 
 
 app_name = "api"

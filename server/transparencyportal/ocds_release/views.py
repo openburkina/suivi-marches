@@ -3,13 +3,17 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import viewsets
 
-from ocds_release.models import Record
-from .serializers import RecordSerializer
+from ocds_release.models import Record, Release
+from .serializers import RecordSerializer, ReleaseSerializer
 from ocds_master_tables.models import Entity
 
 class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
+
+class ReleaseViewSet(viewsets.ModelViewSet):
+    queryset = Release.objects.all()
+    serializer_class = ReleaseSerializer
 
 class InProgressRecordList(APIView):
     def get(self, request, buyer_id):
