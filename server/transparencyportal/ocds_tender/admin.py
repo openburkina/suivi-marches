@@ -5,4 +5,3 @@ admin.site.register(TenderItem)
 admin.site.register(TenderDocument)
 admin.site.register(TenderMilestone)
 admin.site.register(Tenderer)
-
