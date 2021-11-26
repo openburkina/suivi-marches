@@ -15,6 +15,9 @@ class Contract(models.Model):
     amendment = models.OneToOneField(Amendment, null=True, blank=True, on_delete=models.DO_NOTHING)
     implementation = models.OneToOneField(Implementation, null=True, blank=True, on_delete=models.DO_NOTHING)
 
+    def __str__(self):
+        return '%s - %s' % (self.id, self.title)
+
 class ContractItem(Item):
     ref_contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
 

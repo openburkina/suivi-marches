@@ -12,6 +12,9 @@ class Award(models.Model):
     value = models.OneToOneField(Value, on_delete=models.DO_NOTHING, null=True, blank=True)
     contract_period = models.OneToOneField(Period, on_delete=models.DO_NOTHING, null=True, blank=True)
 
+    def __str__(self):
+        return '%s - %s' % (self.id, self.title)
+
 class Supplier(Entity):
     ref_award = models.ForeignKey(Award, on_delete=models.DO_NOTHING)
 

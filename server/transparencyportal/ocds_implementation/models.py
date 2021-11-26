@@ -13,6 +13,9 @@ class Transaction(models.Model):
     receiver_organization = models.OneToOneField(Organization, related_name='receiver_organization', null=True, blank=True, on_delete=models.DO_NOTHING)
     uri = models.CharField(max_length=255, null=True, blank=True)
 
+    def __str__(self):
+        return '%s - %s : %s %s' % (self.provider_organization.legal_name, self.receiver_organization.legal_name, str(self.amount.amount), self.amount.currency)
+
 class ImplementationMilestone(Milestone):
     ref_implementation = models.ForeignKey(Implementation, on_delete=models.CASCADE)
 

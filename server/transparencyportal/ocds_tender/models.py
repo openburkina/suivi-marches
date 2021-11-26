@@ -24,6 +24,9 @@ class Tender(models.Model):
     procuring_entity = models.OneToOneField(Entity, on_delete=models.DO_NOTHING, related_name='procuring_entity', null=True, blank=True)
     amendment = models.OneToOneField(Amendment, on_delete=models.DO_NOTHING, null=True, blank=True)
 
+    def __str__(self):
+        return '%s - %s (%s)' % (self.id, self.title, self.status)
+
 class TenderItem(Item):
     tender = models.ForeignKey(Tender, on_delete=models.CASCADE)
 
