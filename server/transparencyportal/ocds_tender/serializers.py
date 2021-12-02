@@ -1,9 +1,14 @@
 from rest_framework import serializers
-from .models import Tender, TenderDocument, Tenderer, TenderItem, TenderMilestone
+from ocds_tender.models import Buyer, Tender, TenderDocument, Tenderer, TenderItem, TenderMilestone
 from ocds_master_tables.serializers import AddressSerializer, AmendmentSerializer, ChangeSerializer, ClassificationSerializer, ContactPointSerializer, DocumentSerializer, EntitySerializer, IdentifierSerializer, EntityAdditionalIdentifierSerializer, ItemSerializer, ItemAdditionalClassificationSerializer, MilestoneSerializer, MilestoneDocumentSerializer, OrganizationSerializer, PeriodSerializer, UnitSerializer, ValueSerializer, ProjetSerializer, BudgetSerializer
 
+class BuyerSerializer(EntitySerializer):
+    class Meta:
+        model = Buyer
+        fields = '__all__'
+
 class TenderSerializer(serializers.ModelSerializer):
-    buyer = EntitySerializer()
+    buyer = BuyerSerializer()
     min_value = ValueSerializer()
     value = ValueSerializer()
     tender_period = PeriodSerializer()
