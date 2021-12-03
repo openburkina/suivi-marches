@@ -8,6 +8,13 @@
 </template>
 <script>
 export default {
-   
+    mounted(){
+        this.$store.dispatch('myActions')
+    },
+   computed:{
+       data(){
+           return this.$store.state.data
+       }
+   }
 }
 </script>
