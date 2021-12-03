@@ -58,7 +58,7 @@
 </v-container>
 </template>
 <script>
-  import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
+  import {mapState,mapMutations,mapActions} from 'vuex'
   export default {
     
     data () {
@@ -67,6 +67,14 @@
        
       }
     },
+    computed:mapState({
+      data:state => state.buyers
+    }),
+    methode:{
+      async getBuyers(){
+       await this.$store.dispatch('fetchBuyers')
+      }
+    }
   }
 </script>
 
