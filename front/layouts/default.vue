@@ -101,7 +101,7 @@
         bottom
         origin="center center"
         transition="fab-transition"
-        nudge-bottom="40"
+        nudge-bottom="30"
         open-on-hover :close-on-content-click="false"
       >
         <template v-slot:activator="{ on, attrs }">

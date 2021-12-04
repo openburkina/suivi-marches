@@ -3,7 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-
+  
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - cafdo',
@@ -82,7 +82,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     options: {
-      fix: true
+        fix: true
       }
   }
 }

@@ -26,6 +26,7 @@
           </v-btn>
           </v-tab>
   </v-tabs>
+  {{ allBuyers }}
      <v-tabs-items v-model="tab">
       <v-tab-item>
        
@@ -58,7 +59,6 @@
 </v-container>
 </template>
 <script>
-  import {mapState,mapMutations,mapGetters,mapActions} from 'vuex'
   export default {
     
     data () {
@@ -67,6 +67,21 @@
        
       }
     },
+  mounted(){
+    this.Fetchbuyers()
+  },
+  computed:{
+    allBuyers(){
+      return this.$store.state.buyers
+    }
+  },
+  methods:{
+   Fetchbuyers(){
+     console.log("hello",this.$store.state.buyers)
+      return this.$store.dispatch('fetchBuyers')
+    }
+  }
+
   }
 </script>
 
