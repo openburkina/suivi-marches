@@ -139,7 +139,7 @@
         "model": "ocds_master_tables.entity",
         "pk": 1,
         "fields": {
-            "name": "An_organization",
+            "name": "Some_buyer_name",
             "identifier": 1,
             "address": 1,
             "contact_point": 1
@@ -287,6 +287,16 @@
             "buyer": 1,
             "planning": null,
             "tender": 2
+        }
+    },
+    {
+        "model": "ocds_tender.buyer",
+        "pk": 1,
+        "fields": {
+            "name": "An_organization",
+            "identifier": 1,
+            "address": 1,
+            "contact_point": 1
         }
     },
     {

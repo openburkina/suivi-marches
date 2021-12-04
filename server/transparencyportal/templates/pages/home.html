@@ -1,1 +1,11 @@
 {% extends "base.html" %}
+
+{% if debug %}
+{% block content %}
+<p>API Documentation can be viewed at :</p>
+<ul>
+    <li><a href="{% url 'api:schema-swagger-ui' %}">Swagger UI</a></li>
+    <li><a href="{% url 'api:schema-redoc-ui' %}">Redoc UI</a></li>
+</ul>
+{% endblock %}
+{% endif %}

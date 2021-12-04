@@ -2,8 +2,11 @@ from django.db import models
 from ocds_master_tables.models import Amendment, Document, Entity, Item, Milestone, Period, Value
 from .constants import TENDER_STATUS, PROCUREMENT_METHOD, AWARD_CRITERIA, SUBMISSION_METHOD
 
+class Buyer(Entity):
+    pass
+
 class Tender(models.Model):
-    buyer = models.ForeignKey(Entity, on_delete=models.DO_NOTHING)
+    buyer = models.ForeignKey(Buyer, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=TENDER_STATUS, null=True, blank=True)
