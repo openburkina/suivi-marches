@@ -7,6 +7,13 @@ class AddressSerializer(serializers.ModelSerializer):
         model = Address
         fields = '__all__'
 
+class AddressSerializerRegion(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = (
+            'country_name',
+            'region'
+        )
 
 class AmendmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,6 +56,15 @@ class EntitySerializer(serializers.ModelSerializer):
     class Meta:
         model = Entity
         fields = '__all__'
+
+class EntitySerializerAdress(serializers.ModelSerializer):
+    address = AddressSerializerRegion()
+    class Meta:
+        model = Entity
+        fields = (
+            'name',
+            'address'
+            )
 
 class EntityAdditionalIdentifierSerializer(serializers.ModelSerializer):
     class Meta:
