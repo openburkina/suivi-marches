@@ -16,11 +16,11 @@ router.register("records", RecordViewSet)
 router.register("releases", ReleaseViewSet)
 router.register("buyers", BuyerViewSet)
 
-
 app_name = "api"
 urlpatterns = router.urls
 
 urlpatterns += [
     path("tenders/", include("ocds_tender.urls")),
     path("outputs/", include("ocds_release.urls")),
+    path('docs/', include("api_doc.urls")),
 ]
