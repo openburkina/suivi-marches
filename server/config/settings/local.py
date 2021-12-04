@@ -62,3 +62,5 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+INSTALLED_APPS += ["drf_yasg"]
+INSTALLED_APPS += ["api_doc"]
