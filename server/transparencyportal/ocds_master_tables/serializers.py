@@ -55,11 +55,6 @@ class EntityAdditionalIdentifierSerializer(serializers.ModelSerializer):
         model = EntityAdditionalIdentifier
         fields = '__all__'
 
-class ItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Item
-        fields = '__all__'
-
 class ItemAdditionalClassificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemAdditionalClassification
@@ -90,6 +85,13 @@ class UnitSerializer(serializers.ModelSerializer):
         model = Unit
         fields = '__all__'
 
+class ItemSerializer(serializers.ModelSerializer):
+    classification = ClassificationSerializer()
+    unit = UnitSerializer()
+    class Meta:
+        model = Item
+        fields = '__all__'
+
 class ValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Value
@@ -104,5 +106,3 @@ class BudgetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Budget
         fields = '__all__'
-
-

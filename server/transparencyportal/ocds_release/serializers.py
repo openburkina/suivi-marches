@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from ocds_release.models import Record, Release
-from ocds_master_tables.serializers import PeriodSerializer, EntitySerializer
+from ocds_master_tables.serializers import PeriodSerializer, EntitySerializer, ItemSerializer
 from ocds_awards.serializers import AwardPeriodSerializer
 
 class ReleaseSerializer(serializers.ModelSerializer):
@@ -25,3 +25,8 @@ class RecordStageSerializer(serializers.Serializer):
     tender_period = PeriodSerializer()
     award_period = PeriodSerializer()
     awards = AwardPeriodSerializer(many=True)
+
+class RecordItemSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
+    items = ItemSerializer(many=True)
