@@ -6,6 +6,8 @@ from transparencyportal.users.api.views import UserViewSet
 from transparencyportal.ocds_release.views import RecordViewSet, ReleaseViewSet
 from transparencyportal.ocds_tender.views import BuyerViewSet
 
+from transparencyportal.ocds_release.urls import buyer_urlpatterns, record_urlpatterns
+
 if settings.DEBUG:
     router = DefaultRouter()
 else:
@@ -21,6 +23,7 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path("tenders/", include("ocds_tender.urls")),
-    path("outputs/", include("ocds_release.urls")),
+    path("buyers/", include(buyer_urlpatterns)),
+    path("records/", include(record_urlpatterns)),
     path('docs/', include("api_doc.urls")),
 ]
