@@ -2,7 +2,7 @@
   <v-btn
         left="true"
         dark
-        color="indigo"
+        :color="color"
         :to="route"
         >
         {{ title }}
@@ -12,6 +12,6 @@
 <script>
 
 export default {
-    props:['title',"route"]
+    props:["title","route","color"]
 }
 </script>

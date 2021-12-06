@@ -1,5 +1,5 @@
 <template>
-  <Travaux title='Travaux terminés' />
+  <Travaux />
 </template>
 
 <script>
@@ -7,7 +7,7 @@ export default {
 
   data () {
       return {
-        tab: null,
+       
       }
   },
   mounted(){

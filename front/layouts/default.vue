@@ -84,55 +84,9 @@
         <v-btn to="/" text>
           <span class="mr-2 white--text">Home</span>
         </v-btn>
-         <v-menu
-        bottom
-        origin="center center"
-        transition="fab-transition"
-        nudge-bottom="30"
-        open-on-hover :close-on-content-click="false"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-          text
-          class="white--text"
-            v-bind="attrs"
-            v-on="on"
-          >
-           Travaux
-          <v-icon class="ml-4"> mdi-chevron-down</v-icon>
-          </v-btn>
-        </template>
-        <v-card>
-          <v-list-item-content class="justify-center">
-            <div class="mx-auto text-center">
-             
-              <v-btn
-                depressed
-                text
-                to="/currentProject"
-              >
-                <v-icon class="mx-3" color="indigo">
-                  mdi-progress-check
-                </v-icon>
-                <span class="mx-2">
-                 Travaux en cours
-                </span>
-              </v-btn>
-              <v-divider class="my-3"></v-divider>
-              <v-btn
-                depressed
-                text
-                to="/projet"
-              >
-              <v-icon class="mx-3" color="success">
-                mdi-check-all
-              </v-icon>
-              <span class="mx-2"> Travaux terminés </span>
-              </v-btn>
-            </div>
-          </v-list-item-content>
-        </v-card>
-      </v-menu>
+         <v-btn to="/projet" text>
+          <span class="mr-2 white--text">Travaux</span>
+        </v-btn>
         <v-btn text to="/donors">
           <span class="mr-2  white--text">Donors</span>
         </v-btn>
