@@ -1,5 +1,5 @@
 <template>
-  <DoneProject title='Travaux terminés' />
+  <Travaux title='Travaux terminés' />
 </template>
 
 <script>

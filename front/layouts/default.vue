@@ -98,7 +98,7 @@
             v-bind="attrs"
             v-on="on"
           >
-           Projet
+           Travaux
           <v-icon class="ml-4"> mdi-chevron-down</v-icon>
           </v-btn>
         </template>

@@ -1,7 +1,14 @@
 <template>
-   <v-card
-   elevation="6"
-   >
+  <div>
+     <div v-if="title=='Travaux en cours'" >
+       <ButtonTitle title="Travaux terminés" route="projet" />
+     </div>
+     <div v-if="title=='Travaux terminés'" >
+       <ButtonTitle title="Travaux en cours" route="currentProject" />
+     </div>
+       <v-card
+        elevation="6"
+        >
     <v-card-title>
       {{ title }}
       <v-spacer></v-spacer>
@@ -25,6 +32,7 @@
       }"
     ></v-data-table>
   </v-card>
+  </div>
 </template>
 
 <script>
