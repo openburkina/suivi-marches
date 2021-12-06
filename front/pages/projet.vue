@@ -5,26 +5,16 @@
 <script>
 export default {
 
-  data () {
-      return {
-       
-      }
-  },
   mounted(){
-    this.Fetchbuyers()
-    
+     this.$store.dispatch('fetchBuyers')
   },
  
   computed:{
-    allBuyers(){
-      return this.$store.state.buyers
+    text(){
+      return this.$store.state.list
     }
   },
   methods:{
-   Fetchbuyers(){
-     console.log("hello",this.$store.state.buyers)
-      return this.$store.dispatch('fetchBuyers')
-    },
   
   }
 }

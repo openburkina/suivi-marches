@@ -19,8 +19,9 @@
       :items="desserts"
       :search="search"
       :items-per-page=5
+      :options=
+      "{sortBy: []}"
       :footer-props="{
-       
         'items-per-page-text':'Liste de travaux'
       }"
     ></v-data-table>
