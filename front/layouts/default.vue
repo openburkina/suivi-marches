@@ -84,20 +84,7 @@
         <v-btn to="/" text>
           <span class="mr-2 white--text">Home</span>
         </v-btn>
-        <v-btn to="/projet" text>
-          <span class="mr-2  white--text">Projects</span>
-        </v-btn>
-        <v-btn text to="/donors">
-          <span class="mr-2  white--text">Donors</span>
-        </v-btn>
-        <v-btn text to="/sustainable">
-          <span class="mr-2  white--text">SUSTAINABLE DEVELOPMENT GOALS</span>
-        </v-btn>
-        <v-btn text to="/approche">
-          <span class="mr-2  white--text">OUR APPROACHES</span>
-        
-        </v-btn>
-            <v-menu
+         <v-menu
         bottom
         origin="center center"
         transition="fab-transition"
@@ -111,7 +98,7 @@
             v-bind="attrs"
             v-on="on"
           >
-           More
+           Projet
           <v-icon class="ml-4"> mdi-chevron-down</v-icon>
           </v-btn>
         </template>
@@ -122,34 +109,41 @@
               <v-btn
                 depressed
                 text
-                to="/about"
+                to="/currentProject"
               >
-                <v-icon class="mx-3">
-                  mdi-information-variant
+                <v-icon class="mx-3" color="indigo">
+                  mdi-progress-check
                 </v-icon>
                 <span class="mx-2">
-                  About us
+                 Travaux en cours
                 </span>
-               
               </v-btn>
               <v-divider class="my-3"></v-divider>
               <v-btn
                 depressed
                 text
-                to="/download"
+                to="/projet"
               >
-              <v-icon class="mx-3">
-                mdi-tray-arrow-down
+              <v-icon class="mx-3" color="success">
+                mdi-check-all
               </v-icon>
-              <span class="mx-2"> Download </span>
-                
+              <span class="mx-2"> Travaux terminés </span>
               </v-btn>
-              
             </div>
           </v-list-item-content>
         </v-card>
-          
       </v-menu>
+        <v-btn text to="/donors">
+          <span class="mr-2  white--text">Donors</span>
+        </v-btn>
+        <v-btn text to="/sustainable">
+          <span class="mr-2  white--text">SUSTAINABLE DEVELOPMENT GOALS</span>
+        </v-btn>
+        <v-btn text to="/approche">
+          <span class="mr-2  white--text">OUR APPROACHES</span>
+        </v-btn>
+        <!-- More menu -->
+          <Menu />
       </div>
     </v-app-bar>
     <v-main>

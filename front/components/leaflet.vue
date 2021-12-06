@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    // import {L} from 'nuxt-leaflet'; 
+    import {L} from 'nuxt-leaflet'; 
 export default {
     data(){
         return {
