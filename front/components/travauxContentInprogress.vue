@@ -19,8 +19,6 @@
       :items=inprogress
       :search="search"
       :items-per-page=5
-      @click:row="clicked"
-      
       :options=
       "{sortBy: []}"
       :footer-props="{

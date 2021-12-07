@@ -9,12 +9,12 @@ export default {
     },
   data(){
     return {
-        slug: this.$route.params
+        id: this.$route.params.works
     }
   },
   mounted(){
-    this.$store.dispatch('recordsDone',1)
-    this.$store.dispatch('recordsInprogress',1)
+    this.$store.dispatch('recordsDone',this.id)
+    this.$store.dispatch('recordsInprogress',this.id)
   },
   computed:{
     done(){

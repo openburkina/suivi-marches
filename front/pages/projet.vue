@@ -7,7 +7,7 @@
             Name
           </th>
           <th class="text-left">
-            Calories
+            Scheme
           </th>
           <th class="text-left">
             Action
@@ -16,10 +16,8 @@
       </thead>
       <tbody>
         <tr
-
           v-for="buyer in buyers"
           :key="buyer.id"
-         
         >
           <td>{{ buyer.name }}</td>
           <td>{{ buyer.identifier.scheme}}</td>
