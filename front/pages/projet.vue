@@ -1,5 +1,39 @@
 <template>
-  <Travaux />
+  <v-simple-table height="300px">
+    <template v-slot:default>
+      <thead>
+        <tr>
+          <th class="text-left">
+            Name
+          </th>
+          <th class="text-left">
+            Calories
+          </th>
+          <th class="text-left">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+
+          v-for="buyer in buyers"
+          :key="buyer.id"
+         
+        >
+          <td>{{ buyer.name }}</td>
+          <td>{{ buyer.identifier.scheme}}</td>
+          <td>
+            <nuxt-link
+            :to="`/works/${buyer.id}`"
+            >
+              Ses Travaux
+            </nuxt-link>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+  </v-simple-table>
 </template>
 
 <script>
@@ -10,7 +44,7 @@ export default {
   },
  
   computed:{
-    text(){
+    buyers(){
       return this.$store.state.list
     }
   },

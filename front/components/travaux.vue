@@ -23,10 +23,10 @@
     </v-tabs>
      <v-tabs-items v-model="tab">
       <v-tab-item>
-        <TravauxContent title='Travaux terminés' />
+        <TravauxContentDone title='Travaux terminés' :done=done />
       </v-tab-item>
     <v-tab-item>
-        <TravauxContent title='Travaux en cours' />
+        <TravauxContentInprogress title='Travaux en cours' :inprogress=inprogress />
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -35,6 +35,14 @@
 
 <script>
 export default {
+   props: {
+    done: {
+        type: []
+    },
+    inprogress: {
+        type: []
+    }
+  },
     data () {
       return {
         tab: null
