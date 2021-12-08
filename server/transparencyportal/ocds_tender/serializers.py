@@ -44,3 +44,8 @@ class TenderMilestoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = TenderMilestone
         fields = '__all__'
+
+class RatingSerializer(serializers.Serializer):
+    region_name = serializers.ReadOnlyField()
+    total = serializers.ReadOnlyField()
+    buyer_name = serializers.ReadOnlyField()
