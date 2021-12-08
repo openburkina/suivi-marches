@@ -67,6 +67,8 @@ THIRD_PARTY_APPS = [
     'django_cron',
     "crispy_forms",
     "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
@@ -74,13 +76,21 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "transparencyportal.users.apps.UsersConfig",
+    # Extension Marché Public
+    'ocds_master_tables',
+    'ocds_release',
+    'ocds_tender',
+    'ocds_planning',
+    'ocds_awards',
+    'ocds_contracts',
+    'ocds_implementation',
     # Your stuff: custom apps go here
-    'undp_projects',
-    'undp_outputs',
-    'master_tables',
-    'undp_donors',
-    # 'undp_purchase_orders',
     'undp_admin',
+    # 'undp_projects',
+    # 'undp_outputs',
+    # 'master_tables',
+    # 'undp_donors',
+    # 'undp_purchase_orders',
     # 'undp_extra_features',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -267,9 +277,9 @@ ACCOUNT_ALLOW_REGISTRATION = env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_AUTHENTICATION_METHOD = "username"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = False
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_VERIFICATION = "optional"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_ADAPTER = "transparencyportal.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
@@ -283,10 +293,13 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ),
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.TokenAuthentication",
+        # """ 
+        # "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.TokenAuthentication", """
     ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_PERMISSION_CLASSES": (
+        # """ "rest_framework.permissions.IsAuthenticated", """
+        ),
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup

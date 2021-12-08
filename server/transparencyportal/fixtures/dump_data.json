@@ -1,0 +1,354 @@
+[
+    {
+        "model": "ocds_awards.award",
+        "pk": 1,
+        "fields": {
+            "ref_tender": 1,
+            "title": "some_title",
+            "description": "Some_descriptions",
+            "status": "pending",
+            "date": "2021-11-26T10:12:56Z",
+            "value": 3,
+            "contract_period": 4
+        }
+    },
+    {
+        "model": "ocds_awards.award",
+        "pk": 2,
+        "fields": {
+            "ref_tender": 2,
+            "title": "another_award",
+            "description": null,
+            "status": "active",
+            "date": "2021-11-26T10:19:21Z",
+            "value": 1,
+            "contract_period": 1
+        }
+    },
+    {
+        "model": "ocds_awards.award",
+        "pk": 3,
+        "fields": {
+            "ref_tender": 1,
+            "title": null,
+            "description": null,
+            "status": null,
+            "date": null,
+            "value": 2,
+            "contract_period": 3
+        }
+    },
+    {
+        "model": "ocds_awards.award",
+        "pk": 4,
+        "fields": {
+            "ref_tender": 2,
+            "title": null,
+            "description": null,
+            "status": null,
+            "date": null,
+            "value": null,
+            "contract_period": 2
+        }
+    },
+    {
+        "model": "ocds_awards.awarditem",
+        "pk": 1,
+        "fields": {
+            "ref_award": 1
+        }
+    },
+    {
+        "model": "ocds_awards.awarddocument",
+        "pk": 1,
+        "fields": {
+            "document_type": "projectPlan",
+            "title": "some_title",
+            "description": "Some_descriptions",
+            "url": "some_url/",
+            "date_published": "2021-11-26T10:15:04Z",
+            "date_modified": "2021-11-26T10:15:04Z",
+            "document_format": "pdf",
+            "language": "english",
+            "ref_award": 1
+        }
+    },
+    {
+        "model": "ocds_contracts.contract",
+        "pk": 1,
+        "fields": {
+            "ref_award": 1,
+            "title": "some_title",
+            "description": "Some_descriptions",
+            "status": "active",
+            "period": 4,
+            "date_signed": "2021-11-26T10:16:00Z",
+            "value": 2,
+            "amendment": null,
+            "implementation": 1
+        }
+    },
+    {
+        "model": "ocds_implementation.implementation",
+        "pk": 1,
+        "fields": {}
+    },
+    {
+        "model": "ocds_master_tables.address",
+        "pk": 1,
+        "fields": {
+            "country_name": "Madagascar",
+            "region": "Analamanga",
+            "locality": "Tananarive",
+            "postal_code": "101"
+        }
+    },
+    {
+        "model": "ocds_master_tables.address",
+        "pk": 2,
+        "fields": {
+            "country_name": "Madagascar",
+            "region": "Analamanga",
+            "locality": "Tananarive",
+            "postal_code": "101"
+        }
+    },
+    {
+        "model": "ocds_master_tables.contactpoint",
+        "pk": 1,
+        "fields": {
+            "name": "some_name",
+            "email": "some_email@test.com",
+            "telephone": "+261320099900",
+            "faxNumber": null,
+            "url": null
+        }
+    },
+    {
+        "model": "ocds_master_tables.contactpoint",
+        "pk": 2,
+        "fields": {
+            "name": "another_name",
+            "email": "another_mail@test.com",
+            "telephone": "+261320099900",
+            "faxNumber": null,
+            "url": null
+        }
+    },
+    {
+        "model": "ocds_master_tables.entity",
+        "pk": 1,
+        "fields": {
+            "name": "Some_buyer_name",
+            "identifier": 1,
+            "address": 1,
+            "contact_point": 1
+        }
+    },
+    {
+        "model": "ocds_master_tables.entity",
+        "pk": 2,
+        "fields": {
+            "name": "A_procuring_entity_name",
+            "identifier": 2,
+            "address": 2,
+            "contact_point": 2
+        }
+    },
+    {
+        "model": "ocds_master_tables.identifier",
+        "pk": 1,
+        "fields": {
+            "scheme": "some_scheme",
+            "legal_name": "some_legal_name",
+            "uri": "some_uri"
+        }
+    },
+    {
+        "model": "ocds_master_tables.identifier",
+        "pk": 2,
+        "fields": {
+            "scheme": "some_scheme",
+            "legal_name": "another_legal_name",
+            "uri": "some_uri"
+        }
+    },
+    {
+        "model": "ocds_master_tables.item",
+        "pk": 1,
+        "fields": {
+            "description": "Some descriptions",
+            "classification": null,
+            "quantity": 15,
+            "unit": 1
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 1,
+        "fields": {
+            "start_date": "2021-11-26",
+            "end_date": "2021-12-04"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 2,
+        "fields": {
+            "start_date": "2021-11-26",
+            "end_date": "2021-11-30"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 3,
+        "fields": {
+            "start_date": "2021-11-26",
+            "end_date": "2021-12-31"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 4,
+        "fields": {
+            "start_date": "2021-11-26",
+            "end_date": "2021-11-28"
+        }
+    },
+    {
+        "model": "ocds_master_tables.unit",
+        "pk": 1,
+        "fields": {
+            "name": "some_unit_name",
+            "value": null
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 1,
+        "fields": {
+            "amount": "250000.00",
+            "currency": "MGA"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 2,
+        "fields": {
+            "amount": "800000.00",
+            "currency": "MGA"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 3,
+        "fields": {
+            "amount": "58000.00",
+            "currency": "MGA"
+        }
+    },
+    {
+        "model": "ocds_release.record",
+        "pk": 1,
+        "fields": {
+            "compiled_release": 1
+        }
+    },
+    {
+        "model": "ocds_release.record",
+        "pk": 2,
+        "fields": {
+            "compiled_release": 2
+        }
+    },
+    {
+        "model": "ocds_release.release",
+        "pk": 1,
+        "fields": {
+            "ref_record": 1,
+            "ocid": "xxxx-xxxx",
+            "date": "2021-11-26T09:55:13Z",
+            "tag": "planning",
+            "initiation_type": "tender",
+            "buyer": 1,
+            "planning": null,
+            "tender": 1
+        }
+    },
+    {
+        "model": "ocds_release.release",
+        "pk": 2,
+        "fields": {
+            "ref_record": 2,
+            "ocid": "xxxx-yyyy",
+            "date": "2021-11-26T10:20:38Z",
+            "tag": "planning",
+            "initiation_type": "tender",
+            "buyer": 1,
+            "planning": null,
+            "tender": 2
+        }
+    },
+    {
+        "model": "ocds_tender.buyer",
+        "pk": 1,
+        "fields": {
+            "name": "An_organization",
+            "identifier": 1,
+            "address": 1,
+            "contact_point": 1
+        }
+    },
+    {
+        "model": "ocds_tender.tender",
+        "pk": 1,
+        "fields": {
+            "buyer": 1,
+            "title": "Some_title_for_tender",
+            "description": "Some_descriptions",
+            "status": "planning",
+            "procurement_method": "direct",
+            "procurement_method_rationale": "Some_rationale",
+            "award_criteria": "priceOnly",
+            "award_criteria_details": "Some details about the award criteria",
+            "submission_method": "electronicAuction",
+            "submission_method_details": "",
+            "min_value": 1,
+            "value": 2,
+            "tender_period": 1,
+            "enquiry_period": 2,
+            "has_enquiries": false,
+            "eligibility_criteria": "",
+            "award_period": 3,
+            "number_of_tenderers": null,
+            "procuring_entity": 2,
+            "amendment": null
+        }
+    },
+    {
+        "model": "ocds_tender.tender",
+        "pk": 2,
+        "fields": {
+            "buyer": 1,
+            "title": "Another_tender",
+            "description": null,
+            "status": "active",
+            "procurement_method": null,
+            "procurement_method_rationale": "",
+            "award_criteria": null,
+            "award_criteria_details": "",
+            "submission_method": null,
+            "submission_method_details": "",
+            "min_value": null,
+            "value": null,
+            "tender_period": 1,
+            "enquiry_period": 3,
+            "has_enquiries": false,
+            "eligibility_criteria": "",
+            "award_period": 4,
+            "number_of_tenderers": null,
+            "procuring_entity": 1,
+            "amendment": null
+        }
+    }
+]
