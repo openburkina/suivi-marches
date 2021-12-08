@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 
 from ocds_tender.models import Buyer, Tender
-from ocds_tender.serializers import BuyerSerializer, TenderSerializer
+from ocds_tender.serializers import BuyerSerializer, TenderSerializer, RatingSerializer
 
 
 class TenderViews(viewsets.ModelViewSet):
@@ -14,10 +14,9 @@ class TenderViews(viewsets.ModelViewSet):
     serializer_class = TenderSerializer
 
 class TenderByAdress(APIView):
-    def get(self, request, table=models.Tender, serializers_class=serializers.RatingSerializer,
+    def get(self, request, table=Tender, serializers_class=RatingSerializer,
              buyer_id=None):
-        #entity = table.objects.raw('select 1 id, count(*) as total from ocds_tender_Tender T')
-        entity = table.objects.raw('select 1 id, count(*) as total, A.region as "region_name" from ocds_tender_Tender T, ocds_master_tables_Entity E, ocds_master_tables_Address A WHERE T.buyer=%s AND E.address=A.id Group By A.region',[buyer_id])
+        entity = table.objects.raw('select 1 id, count(distinct T) as total, A.region as "region_name" from ocds_tender_Tender T, ocds_master_tables_Entity E, ocds_master_tables_Address A WHERE T.buyer_id=%s AND T.procuring_entity_id = E.address_id AND E.address_id=A.id Group By A.region order by total desc',[buyer_id])
         serializer = serializers_class(entity, many=True)
         return Response({
             'entities': serializer.data,
