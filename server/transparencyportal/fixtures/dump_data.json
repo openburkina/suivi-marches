@@ -1,15 +1,648 @@
 [
     {
+        "model": "ocds_master_tables.address",
+        "pk": 1,
+        "fields": {
+            "country_name": "United Kingdom",
+            "region": "London",
+            "locality": "London",
+            "postal_code": "N11 1NP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.address",
+        "pk": 2,
+        "fields": {
+            "country_name": "United Kingdom",
+            "region": "Anycountry",
+            "locality": "Anytown",
+            "postal_code": "AN1 1TN"
+        }
+    },
+    {
+        "model": "ocds_master_tables.address",
+        "pk": 3,
+        "fields": {
+            "country_name": "Madagascar",
+            "region": "Tananarive",
+            "locality": "Tananarive",
+            "postal_code": "101"
+        }
+    },
+    {
+        "model": "ocds_master_tables.address",
+        "pk": 4,
+        "fields": {
+            "country_name": "United Kingdom",
+            "region": "AnyCounty",
+            "locality": "Anytown",
+            "postal_code": "AE"
+        }
+    },
+    {
+        "model": "ocds_master_tables.classification",
+        "pk": 1,
+        "fields": {
+            "scheme": "CPV",
+            "description": "Construction work for highways",
+            "uri": "http://cpv.data.ac.uk/code-45233130"
+        }
+    },
+    {
+        "model": "ocds_master_tables.classification",
+        "pk": 2,
+        "fields": {
+            "scheme": "CPV",
+            "description": "Construction work for highways",
+            "uri": "http://cpv.data.ac.uk/code-45233130"
+        }
+    },
+    {
+        "model": "ocds_master_tables.classification",
+        "pk": 3,
+        "fields": {
+            "scheme": "CPV",
+            "description": "Construction work for highways",
+            "uri": "http://cpv.data.ac.uk/code-45233130"
+        }
+    },
+    {
+        "model": "ocds_master_tables.classification",
+        "pk": 4,
+        "fields": {
+            "scheme": "CPV",
+            "description": "Construction work for highways",
+            "uri": "http://cpv.data.ac.uk/code-45233130"
+        }
+    },
+    {
+        "model": "ocds_master_tables.contactpoint",
+        "pk": 1,
+        "fields": {
+            "name": "Procurement Team",
+            "email": "procurement-team@example.com",
+            "telephone": "01234 345 346",
+            "faxNumber": "01234 345 345",
+            "url": "http://example.com/contact/"
+        }
+    },
+    {
+        "model": "ocds_master_tables.contactpoint",
+        "pk": 2,
+        "fields": {
+            "name": "Contracts Team",
+            "email": "contracts@anycorp.example",
+            "telephone": "12345 456 343",
+            "faxNumber": "12345 456 343",
+            "url": null
+        }
+    },
+    {
+        "model": "ocds_master_tables.contactpoint",
+        "pk": 3,
+        "fields": {
+            "name": "Team",
+            "email": "Team@example.com",
+            "telephone": "12345 456 343",
+            "faxNumber": "12345 456 343",
+            "url": null
+        }
+    },
+    {
+        "model": "ocds_master_tables.contactpoint",
+        "pk": 4,
+        "fields": {
+            "name": "Contracts Team",
+            "email": "procurement-team@example.com",
+            "telephone": "12345 456 343",
+            "faxNumber": "12345 456 343",
+            "url": null
+        }
+    },
+    {
+        "model": "ocds_master_tables.entity",
+        "pk": 1,
+        "fields": {
+            "name": "London Borough of Barnet",
+            "identifier": 1,
+            "address": 1,
+            "contact_point": 1
+        }
+    },
+    {
+        "model": "ocds_master_tables.entity",
+        "pk": 2,
+        "fields": {
+            "name": "AnyCorp Cycle Provision",
+            "identifier": 2,
+            "address": 2,
+            "contact_point": 2
+        }
+    },
+    {
+        "model": "ocds_master_tables.entity",
+        "pk": 3,
+        "fields": {
+            "name": "Another Supplier",
+            "identifier": 3,
+            "address": 3,
+            "contact_point": 3
+        }
+    },
+    {
+        "model": "ocds_master_tables.entity",
+        "pk": 4,
+        "fields": {
+            "name": "AnyCorp Cycle Provision",
+            "identifier": 4,
+            "address": 4,
+            "contact_point": 4
+        }
+    },
+    {
+        "model": "ocds_master_tables.identifier",
+        "pk": 1,
+        "fields": {
+            "scheme": "GB-LAC",
+            "legal_name": "London Borough of Barnet",
+            "uri": "http://www.barnet.gov.uk/"
+        }
+    },
+    {
+        "model": "ocds_master_tables.identifier",
+        "pk": 2,
+        "fields": {
+            "scheme": "GB-COH",
+            "legal_name": "AnyCorp Ltd",
+            "uri": "http://www.anycorp.example"
+        }
+    },
+    {
+        "model": "ocds_master_tables.identifier",
+        "pk": 3,
+        "fields": {
+            "scheme": "GB-LAC",
+            "legal_name": "AnyCorp Ltd2",
+            "uri": "http://cpv.data.ac.uk/code-45233130"
+        }
+    },
+    {
+        "model": "ocds_master_tables.identifier",
+        "pk": 4,
+        "fields": {
+            "scheme": "GB-LAC",
+            "legal_name": "AnyCorp Ltd",
+            "uri": "http://www.anycorp.example"
+        }
+    },
+    {
+        "model": "ocds_master_tables.item",
+        "pk": 1,
+        "fields": {
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+            "classification": 1,
+            "quantity": 10,
+            "unit": 1
+        }
+    },
+    {
+        "model": "ocds_master_tables.item",
+        "pk": 2,
+        "fields": {
+            "description": "string",
+            "classification": 2,
+            "quantity": 8,
+            "unit": 2
+        }
+    },
+    {
+        "model": "ocds_master_tables.item",
+        "pk": 3,
+        "fields": {
+            "description": "string",
+            "classification": 3,
+            "quantity": 8,
+            "unit": 3
+        }
+    },
+    {
+        "model": "ocds_master_tables.item",
+        "pk": 4,
+        "fields": {
+            "description": "string",
+            "classification": 4,
+            "quantity": 8,
+            "unit": 4
+        }
+    },
+    {
+        "model": "ocds_master_tables.milestone",
+        "pk": 1,
+        "fields": {
+            "title": "Consultation Period",
+            "description": "A consultation period is open for citizen input to shape the final plans.",
+            "due_date": "2015-04-15T17:00:00Z",
+            "date_modified": "2015-04-15T17:00:00Z",
+            "status": "scheduled"
+        }
+    },
+    {
+        "model": "ocds_master_tables.organization",
+        "pk": 1,
+        "fields": {
+            "scheme": "GB-LAC",
+            "legal_name": "London Borough of Barnet",
+            "uri": "http://www.barnet.gov.uk/"
+        }
+    },
+    {
+        "model": "ocds_master_tables.organization",
+        "pk": 2,
+        "fields": {
+            "scheme": "GB-COH",
+            "legal_name": "AnyCorp Ltd",
+            "uri": "http://www.anycorp.example"
+        }
+    },
+    {
+        "model": "ocds_master_tables.organization",
+        "pk": 3,
+        "fields": {
+            "scheme": "GB-LAC",
+            "legal_name": "London Borough of Barnet",
+            "uri": "http://www.barnet.gov.uk/"
+        }
+    },
+    {
+        "model": "ocds_master_tables.organization",
+        "pk": 4,
+        "fields": {
+            "scheme": "GB-COH",
+            "legal_name": "AnyCorp Ltd",
+            "uri": "http://www.anycorp.example"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 1,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": null
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 2,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": "2021-12-09"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 3,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": "2021-12-09"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 4,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": "2021-12-09"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 5,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": "2021-12-09"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 6,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": "2021-12-09"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 7,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": "2021-12-09"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 8,
+        "fields": {
+            "start_date": "2021-12-09",
+            "end_date": "2021-12-09"
+        }
+    },
+    {
+        "model": "ocds_master_tables.unit",
+        "pk": 1,
+        "fields": {
+            "name": "Miles",
+            "value": 2
+        }
+    },
+    {
+        "model": "ocds_master_tables.unit",
+        "pk": 2,
+        "fields": {
+            "name": "Miles",
+            "value": 6
+        }
+    },
+    {
+        "model": "ocds_master_tables.unit",
+        "pk": 3,
+        "fields": {
+            "name": "Miles",
+            "value": 8
+        }
+    },
+    {
+        "model": "ocds_master_tables.unit",
+        "pk": 4,
+        "fields": {
+            "name": "Miles",
+            "value": 12
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 1,
+        "fields": {
+            "amount": "6700000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 2,
+        "fields": {
+            "amount": "100000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 3,
+        "fields": {
+            "amount": "500000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 4,
+        "fields": {
+            "amount": "1000000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 5,
+        "fields": {
+            "amount": "11000000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 6,
+        "fields": {
+            "amount": "137000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 7,
+        "fields": {
+            "amount": "11000000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 8,
+        "fields": {
+            "amount": "137000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 9,
+        "fields": {
+            "amount": "500000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 10,
+        "fields": {
+            "amount": "100000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 11,
+        "fields": {
+            "amount": "11000000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.value",
+        "pk": 12,
+        "fields": {
+            "amount": "137000.00",
+            "currency": "GBP"
+        }
+    },
+    {
+        "model": "ocds_master_tables.projet",
+        "pk": 1,
+        "fields": {
+            "titre_projet": "SP001",
+            "description": "Central Junction Cycle Scheme"
+        }
+    },
+    {
+        "model": "ocds_master_tables.budget",
+        "pk": 1,
+        "fields": {
+            "source": "https://openspending.org/uk-barnet-budget/entries/6801ad388f3a38b7740dde20108c58b35984ee91",
+            "description": "Budget allocation for highway maintenance, aligned with 2015 strategic plan.",
+            "amount": 1,
+            "projet": 1,
+            "uri": "https://openspending.org/uk-barnet-budget/entries/6801ad388f3a38b7740dde20108c58b35984ee91"
+        }
+    },
+    {
+        "model": "ocds_planning.planning",
+        "pk": 1,
+        "fields": {
+            "raison": "The 2009 Strategic Plan identifies a need for an improved cycle route in the centre of town.",
+            "budget": 1
+        }
+    },
+    {
+        "model": "ocds_planning.planningdocument",
+        "pk": 1,
+        "fields": {
+            "document_type": "procurementPlan",
+            "title": "Area Wide Cycle Improvements - Procurement Plan",
+            "description": "The overall strategic framework for procurement to enhance cycle provision.",
+            "url": "http://example.com/opencontracting/documents/planning/highways/procurementPlan.pdf",
+            "date_published": "2021-12-09T08:36:18Z",
+            "date_modified": "2021-12-09T08:36:20Z",
+            "document_format": "application/pdf",
+            "language": "en",
+            "planning": 1
+        }
+    },
+    {
+        "model": "ocds_planning.planningdocument",
+        "pk": 2,
+        "fields": {
+            "document_type": "needsAssessment",
+            "title": "Cycle provision - Needs Assessment",
+            "description": "Needs assessment for provision for cyclists in the centre of town.",
+            "url": "http://example.com/opencontracting/documents/ocds-213czf-000-00001/needsAssessment.pdf",
+            "date_published": "2021-12-09T08:38:03Z",
+            "date_modified": "2021-12-09T08:38:04Z",
+            "document_format": "application/pdf",
+            "language": "en",
+            "planning": 1
+        }
+    },
+    {
+        "model": "ocds_tender.buyer",
+        "pk": 1,
+        "fields": {}
+    },
+    {
+        "model": "ocds_tender.tender",
+        "pk": 1,
+        "fields": {
+            "buyer": 1,
+            "title": "Planned cycle lane improvements",
+            "description": "The authority plans to tender for improvements to the cycle lane in early 2010. This notice provides advanced notice of the intention to tender, and details to upcoming consultation events.",
+            "status": "planned",
+            "procurement_method": "open",
+            "procurement_method_rationale": "An open competitive tender is required by EU Rules",
+            "award_criteria": "bestProposal",
+            "award_criteria_details": "The best proposal, subject to value for money requirements, will be accepted.",
+            "submission_method": null,
+            "submission_method_details": "",
+            "min_value": 3,
+            "value": 4,
+            "tender_period": 1,
+            "enquiry_period": null,
+            "has_enquiries": false,
+            "eligibility_criteria": "",
+            "award_period": 2,
+            "number_of_tenderers": null,
+            "procuring_entity": 1,
+            "amendment": null
+        }
+    },
+    {
+        "model": "ocds_tender.tender",
+        "pk": 2,
+        "fields": {
+            "buyer": 1,
+            "title": "Planned cycle lane improvements",
+            "description": "Tenders solicited for work to build new cycle lanes in the centre of town.",
+            "status": "active",
+            "procurement_method": "open",
+            "procurement_method_rationale": "An open competitive tender is required by EU Rules",
+            "award_criteria": "bestProposal",
+            "award_criteria_details": "The best proposal, subject to value for money requirements, will be accepted.",
+            "submission_method": "electronicSubmission",
+            "submission_method_details": "Submit through the online portal at http://example.com/submissions/ocds-213czf-000-00001-01/",
+            "min_value": null,
+            "value": null,
+            "tender_period": 4,
+            "enquiry_period": 3,
+            "has_enquiries": false,
+            "eligibility_criteria": "",
+            "award_period": null,
+            "number_of_tenderers": null,
+            "procuring_entity": null,
+            "amendment": null
+        }
+    },
+    {
+        "model": "ocds_tender.tenderitem",
+        "pk": 1,
+        "fields": {
+            "tender": 1
+        }
+    },
+    {
+        "model": "ocds_tender.tenderdocument",
+        "pk": 1,
+        "fields": {
+            "document_type": "technicalSpecifications",
+            "title": "Consultation on cycle provision",
+            "description": "A consultation document inviting citizen input into cycle provision.",
+            "url": "http://example.com/consultations/cycle-provision/",
+            "date_published": "2021-12-09T08:45:19Z",
+            "date_modified": "2021-12-09T08:45:21Z",
+            "document_format": "text/html",
+            "language": "en",
+            "tender": 1
+        }
+    },
+    {
+        "model": "ocds_tender.tenderdocument",
+        "pk": 2,
+        "fields": {
+            "document_type": "tenderNotice",
+            "title": "Map of affected areas",
+            "description": "A map showing areas affected by the planned highway updates. Available from local libraries.",
+            "url": "x",
+            "date_published": "2021-12-09T08:46:01Z",
+            "date_modified": "2021-12-09T08:46:02Z",
+            "document_format": "offline/print",
+            "language": "en",
+            "tender": 1
+        }
+    },
+    {
+        "model": "ocds_tender.tendermilestone",
+        "pk": 1,
+        "fields": {
+            "tender": 1
+        }
+    },
+    {
         "model": "ocds_awards.award",
         "pk": 1,
         "fields": {
-            "ref_tender": 1,
-            "title": "some_title",
-            "description": "Some_descriptions",
+            "ref_tender": 2,
+            "title": "Award of contract to build new cycle lanes in the centre of town.",
+            "description": "AnyCorp Ltd has been awarded the contract to build new cycle lanes in the centre of town.",
             "status": "pending",
-            "date": "2021-11-26T10:12:56Z",
-            "value": 3,
-            "contract_period": 4
+            "date": "2021-12-09T10:14:12Z",
+            "value": 5,
+            "contract_period": 5
         }
     },
     {
@@ -17,75 +650,142 @@
         "pk": 2,
         "fields": {
             "ref_tender": 2,
-            "title": "another_award",
-            "description": null,
+            "title": "Award of contract to build new cycle lanes in the centre of town.",
+            "description": "AnyCorp Ltd has been awarded the contract to build new cycle lanes in the centre of town.",
             "status": "active",
-            "date": "2021-11-26T10:19:21Z",
-            "value": 1,
-            "contract_period": 1
+            "date": "2021-12-09T10:20:49Z",
+            "value": 7,
+            "contract_period": 6
         }
     },
     {
         "model": "ocds_awards.award",
         "pk": 3,
         "fields": {
-            "ref_tender": 1,
-            "title": null,
-            "description": null,
-            "status": null,
-            "date": null,
-            "value": 2,
-            "contract_period": 3
+            "ref_tender": 2,
+            "title": "Award of contract to build new cycle lanes in the centre of town.",
+            "description": "AnyCorp Ltd has been awarded the contract to build new cycle lanes in the centre of town.",
+            "status": "active",
+            "date": "2021-12-09T10:35:41Z",
+            "value": 11,
+            "contract_period": 8
         }
     },
     {
-        "model": "ocds_awards.award",
+        "model": "ocds_awards.supplier",
+        "pk": 2,
+        "fields": {
+            "ref_award": 1
+        }
+    },
+    {
+        "model": "ocds_awards.supplier",
+        "pk": 3,
+        "fields": {
+            "ref_award": 2
+        }
+    },
+    {
+        "model": "ocds_awards.supplier",
         "pk": 4,
         "fields": {
-            "ref_tender": 2,
-            "title": null,
-            "description": null,
-            "status": null,
-            "date": null,
-            "value": null,
-            "contract_period": 2
+            "ref_award": 3
         }
     },
     {
         "model": "ocds_awards.awarditem",
-        "pk": 1,
+        "pk": 2,
         "fields": {
             "ref_award": 1
+        }
+    },
+    {
+        "model": "ocds_awards.awarditem",
+        "pk": 4,
+        "fields": {
+            "ref_award": 3
         }
     },
     {
         "model": "ocds_awards.awarddocument",
         "pk": 1,
         "fields": {
-            "document_type": "projectPlan",
-            "title": "some_title",
-            "description": "Some_descriptions",
-            "url": "some_url/",
-            "date_published": "2021-11-26T10:15:04Z",
-            "date_modified": "2021-11-26T10:15:04Z",
-            "document_format": "pdf",
-            "language": "english",
+            "document_type": "awardNotice",
+            "title": "Award notice",
+            "description": "Award of contract to build new cycle lanes in the centre of town to AnyCorp Ltd.",
+            "url": "http://example.com/tender-notices/ocds-213czf-000-00001-04.html",
+            "date_published": "2021-12-09T10:18:54Z",
+            "date_modified": "2021-12-09T10:18:55Z",
+            "document_format": "text/html",
+            "language": "en",
             "ref_award": 1
+        }
+    },
+    {
+        "model": "ocds_awards.awarddocument",
+        "pk": 2,
+        "fields": {
+            "document_type": "awardNotice",
+            "title": "Award of contract to build new cycle lanes in the centre of town to AnyCorp Ltd.",
+            "description": "Award of contract to build new cycle lanes in the centre of town to AnyCorp Ltd.",
+            "url": "http://example.com/tender-notices/ocds-213czf-000-00001-04.html",
+            "date_published": "2021-12-09T10:25:02Z",
+            "date_modified": "2021-12-09T10:25:04Z",
+            "document_format": "text/html",
+            "language": "en",
+            "ref_award": 2
+        }
+    },
+    {
+        "model": "ocds_awards.awarddocument",
+        "pk": 3,
+        "fields": {
+            "document_type": "awardNotice",
+            "title": "Award notice",
+            "description": "Award of contract to build new cycle lanes in the centre of town to AnyCorp Ltd.",
+            "url": "http://example.com/tender-notices/ocds-213czf-000-00001-04.html",
+            "date_published": "2021-12-09T10:39:40Z",
+            "date_modified": "2021-12-09T10:39:41Z",
+            "document_format": "text/html",
+            "language": "en",
+            "ref_award": 3
         }
     },
     {
         "model": "ocds_contracts.contract",
         "pk": 1,
         "fields": {
-            "ref_award": 1,
-            "title": "some_title",
-            "description": "Some_descriptions",
+            "ref_award": 2,
+            "title": "Contract to build new cycle lanes in the centre of town.",
+            "description": "A contract has been signed between the Council and AnyCorp Ltd for construction of new cycle lanes in the centre of town.",
             "status": "active",
-            "period": 4,
-            "date_signed": "2021-11-26T10:16:00Z",
-            "value": 2,
+            "period": 7,
+            "date_signed": "2021-12-09T10:26:13Z",
+            "value": null,
             "amendment": null,
-            "implementation": 1
+            "implementation": null
+        }
+    },
+    {
+        "model": "ocds_contracts.contractitem",
+        "pk": 3,
+        "fields": {
+            "ref_contract": 1
+        }
+    },
+    {
+        "model": "ocds_contracts.contractdocument",
+        "pk": 1,
+        "fields": {
+            "document_type": "contractSigned",
+            "title": "Signed Contract",
+            "description": "The Signed Contract for Cycle Path Construction",
+            "url": "http://example.com/contracts/ocds-213czf-000-00001",
+            "date_published": "2021-12-09T10:28:02Z",
+            "date_modified": "2021-12-09T10:28:04Z",
+            "document_format": "application/pdf",
+            "language": "en",
+            "ref_contract": 1
         }
     },
     {
@@ -94,171 +794,36 @@
         "fields": {}
     },
     {
-        "model": "ocds_master_tables.address",
+        "model": "ocds_implementation.transaction",
         "pk": 1,
         "fields": {
-            "country_name": "Madagascar",
-            "region": "Analamanga",
-            "locality": "Tananarive",
-            "postal_code": "101"
+            "implementation": 1,
+            "source": "https://openspending.org/uk-barnet-spending/",
+            "date": "2021-12-09T10:31:01Z",
+            "amount": 9,
+            "provider_organization": 1,
+            "receiver_organization": 2,
+            "uri": "https://openspending.org/uk-barnet-spending/transaction/asd9235qaghvs1059620ywhgai"
         }
     },
     {
-        "model": "ocds_master_tables.address",
+        "model": "ocds_implementation.transaction",
         "pk": 2,
         "fields": {
-            "country_name": "Madagascar",
-            "region": "Analamanga",
-            "locality": "Tananarive",
-            "postal_code": "101"
-        }
-    },
-    {
-        "model": "ocds_master_tables.contactpoint",
-        "pk": 1,
-        "fields": {
-            "name": "some_name",
-            "email": "some_email@test.com",
-            "telephone": "+261320099900",
-            "faxNumber": null,
-            "url": null
-        }
-    },
-    {
-        "model": "ocds_master_tables.contactpoint",
-        "pk": 2,
-        "fields": {
-            "name": "another_name",
-            "email": "another_mail@test.com",
-            "telephone": "+261320099900",
-            "faxNumber": null,
-            "url": null
-        }
-    },
-    {
-        "model": "ocds_master_tables.entity",
-        "pk": 1,
-        "fields": {
-            "name": "Some_buyer_name",
-            "identifier": 1,
-            "address": 1,
-            "contact_point": 1
-        }
-    },
-    {
-        "model": "ocds_master_tables.entity",
-        "pk": 2,
-        "fields": {
-            "name": "A_procuring_entity_name",
-            "identifier": 2,
-            "address": 2,
-            "contact_point": 2
-        }
-    },
-    {
-        "model": "ocds_master_tables.identifier",
-        "pk": 1,
-        "fields": {
-            "scheme": "some_scheme",
-            "legal_name": "some_legal_name",
-            "uri": "some_uri"
-        }
-    },
-    {
-        "model": "ocds_master_tables.identifier",
-        "pk": 2,
-        "fields": {
-            "scheme": "some_scheme",
-            "legal_name": "another_legal_name",
-            "uri": "some_uri"
-        }
-    },
-    {
-        "model": "ocds_master_tables.item",
-        "pk": 1,
-        "fields": {
-            "description": "Some descriptions",
-            "classification": null,
-            "quantity": 15,
-            "unit": 1
-        }
-    },
-    {
-        "model": "ocds_master_tables.period",
-        "pk": 1,
-        "fields": {
-            "start_date": "2021-11-26",
-            "end_date": "2021-12-04"
-        }
-    },
-    {
-        "model": "ocds_master_tables.period",
-        "pk": 2,
-        "fields": {
-            "start_date": "2021-11-26",
-            "end_date": "2021-11-30"
-        }
-    },
-    {
-        "model": "ocds_master_tables.period",
-        "pk": 3,
-        "fields": {
-            "start_date": "2021-11-26",
-            "end_date": "2021-12-31"
-        }
-    },
-    {
-        "model": "ocds_master_tables.period",
-        "pk": 4,
-        "fields": {
-            "start_date": "2021-11-26",
-            "end_date": "2021-11-28"
-        }
-    },
-    {
-        "model": "ocds_master_tables.unit",
-        "pk": 1,
-        "fields": {
-            "name": "some_unit_name",
-            "value": null
-        }
-    },
-    {
-        "model": "ocds_master_tables.value",
-        "pk": 1,
-        "fields": {
-            "amount": "250000.00",
-            "currency": "MGA"
-        }
-    },
-    {
-        "model": "ocds_master_tables.value",
-        "pk": 2,
-        "fields": {
-            "amount": "800000.00",
-            "currency": "MGA"
-        }
-    },
-    {
-        "model": "ocds_master_tables.value",
-        "pk": 3,
-        "fields": {
-            "amount": "58000.00",
-            "currency": "MGA"
+            "implementation": 1,
+            "source": "https://openspending.org/uk-barnet-spending/",
+            "date": "2021-12-09T10:32:09Z",
+            "amount": 10,
+            "provider_organization": 3,
+            "receiver_organization": 4,
+            "uri": "https://openspending.org/uk-barnet-spending/transaction/asd9235qaghvs105962as0012"
         }
     },
     {
         "model": "ocds_release.record",
         "pk": 1,
         "fields": {
-            "compiled_release": 1
-        }
-    },
-    {
-        "model": "ocds_release.record",
-        "pk": 2,
-        "fields": {
-            "compiled_release": 2
+            "compiled_release": 6
         }
     },
     {
@@ -266,12 +831,12 @@
         "pk": 1,
         "fields": {
             "ref_record": 1,
-            "ocid": "xxxx-xxxx",
-            "date": "2021-11-26T09:55:13Z",
+            "ocid": "ocds-213czf-000-00001-01-planning",
+            "date": "2021-12-09T08:26:57Z",
             "tag": "planning",
             "initiation_type": "tender",
             "buyer": 1,
-            "planning": null,
+            "planning": 1,
             "tender": 1
         }
     },
@@ -279,10 +844,10 @@
         "model": "ocds_release.release",
         "pk": 2,
         "fields": {
-            "ref_record": 2,
-            "ocid": "xxxx-yyyy",
-            "date": "2021-11-26T10:20:38Z",
-            "tag": "planning",
+            "ref_record": 1,
+            "ocid": "ocds-213czf-000-00001-02-tender",
+            "date": "2021-12-09T08:57:52Z",
+            "tag": "tender",
             "initiation_type": "tender",
             "buyer": 1,
             "planning": null,
@@ -290,65 +855,66 @@
         }
     },
     {
-        "model": "ocds_tender.buyer",
-        "pk": 1,
+        "model": "ocds_release.release",
+        "pk": 4,
         "fields": {
-            "name": "An_organization",
-            "identifier": 1,
-            "address": 1,
-            "contact_point": 1
-        }
-    },
-    {
-        "model": "ocds_tender.tender",
-        "pk": 1,
-        "fields": {
+            "ref_record": 1,
+            "ocid": "ocds-213czf-000-00001-04-award",
+            "date": "2021-12-09T10:02:45Z",
+            "tag": "award",
+            "initiation_type": "tender",
             "buyer": 1,
-            "title": "Some_title_for_tender",
-            "description": "Some_descriptions",
-            "status": "planning",
-            "procurement_method": "direct",
-            "procurement_method_rationale": "Some_rationale",
-            "award_criteria": "priceOnly",
-            "award_criteria_details": "Some details about the award criteria",
-            "submission_method": "electronicAuction",
-            "submission_method_details": "",
-            "min_value": 1,
-            "value": 2,
-            "tender_period": 1,
-            "enquiry_period": 2,
-            "has_enquiries": false,
-            "eligibility_criteria": "",
-            "award_period": 3,
-            "number_of_tenderers": null,
-            "procuring_entity": 2,
-            "amendment": null
+            "planning": null,
+            "tender": null
         }
     },
     {
-        "model": "ocds_tender.tender",
+        "model": "ocds_release.release",
+        "pk": 5,
+        "fields": {
+            "ref_record": 1,
+            "ocid": "ocds-213czf-000-00001-05-contract",
+            "date": "2021-12-09T10:19:54Z",
+            "tag": "contract",
+            "initiation_type": "tender",
+            "buyer": 1,
+            "planning": null,
+            "tender": null
+        }
+    },
+    {
+        "model": "ocds_release.release",
+        "pk": 6,
+        "fields": {
+            "ref_record": 1,
+            "ocid": "ocds-213czf-000-00001-06-implementation",
+            "date": "2021-12-09T10:34:06Z",
+            "tag": "implementation",
+            "initiation_type": "tender",
+            "buyer": 1,
+            "planning": 1,
+            "tender": 2
+        }
+    },
+    {
+        "model": "ocds_release.releaseaward",
+        "pk": 1,
+        "fields": {
+            "ref_release": 4
+        }
+    },
+    {
+        "model": "ocds_release.releaseaward",
         "pk": 2,
         "fields": {
-            "buyer": 1,
-            "title": "Another_tender",
-            "description": null,
-            "status": "active",
-            "procurement_method": null,
-            "procurement_method_rationale": "",
-            "award_criteria": null,
-            "award_criteria_details": "",
-            "submission_method": null,
-            "submission_method_details": "",
-            "min_value": null,
-            "value": null,
-            "tender_period": 1,
-            "enquiry_period": 3,
-            "has_enquiries": false,
-            "eligibility_criteria": "",
-            "award_period": 4,
-            "number_of_tenderers": null,
-            "procuring_entity": 1,
-            "amendment": null
+            "ref_release": 5
+        }
+    },
+    {
+        "model": "ocds_release.releaseaward",
+        "pk": 3,
+        "fields": {
+            "ref_release": 6
         }
     }
 ]
