@@ -21,11 +21,11 @@ class Release(models.Model):
     tag = models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES)
     initiation_type = models.CharField(max_length=255, default='tender', choices=INITIATION_TYPE)
     buyer = models.ForeignKey(Buyer, on_delete=models.DO_NOTHING, null=True, blank=True)
-    planning = models.OneToOneField(Planning, on_delete=models.DO_NOTHING, null=True, blank=True)
-    tender = models.OneToOneField(Tender, on_delete=models.DO_NOTHING, null=True, blank=True)
+    planning = models.ForeignKey(Planning, on_delete=models.DO_NOTHING, null=True, blank=True)
+    tender = models.ForeignKey(Tender, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def __str__(self):
-        return '%s - %s (%s)' % (self.ocid, self.tender.title, self.tag)
+        return '%s' % (self.tag)
 
 class ReleaseAward(Award):
     ref_release = models.ForeignKey(Release, on_delete=models.DO_NOTHING)

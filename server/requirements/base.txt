@@ -18,6 +18,8 @@ django-redis==5.0.0  # https://github.com/jazzband/django-redis
 djangorestframework==3.12.4  # https://github.com/encode/django-rest-framework
 django-cors-headers==3.8.0 # https://github.com/adamchainz/django-cors-headers
 django-filter==2.4.0
+# Django Admin
+django-jazzmin==2.4.8
 
 lxml==4.6.3
 django-cron==0.5.1

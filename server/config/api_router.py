@@ -5,6 +5,7 @@ from rest_framework.routers import DefaultRouter, SimpleRouter
 from transparencyportal.users.api.views import UserViewSet
 from transparencyportal.ocds_release.views import RecordViewSet, ReleaseViewSet
 from transparencyportal.ocds_tender.views import BuyerViewSet
+from transparencyportal.ocds_planning.views import PlanningViewSet
 
 from transparencyportal.ocds_release.urls import buyer_urlpatterns, record_urlpatterns
 
@@ -17,6 +18,7 @@ router.register("users", UserViewSet)
 router.register("records", RecordViewSet)
 router.register("releases", ReleaseViewSet)
 router.register("buyers", BuyerViewSet)
+router.register("plannings", PlanningViewSet)
 
 app_name = "api"
 urlpatterns = router.urls

@@ -8,6 +8,7 @@ class ReleaseSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:release-detail")
     ref_record = serializers.HyperlinkedRelatedField(view_name="api:record-detail", read_only=True)
     tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
+    planning = serializers.HyperlinkedRelatedField(view_name="api:planning-detail", read_only=True)
     buyer = EntitySerializer()
     class Meta:
         model = Release
