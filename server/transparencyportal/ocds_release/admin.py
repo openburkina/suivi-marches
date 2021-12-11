@@ -7,6 +7,7 @@ class AwardInline(admin.StackedInline):
 
 class ReleaseInline(admin.StackedInline):
     model = Release
+    readonly_fields = ['ocid', 'date']
 
 class ContractInline(admin.StackedInline):
     model = ReleaseContract
