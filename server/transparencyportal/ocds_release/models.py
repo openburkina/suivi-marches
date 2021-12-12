@@ -9,11 +9,11 @@ from ocds_awards.models import Award
 from ocds_contracts.models import Contract
 from ocds_planning.models import Planning
 
+from .utils import to_json_publication
 from .constants import INITIATION_TYPE, PARTY_ROLE, RELEASE_TAG_CHOICES
 
 class Record(models.Model):
     ocid = models.CharField(max_length=255)
-    compiled_release = models.OneToOneField('Release', on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # update_or_create compîled_release
@@ -22,8 +22,12 @@ class Record(models.Model):
     def __str__(self):
         return str(self.ocid)
 
+class PublishedRelease(models.Model):
+    ref_record = models.ForeignKey(Record, related_name='release_set', on_delete=models.DO_NOTHING)
+    release = models.JSONField()
+
 class Release(models.Model):
-    ref_record = models.ForeignKey(Record, on_delete=models.DO_NOTHING)
+    ref_record = models.OneToOneField(Record, related_name='compiled_release', on_delete=models.DO_NOTHING, null=True, blank=True)
     ocid = models.CharField(max_length=255, editable=False)
     date = models.DateTimeField(auto_now_add=True)
     tag = ChoiceArrayField(models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES))
@@ -35,11 +39,15 @@ class Release(models.Model):
     def set_ocid(self, *args, **kwargs):
         inc = 1
         self.ocid = self.ref_record.ocid + '-' + str(inc) + '-' + str(self.date)
-        while self.ref_record.release_set.filter(ocid=self.ocid):
+        while self.ref_record.release_set.filter(release__ocid=self.ocid):
             inc += 1
 
     def update_date(self, *args, **kwargs):
         self.date = datetime.datetime.now()
+
+    def publish(self, *args, **kwargs):
+        publication = PublishedRelease.objects.create(ref_record=self.ref_record, release=to_json_publication(self))
+        publication.save()
 
     def save(self, *args, **kwargs):
         self.set_ocid(self, *args, **kwargs)
