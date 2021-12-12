@@ -7,6 +7,11 @@ class BuyerSerializer(EntitySerializer):
         model = Buyer
         fields = '__all__'
 
+class TenderDocumentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TenderDocument
+        fields = '__all__'
+
 class TenderSerializer(serializers.ModelSerializer):
     buyer = BuyerSerializer()
     min_value = ValueSerializer()
@@ -15,16 +20,15 @@ class TenderSerializer(serializers.ModelSerializer):
     enquiry_period = PeriodSerializer()
     award_period = PeriodSerializer()
     procuring_entity = EntitySerializer()
-    amendment = AmendmentSerializer()
+    amendments = AmendmentSerializer(many=True)
+    items = ItemSerializer(many=True)
+    documents = TenderDocumentSerializer(many=True)
+    milestones = MilestoneSerializer(many=True)
+    tenderers = EntitySerializer(many=True)
+    number_of_tenderer = serializers.IntegerField()
 
     class Meta:
         model = Tender
-        fields = '__all__'
-
-
-class TenderDocumentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TenderDocument
         fields = '__all__'
 
 

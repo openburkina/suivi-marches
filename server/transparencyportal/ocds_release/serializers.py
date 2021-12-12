@@ -1,8 +1,14 @@
 from rest_framework import serializers
 
-from ocds_release.models import Record, Release
 from ocds_master_tables.serializers import PeriodSerializer, EntitySerializer, ItemSerializer
-from ocds_awards.serializers import AwardPeriodSerializer
+from ocds_awards.serializers import AwardSerializer, AwardPeriodSerializer
+from ocds_contracts.serializers import ContractSerializer
+
+from ocds_release.models import Record, Release
+from ocds_release.constants import PARTY_ROLE
+
+class ReleasePartySerializer(EntitySerializer):
+    role = serializers.MultipleChoiceField(choices=PARTY_ROLE)
 
 class ReleaseSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:release-detail")
@@ -10,6 +16,10 @@ class ReleaseSerializer(serializers.ModelSerializer):
     tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
     planning = serializers.HyperlinkedRelatedField(view_name="api:planning-detail", read_only=True)
     buyer = EntitySerializer()
+    awards = AwardSerializer(many=True)
+    contracts = ContractSerializer(many=True)
+    parties = ReleasePartySerializer(many=True)
+
     class Meta:
         model = Release
         fields = '__all__'
