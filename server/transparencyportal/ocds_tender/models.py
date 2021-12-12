@@ -25,6 +25,10 @@ class Tender(models.Model):
     award_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='as_award_period_tenders', null=True, blank=True)
     procuring_entity = models.ForeignKey(Entity, on_delete=models.DO_NOTHING, related_name='as_procuring_entity_tenders', null=True, blank=True)
 
+    @property
+    def number_of_tenderer(self):
+        return self.tenderers.count()
+
     def __str__(self):
         return '%s - %s (%s)' % (self.id, self.title, self.status)
 
