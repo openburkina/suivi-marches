@@ -37,17 +37,17 @@ class Release(models.Model):
     tender = models.OneToOneField(Tender, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def set_ocid(self, *args, **kwargs):
-        inc = 1
+        inc = self.ref_record.releases.count() + 1
         self.ocid = self.ref_record.ocid + '-' + str(inc) + '-' + str(self.date)
-        while self.ref_record.releases.filter(release__ocid=self.ocid):
-            inc += 1
 
     def update_date(self, *args, **kwargs):
         self.date = datetime.datetime.now()
 
     def publish(self, *args, **kwargs):
-        publication = PublishedRelease.objects.create(ref_record=self.ref_record, release=to_json_publication(self))
+        self_instance = Release.objects.get(pk=self.pk)
+        publication = PublishedRelease.objects.create(ref_record=self.ref_record, release=to_json_publication(self_instance))
         publication.save()
+        self.set_ocid()
 
     def save(self, *args, **kwargs):
         self.set_ocid(self, *args, **kwargs)

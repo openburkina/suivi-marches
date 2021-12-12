@@ -27,6 +27,8 @@ class ReleaseSerializer(serializers.ModelSerializer):
 class RecordSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:record-detail")
     compiled_release = serializers.HyperlinkedRelatedField(view_name="api:release-detail", read_only=True)
+    releases = serializers.HyperlinkedRelatedField(view_name="api:published-release-detail", read_only=True, many=True)
+
     class Meta:
         model = Record
         fields = '__all__'
