@@ -95,8 +95,8 @@ class ItemAdditionalClassification(Classification):
 class Milestone(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    due_date = models.CharField(max_length=255)
-    date_modified = models.CharField(max_length=255, null=True, blank=True)
+    due_date = models.DateField(max_length=255)
+    date_modified = models.DateField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=MILESTONE_STATUS)
 
     def __str__(self):
