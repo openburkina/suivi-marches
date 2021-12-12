@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 
+from ocds_release.custom_fields import ChoiceArrayField
 from ocds_master_tables.models import Entity
 from ocds_tender.models import Buyer, Tender
 from ocds_awards.models import Award
@@ -25,7 +26,7 @@ class Release(models.Model):
     ref_record = models.ForeignKey(Record, on_delete=models.DO_NOTHING)
     ocid = models.CharField(max_length=255, editable=False)
     date = models.DateTimeField(auto_now_add=True)
-    tag = models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES)
+    tag = ChoiceArrayField(models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES))
     initiation_type = models.CharField(max_length=255, default='tender', choices=INITIATION_TYPE)
     buyer = models.ForeignKey(Buyer, on_delete=models.DO_NOTHING, null=True, blank=True)
     planning = models.ForeignKey(Planning, on_delete=models.DO_NOTHING, null=True, blank=True)
@@ -33,7 +34,7 @@ class Release(models.Model):
 
     def set_ocid(self, *args, **kwargs):
         inc = 1
-        self.ocid = self.ref_record.ocid + '-' + str(inc) + '-' + self.tag
+        self.ocid = self.ref_record.ocid + '-' + str(inc) + '-' + str(self.date)
         while self.ref_record.release_set.filter(ocid=self.ocid):
             inc += 1
 
@@ -57,10 +58,4 @@ class ReleaseContract(Contract):
 
 class ReleaseParty(Entity):
     ref_release = models.ForeignKey(Release, on_delete=models.DO_NOTHING)
-
-class ReleasePartyRole(models.Model):
-    name = models.CharField(max_length=255, choices=PARTY_ROLE)
-    ref_release_party = models.ForeignKey(ReleaseParty, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return '%s - %s' % (self.id, self.name)
+    role = ChoiceArrayField(models.CharField(max_length=255, choices=PARTY_ROLE), null=True)

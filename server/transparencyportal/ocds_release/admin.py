@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Release, ReleaseAward, ReleaseContract, ReleaseParty, ReleasePartyRole, Record
+from .models import Release, ReleaseAward, ReleaseContract, ReleaseParty, Record
 
 
 class AwardInline(admin.StackedInline):
@@ -11,9 +11,6 @@ class ReleaseInline(admin.StackedInline):
 
 class ContractInline(admin.StackedInline):
     model = ReleaseContract
-
-class PartyRoleInline(admin.StackedInline):
-    model = ReleasePartyRole
 
 class PartyInline(admin.StackedInline):
     model = ReleaseParty
