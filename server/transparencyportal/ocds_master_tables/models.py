@@ -18,7 +18,7 @@ class Amendment(models.Model):
         return '%s - %s' % (self.id, self.date)
 
 class Change(models.Model):
-    amendment = models.ForeignKey(Amendment, on_delete=models.CASCADE)
+    amendment = models.ForeignKey(Amendment, related_name='changes', on_delete=models.CASCADE)
     property = models.CharField(max_length=255)
     former_value = models.TextField(null=True, blank=True)
 
@@ -78,7 +78,7 @@ class Identifier(models.Model):
         return '%s - %s' % (self.id, self.legal_name)
 
 class EntityAdditionalIdentifier(Identifier):
-    ref_entity = models.ForeignKey(Entity, on_delete=models.CASCADE)
+    ref_entity = models.ForeignKey(Entity, related_name='additional_identifiers', on_delete=models.CASCADE)
 
 class Item(models.Model):
     description = models.TextField()
@@ -90,7 +90,7 @@ class Item(models.Model):
         return '%s - %s %s' % (self.id, self.quantity, self.unit.name)
 
 class ItemAdditionalClassification(Classification):
-    ref_item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    ref_item = models.ForeignKey(Item, related_name='additional_classifications', on_delete=models.CASCADE)
 
 class Milestone(models.Model):
     title = models.CharField(max_length=255)
@@ -103,7 +103,7 @@ class Milestone(models.Model):
         return '%s - %s' % (self.id, self.title)
 
 class MilestoneDocument(Document):
-    ref_milestone = models.ForeignKey(Milestone, on_delete=models.CASCADE)
+    ref_milestone = models.ForeignKey(Milestone, related_name='documents', on_delete=models.CASCADE)
 
 class Organization(models.Model):
     scheme = models.CharField(max_length=255)

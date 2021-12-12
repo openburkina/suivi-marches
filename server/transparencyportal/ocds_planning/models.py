@@ -9,7 +9,7 @@ class Planning(models.Model):
         return '%s - %s (%s)' % (self.id, self.raison, self.budget)
 
 class PlanningDocument(Document):
-    planning = models.ForeignKey(Planning, on_delete=models.DO_NOTHING)
+    planning = models.ForeignKey(Planning, related_name='documents', on_delete=models.DO_NOTHING)
 
 class PlanningMilestone(Milestone):
-    planning = models.ForeignKey(Planning, on_delete=models.DO_NOTHING)
+    planning = models.ForeignKey(Planning, related_name='milestones', on_delete=models.DO_NOTHING)

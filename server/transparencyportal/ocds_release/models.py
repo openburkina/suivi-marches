@@ -23,7 +23,7 @@ class Record(models.Model):
         return str(self.ocid)
 
 class PublishedRelease(models.Model):
-    ref_record = models.ForeignKey(Record, related_name='release_set', on_delete=models.DO_NOTHING)
+    ref_record = models.ForeignKey(Record, related_name='releases', on_delete=models.DO_NOTHING)
     release = models.JSONField()
 
 class Release(models.Model):
@@ -32,14 +32,14 @@ class Release(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     tag = ChoiceArrayField(models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES))
     initiation_type = models.CharField(max_length=255, default='tender', choices=INITIATION_TYPE)
-    buyer = models.ForeignKey(Buyer, on_delete=models.DO_NOTHING, null=True, blank=True)
-    planning = models.ForeignKey(Planning, on_delete=models.DO_NOTHING, null=True, blank=True)
-    tender = models.ForeignKey(Tender, on_delete=models.DO_NOTHING, null=True, blank=True)
+    buyer = models.ForeignKey(Buyer, related_name='releases', on_delete=models.DO_NOTHING, null=True, blank=True)
+    planning = models.OneToOneField(Planning, on_delete=models.DO_NOTHING, null=True, blank=True)
+    tender = models.OneToOneField(Tender, on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def set_ocid(self, *args, **kwargs):
         inc = 1
         self.ocid = self.ref_record.ocid + '-' + str(inc) + '-' + str(self.date)
-        while self.ref_record.release_set.filter(release__ocid=self.ocid):
+        while self.ref_record.releases.filter(release__ocid=self.ocid):
             inc += 1
 
     def update_date(self, *args, **kwargs):
@@ -59,11 +59,11 @@ class Release(models.Model):
         return '%s' % (self.ocid)
 
 class ReleaseAward(Award):
-    ref_release = models.ForeignKey(Release, on_delete=models.DO_NOTHING)
+    ref_release = models.ForeignKey(Release, related_name='awards', on_delete=models.DO_NOTHING)
 
 class ReleaseContract(Contract):
-    ref_release = models.ForeignKey(Release, on_delete=models.DO_NOTHING)
+    ref_release = models.ForeignKey(Release, related_name='contracts', on_delete=models.DO_NOTHING)
 
 class ReleaseParty(Entity):
-    ref_release = models.ForeignKey(Release, on_delete=models.DO_NOTHING)
+    ref_release = models.ForeignKey(Release, related_name='parties', on_delete=models.DO_NOTHING)
     role = ChoiceArrayField(models.CharField(max_length=255, choices=PARTY_ROLE), null=True)

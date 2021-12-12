@@ -22,7 +22,7 @@ class RecordItemList(APIView):
         output_instance = {
             'id': record_instance.pk,
             'tender': record_instance.compiled_release.tender,
-            'items': record_instance.compiled_release.tender.tenderitem_set.all()
+            'items': record_instance.compiled_release.tender.items.all()
         }
         data = RecordItemSerializer(output_instance, context={'request': request}).data
         return Response(data)
@@ -30,12 +30,12 @@ class RecordItemList(APIView):
 class RecordStageList(APIView):
     def get(self, request, record_id):
         record_instance = Record.objects.get(pk=record_id)
-        award_set = record_instance.compiled_release.tender.award_set.all()
+        awards = record_instance.compiled_release.awards.all()
         output_instance = {
             'id': record_instance.pk,
             'tender_period': record_instance.compiled_release.tender.tender_period,
             'award_period': record_instance.compiled_release.tender.award_period,
-            'awards': award_set,
+            'awards': awards,
         }
         data = RecordStageSerializer(output_instance).data
         return Response(data)

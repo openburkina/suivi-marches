@@ -15,13 +15,13 @@ class Award(models.Model):
         return '%s - %s' % (self.id, self.title)
 
 class Supplier(Entity):
-    ref_award = models.ForeignKey(Award, on_delete=models.DO_NOTHING)
+    ref_award = models.ForeignKey(Award, related_name='suppliers', on_delete=models.DO_NOTHING)
 
 class AwardItem(Item):
-    ref_award = models.ForeignKey(Award, on_delete=models.DO_NOTHING)
+    ref_award = models.ForeignKey(Award, related_name='items', on_delete=models.DO_NOTHING)
 
 class AwardDocument(Document):
-    ref_award = models.ForeignKey(Award, on_delete=models.DO_NOTHING)
+    ref_award = models.ForeignKey(Award, related_name='documents', on_delete=models.DO_NOTHING)
 
 class AwardAmendment(Amendment):
-    ref_award = models.ForeignKey(Award, on_delete=models.DO_NOTHING)
+    ref_award = models.ForeignKey(Award, related_name='amendments', on_delete=models.DO_NOTHING)

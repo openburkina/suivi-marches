@@ -16,13 +16,13 @@ class Contract(models.Model):
         return '%s - %s' % (self.id, self.title)
 
 class ContractAmendment(Amendment):
-    ref_contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    ref_contract = models.ForeignKey(Contract, related_name='amendments', on_delete=models.CASCADE)
 
 class ContractItem(Item):
-    ref_contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    ref_contract = models.ForeignKey(Contract, related_name='items', on_delete=models.CASCADE)
 
 class ContractDocument(Document):
-    ref_contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    ref_contract = models.ForeignKey(Contract, related_name='documents', on_delete=models.CASCADE)
 
 class ContractMilestone(Milestone):
-    ref_contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    ref_contract = models.ForeignKey(Contract, related_name='milestones', on_delete=models.CASCADE)
