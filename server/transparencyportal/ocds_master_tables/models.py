@@ -37,7 +37,7 @@ class ContactPoint(models.Model):
     name = models.CharField(max_length=255)
     email = models.EmailField()
     telephone = models.CharField(max_length=255)
-    faxNumber = models.CharField(max_length=255, null=True, blank=True)
+    fax_number = models.CharField(max_length=255, null=True, blank=True)
     url = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
@@ -53,18 +53,18 @@ class Document(models.Model):
     description = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
     date_published = models.DateTimeField()
-    date_modified = models.DateTimeField()
-    document_format = models.CharField(max_length=255) # with choices
-    language = models.CharField(max_length=255) # with choices
+    date_modified = models.DateTimeField(null=True, blank=True)
+    document_format = models.CharField(max_length=255)
+    language = models.CharField(max_length=255)
 
     def __str__(self):
         return '%s - %s (%s)' % (self.id, self.title, self.document_type)
 
 class Entity(models.Model):
     name = models.CharField(max_length=255)
-    identifier = models.OneToOneField('Identifier', on_delete=models.DO_NOTHING)
-    address = models.OneToOneField('Address', on_delete=models.DO_NOTHING)
-    contact_point = models.OneToOneField('ContactPoint', on_delete=models.DO_NOTHING)
+    identifier = models.ForeignKey('Identifier', on_delete=models.DO_NOTHING)
+    address = models.ForeignKey('Address', on_delete=models.DO_NOTHING)
+    contact_point = models.ForeignKey('ContactPoint', on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return '%s - %s' % (self.id, self.name)
@@ -82,7 +82,7 @@ class EntityAdditionalIdentifier(Identifier):
 
 class Item(models.Model):
     description = models.TextField()
-    classification = models.OneToOneField(Classification, on_delete=models.DO_NOTHING, null=True, blank=True)
+    classification = models.ForeignKey(Classification, on_delete=models.DO_NOTHING, null=True, blank=True)
     quantity = models.IntegerField()
     unit = models.OneToOneField('Unit', on_delete=models.DO_NOTHING, null=True, blank=True)
 
@@ -96,7 +96,7 @@ class Milestone(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     due_date = models.CharField(max_length=255)
-    date_modified = models.CharField(max_length=255)
+    date_modified = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=MILESTONE_STATUS)
 
     def __str__(self):

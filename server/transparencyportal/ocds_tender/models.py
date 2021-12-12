@@ -16,19 +16,21 @@ class Tender(models.Model):
     award_criteria_details = models.TextField(null=True, blank=True)
     submission_method = models.CharField(max_length=255, choices=SUBMISSION_METHOD, null=True, blank=True)
     submission_method_details = models.TextField(null=True, blank=True)
-    min_value = models.ForeignKey(Value, on_delete=models.DO_NOTHING, related_name='min_value', null=True, blank=True)
-    value = models.ForeignKey(Value, on_delete=models.DO_NOTHING, related_name='default_value', null=True, blank=True)
-    tender_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='tender_period', null=True, blank=True)
-    enquiry_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='enquiry_period', null=True, blank=True)
+    min_value = models.ForeignKey(Value, on_delete=models.DO_NOTHING, related_name='as_min_value_tenders', null=True, blank=True)
+    value = models.ForeignKey(Value, on_delete=models.DO_NOTHING, related_name='as_default_value_tenders', null=True, blank=True)
+    tender_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='as_tender_period_tenders', null=True, blank=True)
+    enquiry_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='as_enquiry_period_tenders', null=True, blank=True)
     has_enquiries = models.BooleanField(default=False)
     eligibility_criteria = models.TextField(null=True, blank=True)
-    award_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='award_period', null=True, blank=True)
+    award_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='as_award_period_tenders', null=True, blank=True)
     number_of_tenderers = models.PositiveIntegerField(null=True, blank=True)
-    procuring_entity = models.OneToOneField(Entity, on_delete=models.DO_NOTHING, related_name='procuring_entity', null=True, blank=True)
-    amendment = models.OneToOneField(Amendment, on_delete=models.DO_NOTHING, null=True, blank=True)
+    procuring_entity = models.ForeignKey(Entity, on_delete=models.DO_NOTHING, related_name='as_procuring_entity_tenders', null=True, blank=True)
 
     def __str__(self):
         return '%s - %s (%s)' % (self.id, self.title, self.status)
+
+class TenderAmendment(Amendment):
+    tender = models.ForeignKey(Tender, on_delete=models.CASCADE)
 
 class TenderItem(Item):
     tender = models.ForeignKey(Tender, on_delete=models.CASCADE)
