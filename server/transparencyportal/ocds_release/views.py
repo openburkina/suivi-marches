@@ -47,7 +47,7 @@ class RecordStageList(APIView):
 
 class InProgressRecordList(APIView):
     def get(self, request, buyer_id):
-        queryset = Record.objects.filter(compiled_release__buyer = buyer_id).exclude(compiled_release__tag = 'contractTermination')
+        queryset = Record.objects.filter(compiled_release__buyer = buyer_id).exclude(compiled_release__tag__contains = ['contractTermination'])
         data = RecordSerializer(queryset, many=True, context={'request': request}).data
         return Response(data)
 
@@ -55,7 +55,7 @@ class DoneRecordList(APIView):
     def get(self, request, buyer_id):
         queryset = Record.objects.filter(
             compiled_release__buyer = buyer_id,
-            compiled_release__tag = 'contractTermination'
+            compiled_release__tag__contains = ['contractTermination']
         )
         data = RecordSerializer(queryset, many=True, context={'request': request}).data
         return Response(data)
