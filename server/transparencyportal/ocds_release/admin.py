@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Release, ReleaseAward, ReleaseContract, ReleaseParty, Record
+from .models import Release, ReleaseAward, ReleaseContract, ReleaseParty, Record, Target
 
 
 class AwardInline(admin.StackedInline):
@@ -26,3 +26,5 @@ class ReleaseAdmin(admin.ModelAdmin):
     inlines = [
         AwardInline, ContractInline, PartyInline
     ]
+
+admin.site.register(Target)

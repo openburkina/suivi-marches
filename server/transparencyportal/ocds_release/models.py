@@ -12,8 +12,12 @@ from ocds_planning.models import Planning
 from .utils import to_json_publication
 from .constants import INITIATION_TYPE, PARTY_ROLE, RELEASE_TAG_CHOICES
 
+class Target(models.Model):
+    name = models.CharField(max_length=255)
+
 class Record(models.Model):
     ocid = models.CharField(max_length=255)
+    target = models.ForeignKey(Target, on_delete=models.PROTECT, null=True)
 
     def save(self, *args, **kwargs):
         # update_or_create compîled_release
