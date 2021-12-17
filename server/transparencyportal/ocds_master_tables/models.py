@@ -6,6 +6,8 @@ class Address(models.Model):
     region = models.CharField(max_length=255)
     locality = models.CharField(max_length=255) # Town
     postal_code = models.CharField(max_length=255)
+    locality_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    locality_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
     def __str__(self):
         return '%s, %s' % (self.locality, self.country_name)
@@ -44,10 +46,6 @@ class ContactPoint(models.Model):
         return '%s - %s' % (self.id, self.name)
 
 class Document(models.Model):
-
-    class Meta:
-        abstract = True
-
     document_type = models.CharField(max_length=255, choices=DOCUMENT_TYPE)
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
