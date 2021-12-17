@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import PublishedReleaseView, RecordItemList, RecordStageList, InProgressRecordList, DoneRecordList
+from .views import PublishedReleaseView, RecordByTarget, RecordItemList, RecordStageList, InProgressRecordList, DoneRecordList
 
 buyer_urlpatterns = [
     path(r'<int:buyer_id>/records/in_progress/', InProgressRecordList.as_view(), name='buyer-records-inprogress'),
@@ -10,6 +10,7 @@ buyer_urlpatterns = [
 record_urlpatterns = [
     path(r'<int:record_id>/items', RecordItemList.as_view(), name='record-item-list'),
     path(r'<int:record_id>/stages', RecordStageList.as_view(), name='record-stage-list'),
+    path(r'target/<str:target_name>', RecordByTarget.as_view(), name='record-by-target'),
 ]
 
 release_urlpatterns = [

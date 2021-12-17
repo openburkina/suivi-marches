@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter, SimpleRouter
 
 from transparencyportal.users.api.views import UserViewSet
-from transparencyportal.ocds_release.views import RecordViewSet, ReleaseViewSet
+from transparencyportal.ocds_release.views import RecordViewSet, ReleaseViewSet, TargetViewSet
 from transparencyportal.ocds_tender.views import BuyerViewSet
 from transparencyportal.ocds_planning.views import PlanningViewSet
 
@@ -16,6 +16,7 @@ else:
 
 router.register("users", UserViewSet)
 router.register("records", RecordViewSet)
+router.register("targets", TargetViewSet)
 router.register("releases", ReleaseViewSet)
 router.register("buyers", BuyerViewSet)
 router.register("plannings", PlanningViewSet)

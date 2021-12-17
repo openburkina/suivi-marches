@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework import status
 
-from ocds_release.models import Record, Release, PublishedRelease
-from ocds_release.serializers import RecordSerializer, ReleaseSerializer, RecordStageSerializer, RecordItemSerializer
+from ocds_release.models import Record, Release, PublishedRelease, Target
+from ocds_release.serializers import RecordSerializer, ReleaseSerializer, RecordStageSerializer, RecordItemSerializer, RecordByTargetSerializer, TargetSerializer
 from ocds_tender.models import Buyer
 
 class RecordViewSet(viewsets.ModelViewSet):
@@ -17,6 +17,10 @@ class RecordViewSet(viewsets.ModelViewSet):
 class ReleaseViewSet(viewsets.ModelViewSet):
     queryset = Release.objects.all()
     serializer_class = ReleaseSerializer
+
+class TargetViewSet(viewsets.ModelViewSet):
+    queryset = Target.objects.all()
+    serializer_class = TargetSerializer
 
 class PublishedReleaseView(APIView):
     def get(self, request, pk):
@@ -57,6 +61,21 @@ class RecordStageList(APIView):
         output_instance['award_period'] = record_instance.compiled_release.tender.award_period
         output_instance['awards'] = record_instance.compiled_release.awards.all()
         data = RecordStageSerializer(output_instance).data
+        return Response(data)
+
+class RecordByTarget(APIView):
+    def get(self, request, target_name):
+        country = self.request.query_params.get('country')
+        region = self.request.query_params.get('region')
+        records = Record.objects.filter(target__name=target_name)
+        if country:
+            records = records.filter(implementation_address__country_name__iexact=country)
+        if region:
+            records = records.filter(implementation_address__region__iexact=region)
+        output_instance = {
+            'records' : records
+        }
+        data = RecordByTargetSerializer(output_instance, context={'request': request}).data
         return Response(data)
 
 class InProgressRecordList(APIView):

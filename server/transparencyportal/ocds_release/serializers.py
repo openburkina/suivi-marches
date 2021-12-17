@@ -4,7 +4,7 @@ from ocds_master_tables.serializers import PeriodSerializer, EntitySerializer, I
 from ocds_awards.serializers import AwardSerializer, AwardPeriodSerializer
 from ocds_contracts.serializers import ContractSerializer
 
-from ocds_release.models import Record, Release
+from ocds_release.models import Record, Release, Target
 from ocds_release.constants import PARTY_ROLE
 
 class ReleasePartySerializer(EntitySerializer):
@@ -43,3 +43,11 @@ class RecordItemSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
     items = ItemSerializer(many=True)
+
+class RecordByTargetSerializer(serializers.Serializer):
+    records = serializers.HyperlinkedRelatedField(view_name="api:record-detail", read_only=True, many=True)
+
+class TargetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Target
+        exclude = ['id']
