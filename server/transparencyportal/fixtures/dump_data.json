@@ -61,6 +61,34 @@
         }
     },
     {
+        "model": "ocds_master_tables.document",
+        "pk": 1,
+        "fields": {
+            "document_type": "plannedProcurementNotice",
+            "title": "Area Wide Cycle Improvements - Procurement Plan",
+            "description": "The overall strategic framework for procurement to enhance cycle provision.",
+            "url": "http://example.com/opencontracting/documents/planning/highways/procurementPlan.pdf",
+            "date_published": "2021-12-12T14:20:43Z",
+            "date_modified": "2021-12-12T14:20:46Z",
+            "document_format": "application/pdf",
+            "language": "en"
+        }
+    },
+    {
+        "model": "ocds_master_tables.document",
+        "pk": 2,
+        "fields": {
+            "document_type": "tenderNotice",
+            "title": "Consultation on cycle provision",
+            "description": "A consultation document inviting citizen input into cycle provision.",
+            "url": "http://example.com/consultations/cycle-provision/",
+            "date_published": "2021-12-12T14:27:40Z",
+            "date_modified": null,
+            "document_format": "text/html",
+            "language": "en"
+        }
+    },
+    {
         "model": "ocds_master_tables.entity",
         "pk": 1,
         "fields": {
@@ -364,14 +392,6 @@
         "model": "ocds_planning.planningdocument",
         "pk": 1,
         "fields": {
-            "document_type": "plannedProcurementNotice",
-            "title": "Area Wide Cycle Improvements - Procurement Plan",
-            "description": "The overall strategic framework for procurement to enhance cycle provision.",
-            "url": "http://example.com/opencontracting/documents/planning/highways/procurementPlan.pdf",
-            "date_published": "2021-12-12T14:20:43Z",
-            "date_modified": "2021-12-12T14:20:46Z",
-            "document_format": "application/pdf",
-            "language": "en",
             "planning": 1
         }
     },
@@ -413,16 +433,8 @@
     },
     {
         "model": "ocds_tender.tenderdocument",
-        "pk": 1,
+        "pk": 2,
         "fields": {
-            "document_type": "tenderNotice",
-            "title": "Consultation on cycle provision",
-            "description": "A consultation document inviting citizen input into cycle provision.",
-            "url": "http://example.com/consultations/cycle-provision/",
-            "date_published": "2021-12-12T14:27:40Z",
-            "date_modified": null,
-            "document_format": "text/html",
-            "language": "en",
             "tender": 1
         }
     },
