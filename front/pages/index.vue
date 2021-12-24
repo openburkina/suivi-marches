@@ -1,9 +1,7 @@
 <template>
     <v-sheet>
         <Tabs />
-        <div class="grey--text font-weight-bold display-4">
-           
-        </div>
+        <chart-content />
     </v-sheet>
 </template>
 <script>

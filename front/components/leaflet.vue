@@ -11,7 +11,6 @@
                                     <v-simple-table>
                                         
                                         <template v-slot:default>
-                                     
                                         <tbody>
                                          <tr> <td>Projet</td> <td> {{ d.projet }}</td></tr>
                                          <tr> <td>Budget</td> <td> {{ d.budget }}</td></tr>
@@ -20,11 +19,9 @@
                                         </template>
                                     </v-simple-table>
                                     </template>
-
                             </v-card>
                         </l-popup>
                     </l-marker>
-                 
             </l-map>
         </client-only>
     </div>
@@ -102,15 +99,12 @@ export default {
   methods:{
   
     hovering(name){
-        console.log(this.$refs.marker)
-        console.log(this.$refs[name][0])
         this.$nextTick(() => {
             this.$refs[name][0].mapObject.openPopup()
 
         }) 
       },
     notHovering(name){
-        console.log(name)
         this.$nextTick(() => {
             this.$refs[name][0].mapObject.closePopup()
         }) 
