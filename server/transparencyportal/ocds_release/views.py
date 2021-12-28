@@ -7,7 +7,7 @@ from rest_framework import viewsets
 from rest_framework import status
 
 from ocds_release.models import Record, Release, PublishedRelease, Target
-from ocds_release.serializers import RecordSerializer, ReleaseSerializer, RecordStageSerializer, RecordItemSerializer, RecordByTargetSerializer, TargetSerializer
+from ocds_release.serializers import RecordSerializer, ReleaseSerializer, RecordStageSerializer, RecordItemSerializer, RecordByTargetSerializer, TargetSerializer, RecordSumSerializer
 from ocds_tender.models import Buyer
 
 class RecordViewSet(viewsets.ModelViewSet):
@@ -94,3 +94,14 @@ class DoneRecordList(APIView):
         )
         data = RecordSerializer(queryset, many=True, context={'request': request}).data
         return Response(data)
+
+class SumRecord(APIView):
+    def post(self, request, region_id):
+        queryset = Record.objects.filter(
+            implementation_address__region__iexact = region_id
+        )
+        data = RecordSumSerializer(queryset, many=True, context={'request': request}).data
+        return Response({
+            'entity': data
+        })
+

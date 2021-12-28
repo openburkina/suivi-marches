@@ -1,8 +1,5 @@
 <template>
-    <v-sheet>
-        <Tabs />
-        <chart-content />
-    </v-sheet>
+      <Tabs />
 </template>
 <script>
 export default {
