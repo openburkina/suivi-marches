@@ -63,3 +63,6 @@ MILESTONE_STATUS = [
     ('notMet', 'Not met'),
     ('partiallyMet', 'Partially met'),
 ]
+
+page_id_1=450952076395699
+facebook_access_token_1='EAAGeJAZBzCx8BAJrRyoTfqGhoqZCm3TZBktBDy2O6fy8iaRi4yuzMJ3po2QHFuzC0Iidtovo1dricMu7NqRlE8fCk7btZCkC05erouje8MFmDz6ho1CCwPWJl8FPXMrB7RZBxlnJTclL9MBThmZALSugHo6ZBjWBLUZCQAibryFYHhxxPq9AS6tvCZBZAqfz5U1FxuZAi3NFPR7Rgre8d0XJrMj8bQXpD1afAg6sfI8w1XSUeefKXPWD2Tl1hTUe57AjfEZD'

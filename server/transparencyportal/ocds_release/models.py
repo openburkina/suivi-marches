@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models.deletion import PROTECT
 
 from ocds_release.custom_fields import ChoiceArrayField
-from ocds_master_tables.models import Entity, Address
+from ocds_master_tables.models import Entity, Address, Value
 from ocds_tender.models import Buyer, Tender
 from ocds_awards.models import Award
 from ocds_contracts.models import Contract
@@ -20,6 +20,7 @@ class Record(models.Model):
     ocid = models.CharField(max_length=255)
     target = models.ForeignKey(Target, on_delete=models.PROTECT, null=True)
     implementation_address = models.ForeignKey(Address, on_delete=models.PROTECT, null=True)
+    implementation_value = models.ForeignKey(Value, on_delete=models.PROTECT, null=True)
 
     def save(self, *args, **kwargs):
         # update_or_create compîled_release

@@ -26,6 +26,7 @@ urlpatterns = router.urls
 
 urlpatterns += [
     path("tenders/", include("ocds_tender.urls")),
+    path("facebook/", include("ocds_master_tables.urls")),
     path("buyers/", include(buyer_urlpatterns)),
     path("records/", include(record_urlpatterns)),
     path("releases/", include(release_urlpatterns)),

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ocds_master_tables.serializers import PeriodSerializer, EntitySerializer, ItemSerializer
+from ocds_master_tables.serializers import PeriodSerializer, EntitySerializer, ItemSerializer, ValueSerializer
 from ocds_awards.serializers import AwardSerializer, AwardPeriodSerializer
 from ocds_contracts.serializers import ContractSerializer
 
@@ -51,3 +51,10 @@ class TargetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Target
         exclude = ['id']
+
+class RecordSumSerializer(serializers.ModelSerializer):
+    #value = ValueSerializer()
+    class Meta:
+        model = Record
+        fields ='__all__'
+

@@ -4,10 +4,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from datetime import date, datetime
 
 
 from ocds_tender.models import Buyer, Tender
-from ocds_tender.serializers import BuyerSerializer, TenderSerializer, RatingSerializer
+from ocds_tender.serializers import BuyerSerializer, TenderSerializer, RatingSerializer, TenderStateMount
 
 
 class TenderViews(viewsets.ModelViewSet):
@@ -26,3 +27,19 @@ class TenderByAdress(APIView):
 class BuyerViewSet(viewsets.ModelViewSet):
     queryset = Buyer.objects.all()
     serializer_class = BuyerSerializer
+
+class TenderStateAndMount(APIView):
+    def post(self, request,year_val=None):
+        sting_date_deb = year_val+'-01-01'
+        string_date_fin = year_val+'-12-31'
+       # now_deb = date(*map(int,sting_date_deb.split('-')))
+        now_deb = datetime.strptime(sting_date_deb,'%Y-%m-%d').date()
+       # now_fin = date(*map(int,string_date_fin.split('-')))
+        now_fin = datetime.strptime(string_date_fin,'%Y-%m-%d').date()
+        entity = Tender.objects.filter(tender_period__start_date__range=(now_deb,now_fin))
+        serializer = TenderStateMount(entity, many= True)
+        return Response({
+            'entities': serializer.data
+        })
+
+
