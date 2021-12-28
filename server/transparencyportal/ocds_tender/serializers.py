@@ -53,3 +53,10 @@ class RatingSerializer(serializers.Serializer):
     region_name = serializers.ReadOnlyField()
     total = serializers.ReadOnlyField()
     buyer_name = serializers.ReadOnlyField()
+
+class TenderStateMount(serializers.ModelSerializer):
+    value = ValueSerializer()
+    class Meta:
+        model = Tender
+        fields = ('value',
+        'status')
