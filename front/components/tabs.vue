@@ -31,6 +31,40 @@
       <v-tab-item>
        
          <Leaflet />
+          <v-row no-gutters class="mx-3 mt-5">
+      <v-col>
+        <v-card
+          class="my-5"
+          max-height="500" max-width="370"
+          outlined
+          tile
+        >
+         <BarChartContent />
+
+          
+        </v-card>
+      </v-col>
+      <v-col order="12">
+        <v-card
+          class="my-5"
+          max-height="500" max-width="370"
+          outlined
+          tile
+        >
+          <PieChartContent />
+        </v-card>
+      </v-col>
+      <v-col order="1">
+        <v-card
+          class="my-5"
+          max-height="500" max-width="370"
+          outlined
+          tile
+        >
+        <LineChartContent />
+        </v-card>
+      </v-col>
+    </v-row>
       </v-tab-item>
     <v-tab-item>
         <v-card flat>

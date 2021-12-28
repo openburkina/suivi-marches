@@ -104,8 +104,7 @@
       <v-container>
        <Nuxt />
       </v-container>
-        <Footer />
-    
+          <Footer class="mt-15" />
     </v-main>
     <v-scale-transition>
       <v-btn

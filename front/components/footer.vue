@@ -2,6 +2,8 @@
     <v-card
       flat
       tile
+      fixed
+      bottom
       class="indigo lighten-1 white--text text-center"
     >
       <v-card-text>
