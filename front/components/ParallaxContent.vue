@@ -1,6 +1,6 @@
 <template>
 <div>
-        <p class="white--text font-weight-bold mx-auto display-1 mt-15">
+        <p class="white--text font-weight-bold mx-auto display-1">
         UNDP Transparency Portal
         </p>
         <p class="white--text mx-auto">

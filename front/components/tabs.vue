@@ -1,6 +1,5 @@
 <template>
 <v-container fluid>
-    <p class="display-2 text-center font-weight-bold">Explore  <span id="explore"></span></p>
     <p class="text-center">Learn more about where and how UNDP is making a difference around the globe. Search by location, donor <br>country, our focus, signature solution or Sustainable Development Goal.</p>
     <v-tabs class="ml-auto " v-model="tab" grow  slider-size="1" hide-slider>
         <v-tab >
@@ -38,6 +37,8 @@
           max-height="500" max-width="370"
           outlined
           tile
+          elevation="5"
+
         >
          <BarChartContent />
 
@@ -50,6 +51,8 @@
           max-height="500" max-width="370"
           outlined
           tile
+          elevation="5"
+
         >
           <PieChartContent />
         </v-card>
@@ -60,6 +63,7 @@
           max-height="500" max-width="370"
           outlined
           tile
+          elevation="5"
         >
         <LineChartContent />
         </v-card>
@@ -103,17 +107,3 @@
     },
   }
 </script>
-
-<style lang="scss" scoped>
-.v-tabs{
-  background-color: red ;
-}
-#explore{
-    background-color: #5C6BC0;
-    width: 80px;
-    height: 8px;
-    margin: 0 auto;
-    display: block;
-    margin-top: 10px;
-}
-</style>
