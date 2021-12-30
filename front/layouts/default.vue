@@ -1,11 +1,6 @@
 <template>
   <v-app>
-      <v-parallax
-        height="700"
-        :src="require('~/assets/img/bgHero.jpg')"
-      >
-      <Parallax />
-    </v-parallax>
+    <Caroussel />
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -104,7 +99,7 @@
       <v-container>
        <Nuxt />
       </v-container>
-          <Footer class="mt-15" />
+          <Footer />
     </v-main>
     <v-scale-transition>
       <v-btn
