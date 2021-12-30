@@ -1,14 +1,21 @@
 import json
 
 from django.shortcuts import get_object_or_404
+from ocds_release.models import PublishedRelease, Record, Release, ReleaseParty, Target
+from ocds_release.serializers import (
+    RecordByTargetSerializer,
+    RecordItemSerializer,
+    RecordSerializer,
+    RecordStageSerializer,
+    RecordSumSerializer,
+    ReleaseSerializer,
+    ReleasePartySerializer,
+    TargetSerializer,
+)
+from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import viewsets
-from rest_framework import status
 
-from ocds_release.models import Record, Release, PublishedRelease, Target
-from ocds_release.serializers import RecordSerializer, ReleaseSerializer, RecordStageSerializer, RecordItemSerializer, RecordByTargetSerializer, TargetSerializer, RecordSumSerializer
-from ocds_tender.models import Buyer
 
 class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all()
@@ -21,6 +28,12 @@ class ReleaseViewSet(viewsets.ModelViewSet):
 class TargetViewSet(viewsets.ModelViewSet):
     queryset = Target.objects.all()
     serializer_class = TargetSerializer
+
+class BuyerList(APIView):
+    def get(self, request):
+        buyers = ReleaseParty.objects.filter(role__contains=["buyer"])
+        data = ReleasePartySerializer(buyers, many=True).data
+        return Response(data)
 
 class PublishedReleaseView(APIView):
     def get(self, request, pk):
@@ -80,14 +93,14 @@ class RecordByTarget(APIView):
 
 class InProgressRecordList(APIView):
     def get(self, request, buyer_id):
-        buyer_instance = get_object_or_404(Buyer, pk=buyer_id)
+        buyer_instance = get_object_or_404(ReleaseParty, pk=buyer_id)
         queryset = Record.objects.filter(compiled_release__buyer = buyer_instance.pk).exclude(compiled_release__tag__contains = ['contractTermination'])
         data = RecordSerializer(queryset, many=True, context={'request': request}).data
         return Response(data)
 
 class DoneRecordList(APIView):
     def get(self, request, buyer_id):
-        buyer_instance = get_object_or_404(Buyer, pk=buyer_id)
+        buyer_instance = get_object_or_404(ReleaseParty, pk=buyer_id)
         queryset = Record.objects.filter(
             compiled_release__buyer = buyer_instance.pk,
             compiled_release__tag__contains = ['contractTermination']
@@ -104,4 +117,3 @@ class SumRecord(APIView):
         return Response({
             'entity': data
         })
-

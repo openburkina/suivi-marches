@@ -1,6 +1,7 @@
 from django.db import models
-from ocds_master_tables.models import Document, Milestone, Organization, Value
+from ocds_master_tables.models import Document, Milestone, Value
 from ocds_contracts.models import Contract
+from ocds_release.models import ReleaseParty
 
 class Implementation(models.Model):
     contract = models.OneToOneField(Contract, on_delete=models.CASCADE)
@@ -10,8 +11,8 @@ class Transaction(models.Model):
     source = models.CharField(max_length=255, null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
     value = models.OneToOneField(Value, null=True, blank=True, on_delete=models.CASCADE)
-    payer = models.ForeignKey(Organization, related_name='as_payer_transactions', null=True, blank=True, on_delete=models.DO_NOTHING)
-    payee = models.ForeignKey(Organization, related_name='as_payee_transactions', null=True, blank=True, on_delete=models.DO_NOTHING)
+    payer = models.ForeignKey(ReleaseParty, related_name='as_payer_transactions', null=True, blank=True, on_delete=models.DO_NOTHING)
+    payee = models.ForeignKey(ReleaseParty, related_name='as_payee_transactions', null=True, blank=True, on_delete=models.DO_NOTHING)
     uri = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):

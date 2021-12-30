@@ -1,7 +1,14 @@
+from ocds_awards.models import Award
+from ocds_master_tables.serializers import (
+    AmendmentSerializer,
+    DocumentSerializer,
+    EntitySerializer,
+    ItemSerializer,
+    PeriodSerializer,
+    ValueSerializer,
+)
 from rest_framework import serializers
 
-from ocds_awards.models import Award
-from ocds_master_tables.serializers import AmendmentSerializer, DocumentSerializer, ItemSerializer, EntitySerializer, PeriodSerializer, ValueSerializer
 
 class AwardSerializer(serializers.ModelSerializer):
     value = ValueSerializer()

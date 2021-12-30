@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Organization, Period, Unit, Value, Projet, Budget
+from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Period, Unit, Value, Projet, Budget
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -68,11 +68,6 @@ class MilestoneSerializer(serializers.ModelSerializer):
 class MilestoneDocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = MilestoneDocument
-        fields = '__all__'
-
-class OrganizationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Organization
         fields = '__all__'
 
 class PeriodSerializer(serializers.ModelSerializer):

@@ -5,7 +5,6 @@ from django.db.models.deletion import PROTECT
 
 from ocds_release.custom_fields import ChoiceArrayField
 from ocds_master_tables.models import Entity, Address, Value
-from ocds_tender.models import Buyer, Tender
 from ocds_awards.models import Award
 from ocds_contracts.models import Contract
 from ocds_planning.models import Planning
@@ -39,9 +38,9 @@ class Release(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     tag = ChoiceArrayField(models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES))
     initiation_type = models.CharField(max_length=255, default='tender', choices=INITIATION_TYPE)
-    buyer = models.ForeignKey(Buyer, related_name='releases', on_delete=models.DO_NOTHING, null=True, blank=True)
+    buyer = models.ForeignKey('ReleaseParty', related_name='releases', on_delete=models.DO_NOTHING, null=True, blank=True)
     planning = models.OneToOneField(Planning, on_delete=models.DO_NOTHING, null=True, blank=True)
-    tender = models.OneToOneField(Tender, on_delete=models.DO_NOTHING, null=True, blank=True)
+    tender = models.OneToOneField('ocds_tender.Tender', on_delete=models.DO_NOTHING, null=True, blank=True)
 
     def set_ocid(self, *args, **kwargs):
         inc = self.ref_record.releases.count() + 1
