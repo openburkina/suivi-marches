@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Release, ReleaseAward, ReleaseContract, ReleaseParty, Record, Target
+
+from ocds_master_tables.admin import Entity
+from .models import Release, ReleaseAward, ReleaseContract, Record, Role, Target
 
 
 class AwardInline(admin.StackedInline):
@@ -9,11 +11,12 @@ class ReleaseInline(admin.StackedInline):
     model = Release
     readonly_fields = ['ocid', 'date']
 
+class RoleInline(admin.StackedInline):
+    model = Role
+    extra = 1
+
 class ContractInline(admin.StackedInline):
     model = ReleaseContract
-
-class PartyInline(admin.StackedInline):
-    model = ReleaseParty
 
 @admin.register(Record)
 class RecordAdmin(admin.ModelAdmin):
@@ -24,7 +27,7 @@ class RecordAdmin(admin.ModelAdmin):
 @admin.register(Release)
 class ReleaseAdmin(admin.ModelAdmin):
     inlines = [
-        AwardInline, ContractInline, PartyInline
+        AwardInline, ContractInline, RoleInline
     ]
 
 admin.site.register(Target)

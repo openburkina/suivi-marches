@@ -2,6 +2,7 @@ from django.db import models
 from ocds_master_tables.models import (
     Amendment,
     Document,
+    Entity,
     Item,
     Milestone,
     Period,
@@ -17,7 +18,7 @@ from .constants import (
 
 
 class Tender(models.Model):
-    buyer = models.ForeignKey('ocds_release.ReleaseParty', related_name='tenders', on_delete=models.DO_NOTHING)
+    buyer = models.ForeignKey(Entity, related_name='as_buyer_tenders', on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=TENDER_STATUS, null=True, blank=True)
@@ -34,8 +35,8 @@ class Tender(models.Model):
     has_enquiries = models.BooleanField(default=False)
     eligibility_criteria = models.TextField(null=True, blank=True)
     award_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='as_award_period_tenders', null=True, blank=True)
-    procuring_entity = models.ForeignKey('ocds_release.ReleaseParty', on_delete=models.DO_NOTHING, related_name='as_procuring_entity_tenders', null=True, blank=True)
-    tenderers = models.ManyToManyField('ocds_release.ReleaseParty', related_name='as_tenderers')
+    procuring_entity = models.ForeignKey(Entity, on_delete=models.DO_NOTHING, related_name='as_procuring_entity_tenders', null=True, blank=True)
+    tenderers = models.ManyToManyField(Entity, related_name='as_tenderer_tenders')
 
     @property
     def number_of_tenderer(self):

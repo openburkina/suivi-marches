@@ -11,9 +11,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ocds_release.models import ReleaseParty
-from ocds_release.serializers import ReleasePartySerializer
-
+from ocds_master_tables.models import Entity
 
 class TenderViews(viewsets.ModelViewSet):
     queryset = Tender.objects.all()
@@ -22,7 +20,7 @@ class TenderViews(viewsets.ModelViewSet):
 class TenderByAdress(APIView):
     def get(self, request, table=Tender, serializers_class=RatingSerializer,
              buyer_id=None):
-        # buyer_instance = get_object_or_404(ReleaseParty, pk=buyer_id)
+        buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         entity = table.objects.raw('select 1 id, count(T) as total, A.region as "region_name" from ocds_tender_Tender T, ocds_master_tables_Entity E, ocds_master_tables_Address A WHERE T.buyer_id=%s AND T.procuring_entity_id = E.address_id AND E.address_id=A.id Group By A.region order by total desc',[buyer_id])
         serializer = serializers_class(entity, many=True)
         return Response({

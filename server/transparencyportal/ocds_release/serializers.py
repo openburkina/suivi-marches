@@ -7,8 +7,8 @@ from ocds_contracts.serializers import ContractSerializer
 from ocds_release.models import Record, Release, Target
 from ocds_release.constants import PARTY_ROLE
 
-class ReleasePartySerializer(EntitySerializer):
-    role = serializers.MultipleChoiceField(choices=PARTY_ROLE)
+# class ReleasePartySerializer(EntitySerializer):
+#     role = serializers.MultipleChoiceField(choices=PARTY_ROLE)
 
 class ReleaseSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:release-detail")
@@ -18,7 +18,7 @@ class ReleaseSerializer(serializers.ModelSerializer):
     buyer = EntitySerializer()
     awards = AwardSerializer(many=True)
     contracts = ContractSerializer(many=True)
-    parties = ReleasePartySerializer(many=True)
+    parties = EntitySerializer(many=True)
 
     class Meta:
         model = Release
@@ -57,4 +57,3 @@ class RecordSumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields ='__all__'
-

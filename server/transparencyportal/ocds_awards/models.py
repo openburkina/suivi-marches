@@ -1,5 +1,5 @@
 from django.db import models
-from ocds_master_tables.models import Amendment, Document, Item, Period, Value
+from ocds_master_tables.models import Amendment, Document, Entity, Item, Period, Value
 from .constants import AWARD_STATUS
 
 class Award(models.Model):
@@ -9,7 +9,7 @@ class Award(models.Model):
     date = models.DateTimeField(null=True, blank=True)
     value = models.OneToOneField(Value, on_delete=models.DO_NOTHING, null=True, blank=True)
     contract_period = models.OneToOneField(Period, on_delete=models.DO_NOTHING, null=True, blank=True)
-    suppliers = models.ManyToManyField('ocds_release.ReleaseParty', related_name='as_suppliers')
+    suppliers = models.ManyToManyField(Entity, related_name='as_supplier_awards')
 
     def __str__(self):
         return '%s - %s' % (self.id, self.title)
