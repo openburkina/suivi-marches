@@ -1,6 +1,9 @@
 from django.contrib import admin
 from ocds_contracts.models import Contract, ContractDocument, ContractItem
 
+class ContractInline(admin.StackedInline):
+    model = Contract
+
 class ItemInline(admin.StackedInline):
     model = ContractItem
 

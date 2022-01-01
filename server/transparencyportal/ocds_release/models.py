@@ -1,12 +1,9 @@
 import datetime
 
 from django.db import models
-from django.db.models.deletion import PROTECT
 
 from ocds_release.custom_fields import ChoiceArrayField
 from ocds_master_tables.models import Entity, Address, Value
-from ocds_awards.models import Award
-from ocds_contracts.models import Contract
 from ocds_planning.models import Planning
 
 from .utils import to_json_publication
@@ -92,9 +89,3 @@ class Release(models.Model):
 
     def __str__(self):
         return '%s' % (self.ocid)
-
-class ReleaseAward(Award):
-    ref_release = models.ForeignKey(Release, related_name='awards', on_delete=models.DO_NOTHING)
-
-class ReleaseContract(Contract):
-    ref_release = models.ForeignKey(Release, related_name='contracts', on_delete=models.DO_NOTHING)

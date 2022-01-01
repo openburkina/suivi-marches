@@ -375,20 +375,6 @@
         }
     },
     {
-        "model": "ocds_release.releaseaward",
-        "pk": 1,
-        "fields": {
-            "ref_release": 1
-        }
-    },
-    {
-        "model": "ocds_release.releasecontract",
-        "pk": 1,
-        "fields": {
-            "ref_release": 1
-        }
-    },
-    {
         "model": "ocds_planning.planning",
         "pk": 1,
         "fields": {
@@ -462,6 +448,7 @@
         "model": "ocds_awards.award",
         "pk": 1,
         "fields": {
+            "release": 1,
             "title": "Award for highway construction",
             "description": "Calos corp has been awarded for highway construction",
             "status": "pending",

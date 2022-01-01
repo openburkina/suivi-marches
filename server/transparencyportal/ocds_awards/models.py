@@ -3,6 +3,7 @@ from ocds_master_tables.models import Amendment, Document, Entity, Item, Period,
 from .constants import AWARD_STATUS
 
 class Award(models.Model):
+    release = models.ForeignKey('ocds_release.Release', related_name='awards', on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=255, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=AWARD_STATUS, null=True, blank=True)
