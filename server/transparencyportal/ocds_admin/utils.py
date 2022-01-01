@@ -1,3 +1,4 @@
+from django.db.models.deletion import ProtectedError
 from ocds_master_tables.models import (
     Address,
     Budget,
@@ -11,6 +12,7 @@ from ocds_master_tables.models import (
 from ocds_planning.models import Planning
 from ocds_release.models import Record, Release, Target
 from ocds_tender.models import Tender
+from ocds_awards.models import Award
 from openpyxl import worksheet
 
 # def compare_and_update(incoming_data, db_data, model):
@@ -32,7 +34,10 @@ def set_related_fields(db_instance, related_fields: list):
             to_delete = getattr(db_instance, field[0])
             setattr(db_instance, field[0], field[1])
             db_instance.save()
-            to_delete.delete()
+            try:
+                to_delete.delete()
+            except ProtectedError:
+                print("Object : %s cannot be deleted. It is referenced elsewhere." % to_delete)
     db_instance.save()
 
 def create_records(ws: worksheet):
@@ -66,20 +71,18 @@ def create_records(ws: worksheet):
             ]
             set_related_fields(record, related_fields)
         except Record.DoesNotExist:
-            record = Record(
+            record = Record.objects.create(
                 ocid=flat_object[key_map["ocid"]],
                 implementation_address=incoming_address,
                 target=incoming_target
             )
         try:
             record.compiled_release
-        except:
-            release = Release.objects.create(
+        except Release.DoesNotExist:
+            Release.objects.create(
                 ref_record=record,
                 tag=["planning"]
             )
-            release.save()
-        record.save()
 
 def create_parties(ws: worksheet):
     key_map = {
@@ -106,8 +109,11 @@ def create_parties(ws: worksheet):
             continue
         try:
             release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
-        except:
+        except Record.DoesNotExist:
             print("Record object with OCID : %s does not exist" % flat_object[key_map["record_ocid"]])
+            continue
+        except Release.DoesNotExist:
+            print("Record object with OCID : %s does not have a release" % flat_object[key_map["record_ocid"]])
             continue
         incoming_address = Address.objects.create(
             country_name=flat_object[key_map["address_country"]],
@@ -165,8 +171,11 @@ def create_plannings(ws : worksheet):
             continue
         try:
             release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
-        except:
+        except Record.DoesNotExist:
             print("Record object with OCID : %s does not exist" % flat_object[key_map["record_ocid"]])
+            continue
+        except Release.DoesNotExist:
+            print("Record object with OCID : %s does not have a release" % flat_object[key_map["record_ocid"]])
             continue
         incoming_amount = Value.objects.create(
             amount=flat_object[key_map["budget_amount"]],
@@ -231,18 +240,19 @@ def create_tenders(ws: worksheet):
             continue
         try:
             release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
-        except:
+            buyer_entity = Entity.objects.get(pk=flat_object[key_map["buyer"]])
+        except Record.DoesNotExist:
             print("Record object with OCID : %s does not exist" % flat_object[key_map["record_ocid"]])
             continue
-        try:
-            buyer_entity = Entity.objects.get(pk=flat_object[key_map["buyer"]])
-            print(type(buyer_entity))
-        except:
+        except Release.DoesNotExist:
+            print("Record object with OCID : %s does not have a release" % flat_object[key_map["record_ocid"]])
+            continue
+        except Entity.DoesNotExist:
             print("Buyer with id : %s does not exist" % flat_object[key_map["buyer"]])
             continue
         try:
             procuring_entity = Entity.objects.get(pk=flat_object[key_map["procuring_entity"]])
-        except:
+        except Entity.DoesNotExist:
             print("Entity with id : %s does not exist" % flat_object[key_map["procuring_entity"]])
             continue
 
@@ -305,16 +315,113 @@ def create_tenders(ws: worksheet):
         release.update_buyer_role()
         release.save()
 
+def create_tenderers(ws: worksheet):
+    key_map = {
+        "tender_id": 0,
+        "tenderer_id": 1
+    }
+    for flat_object in ws.iter_rows(min_row=4, values_only=True):
+        if not flat_object[0]:
+            continue
+        try:
+            tender = Tender.objects.get(pk=flat_object[key_map["tender_id"]])
+            tender_release = tender.release
+            incoming_tenderer = Entity.objects.get(pk=flat_object[key_map["tenderer_id"]])
+        except Tender.DoesNotExist:
+            print("Tender object with ID : %s does not exist" % flat_object[key_map["tender_id"]])
+            continue
+        except Release.DoesNotExist:
+            print("Release object with ID : %s does not refer to a release" % flat_object[key_map["tender_id"]])
+            continue
+        except Entity.DoesNotExist:
+            print("Entity object with ID : %s does not exist" % flat_object[key_map["tenderer_id"]])
+            continue
+        tender.tenderers.add(incoming_tenderer)
+        tender_release.parties.add(incoming_tenderer)
+        tender_release.add_role(incoming_tenderer, 'tenderer')
+
+def create_awards(ws: worksheet):
+    key_map = {
+        "record_ocid": 0,
+        "id": 1,
+        "title": 2,
+        "description": 3,
+        "status": 4,
+        "date": 5,
+        "value_amount": 6,
+        "value_currency": 7,
+        "contract_period_start": 12,
+        "contract_period_end": 13
+    }
+    for flat_object in ws.iter_rows(min_row=4, values_only=True):
+        if not flat_object[0]:
+            continue
+        incoming_value = Value.objects.create(
+            amount=flat_object[key_map["value_amount"]],
+            currency=flat_object[key_map["value_currency"]]
+        )
+        incoming_contract_period = Period.objects.create(
+            start_date=flat_object[key_map["contract_period_start"]],
+            end_date=flat_object[key_map["contract_period_end"]]
+        )
+        try:
+            release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
+        except Record.DoesNotExist:
+            print("Record object with OCID : %s does not exist" % flat_object[key_map["tender_id"]])
+            continue
+        except Release.DoesNotExist:
+            print("Record object with OCID : %s does not have a release" % flat_object[key_map["tender_id"]])
+            continue
+        try:
+            award = Award.objects.get(pk=flat_object[key_map["id"]])
+            related_fields = [
+                ('value', incoming_value),
+                ('contract_period', incoming_contract_period)
+            ]
+            set_related_fields(award, related_fields)
+        except Award.DoesNotExist:
+            award = Award(
+                pk=flat_object[key_map["id"]],
+                value=incoming_value,
+                contract_period=incoming_contract_period
+            )
+        award.title = flat_object[key_map["title"]]
+        award.description = flat_object[key_map["description"]]
+        award.status = flat_object[key_map["status"]]
+        award.date = flat_object[key_map["date"]]
+        award.release = release
+        award.save()
+
+def create_suppliers(ws: worksheet):
+    key_map = {
+        "tender_id": 0,
+        "supplier_id": 1
+    }
+    for flat_object in ws.iter_rows(min_row=4, values_only=True):
+        if not flat_object[0]:
+            continue
+        try:
+            award = Award.objects.get(pk=flat_object[key_map["tender_id"]])
+            award_release = award.release
+            incoming_supplier = Entity.objects.get(pk=flat_object[key_map["supplier_id"]])
+        except Award.DoesNotExist:
+            print("Award object with ID : %s does not exist" % flat_object[key_map["tender_id"]])
+            continue
+        except Release.DoesNotExist:
+            print("Release object with ID : %s does not refer to a release" % flat_object[key_map["tender_id"]])
+            continue
+        except Entity.DoesNotExist:
+            print("Entity object with ID : %s does not exist" % flat_object[key_map["supplier_id"]])
+            continue
+        award.suppliers.add(incoming_supplier)
+        award_release.parties.add(incoming_supplier)
+        award_release.add_role(incoming_supplier, 'supplier')
 
 def import_xls(file):
 
 
 
-    def create_tenderer(worksheet):
-        pass
 
-    def create_award(worksheet):
-        pass
 
     def create_contract(worksheet):
         pass
@@ -322,8 +429,6 @@ def import_xls(file):
     def create_implementation(worksheet):
         pass
 
-    def create_supplier(worksheet):
-        pass
 
     def create_transaction(worksheet):
         pass
