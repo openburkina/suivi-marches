@@ -14,7 +14,7 @@ from ocds_release.models import Record, Release, Target
 from ocds_tender.models import Tender
 from ocds_awards.models import Award
 from ocds_contracts.models import Contract
-from ocds_implementation.models import Implementation
+from ocds_implementation.models import Implementation, Transaction
 
 from openpyxl import worksheet
 
@@ -421,21 +421,21 @@ def create_awards(ws: worksheet):
 
 def create_suppliers(ws: worksheet):
     key_map = {
-        "tender_id": 0,
+        "award_id": 0,
         "supplier_id": 1
     }
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
-            award = Award.objects.get(pk=flat_object[key_map["tender_id"]])
+            award = Award.objects.get(pk=flat_object[key_map["award_id"]])
             award_release = award.release
             incoming_supplier = Entity.objects.get(pk=flat_object[key_map["supplier_id"]])
         except Award.DoesNotExist:
-            print("Award object with ID : %s does not exist" % flat_object[key_map["tender_id"]])
+            print("Award object with ID : %s does not exist" % flat_object[key_map["award_id"]])
             continue
         except Release.DoesNotExist:
-            print("Release object with ID : %s does not refer to a release" % flat_object[key_map["tender_id"]])
+            print("Award object with ID : %s does not refer to a release" % flat_object[key_map["award_id"]])
             continue
         except Entity.DoesNotExist:
             print("Entity object with ID : %s does not exist" % flat_object[key_map["supplier_id"]])
@@ -444,10 +444,56 @@ def create_suppliers(ws: worksheet):
         award_release.parties.add(incoming_supplier)
         award_release.add_role(incoming_supplier, 'supplier')
 
+def create_transactions(ws : worksheet):
+    key_map = {
+        "award_id": 0,
+        "transaction_id": 1,
+        "source": 2,
+        "uri": 3,
+        "date": 4,
+        "value_amount": 5,
+        "value_currency": 6,
+        "payer_id": 7,
+        "payee_id": 8
+    }
+    for flat_object in ws.iter_rows(min_row=4, values_only=True):
+        if not flat_object[0]:
+            continue
+        try:
+            implementation = Award.objects.get(pk=flat_object[key_map["award_id"]]).contract.implementation
+            payer = Entity.objects.get(pk=flat_object[key_map["payer_id"]])
+            payee = Entity.objects.get(pk=flat_object[key_map["payee_id"]])
+        except Award.DoesNotExist:
+            print("Award object with ID : %s does not exist" % flat_object[key_map["tender_id"]])
+            continue
+        except Entity.DoesNotExist:
+            print("Entity does not exist")
+            continue
+        incoming_value = Value.objects.create(
+            amount=flat_object[key_map["value_amount"]],
+            currency=flat_object[key_map["value_currency"]]
+        )
+        try:
+            transaction = Transaction.objects.get(pk=flat_object[key_map["transaction_id"]])
+            related_fields = [
+                ('value', incoming_value)
+            ]
+            set_related_fields(transaction, related_fields)
+        except Transaction.DoesNotExist:
+            transaction = Transaction(
+                pk=flat_object[key_map["transaction_id"]],
+                value=incoming_value
+            )
+        transaction.implementation = implementation
+        transaction.source = flat_object[key_map["source"]]
+        transaction.uri = flat_object[key_map["uri"]]
+        transaction.date = flat_object[key_map["date"]]
+        transaction.payer = payer
+        transaction.payee = payee
+        transaction.save()
+
 def import_xls(file):
 
-    def create_transaction(worksheet):
-        pass
 
     def create_document(worksheet):
         pass
