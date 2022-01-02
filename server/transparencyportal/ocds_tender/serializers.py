@@ -1,11 +1,14 @@
+from ocds_master_tables.serializers import (
+    AmendmentSerializer,
+    EntitySerializer,
+    ItemSerializer,
+    MilestoneSerializer,
+    PeriodSerializer,
+    ValueSerializer,
+)
+from ocds_tender.models import Tender, TenderDocument, TenderItem, TenderMilestone
 from rest_framework import serializers
-from ocds_tender.models import Buyer, Tender, TenderDocument, Tenderer, TenderItem, TenderMilestone
-from ocds_master_tables.serializers import AddressSerializer, AmendmentSerializer, ChangeSerializer, ClassificationSerializer, ContactPointSerializer, DocumentSerializer, EntitySerializer, IdentifierSerializer, EntityAdditionalIdentifierSerializer, ItemSerializer, ItemAdditionalClassificationSerializer, MilestoneSerializer, MilestoneDocumentSerializer, OrganizationSerializer, PeriodSerializer, UnitSerializer, ValueSerializer, ProjetSerializer, BudgetSerializer
 
-class BuyerSerializer(EntitySerializer):
-    class Meta:
-        model = Buyer
-        fields = '__all__'
 
 class TenderDocumentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,7 +16,7 @@ class TenderDocumentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TenderSerializer(serializers.ModelSerializer):
-    buyer = BuyerSerializer()
+    buyer = EntitySerializer()
     min_value = ValueSerializer()
     value = ValueSerializer()
     tender_period = PeriodSerializer()
@@ -29,12 +32,6 @@ class TenderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tender
-        fields = '__all__'
-
-
-class TendererSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tenderer
         fields = '__all__'
 
 

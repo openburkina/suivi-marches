@@ -3,36 +3,20 @@
         "model": "ocds_master_tables.address",
         "pk": 1,
         "fields": {
-            "country_name": "United Kingdom",
-            "region": "London",
-            "locality": "London",
-            "postal_code": "N11 1NP"
-        }
-    },
-    {
-        "model": "ocds_master_tables.classification",
-        "pk": 1,
-        "fields": {
-            "scheme": "CPV",
-            "description": "CPV Descriptions",
-            "uri": "http://cpv.data.ac.uk/code-45233130"
-        }
-    },
-    {
-        "model": "ocds_master_tables.classification",
-        "pk": 2,
-        "fields": {
-            "scheme": "GSIN",
-            "description": "Some classification descriptions.\r\n\r\nIt's ok to go inline",
-            "uri": "http://cpv.data.ac.uk/code-45233130"
+            "country_name": "Madagascar",
+            "region": "Analamanga",
+            "locality": "Tananarive",
+            "postal_code": "101",
+            "locality_longitude": "47.516667",
+            "locality_latitude": "-18.933333"
         }
     },
     {
         "model": "ocds_master_tables.contactpoint",
         "pk": 1,
         "fields": {
-            "name": "London Borough of Barnet",
-            "email": "r@ex.com",
+            "name": "Procurement Team",
+            "email": "procurement-team@example.com",
             "telephone": "12345 456 343",
             "fax_number": "12345 456 343",
             "url": "http://example.com/contact/"
@@ -42,19 +26,19 @@
         "model": "ocds_master_tables.contactpoint",
         "pk": 2,
         "fields": {
-            "name": "AnyLtd Contact",
-            "email": "anyltd@ex.com",
+            "name": "SG",
+            "email": "sg@example.com",
             "telephone": "12345 456 343",
             "fax_number": "12345 456 343",
-            "url": "http://any.ltd.example"
+            "url": "http://sg.example/contact/"
         }
     },
     {
         "model": "ocds_master_tables.contactpoint",
         "pk": 3,
         "fields": {
-            "name": "Road Construct contact",
-            "email": "rc@ex.com",
+            "name": "Calos contact",
+            "email": "cc@calos.example",
             "telephone": "12345 456 343",
             "fax_number": "12345 456 343",
             "url": "http://example.com/contact/"
@@ -65,26 +49,26 @@
         "pk": 1,
         "fields": {
             "document_type": "plannedProcurementNotice",
-            "title": "Area Wide Cycle Improvements - Procurement Plan",
-            "description": "The overall strategic framework for procurement to enhance cycle provision.",
-            "url": "http://example.com/opencontracting/documents/planning/highways/procurementPlan.pdf",
-            "date_published": "2021-12-12T14:20:43Z",
-            "date_modified": "2021-12-12T14:20:46Z",
+            "title": "Planification des travaux",
+            "description": "Travaux de réhabilitation des parcs nationaux",
+            "url": "http://example.com",
+            "date_published": "2021-12-30T18:18:43Z",
+            "date_modified": null,
             "document_format": "application/pdf",
             "language": "en"
         }
     },
     {
         "model": "ocds_master_tables.document",
-        "pk": 2,
+        "pk": 3,
         "fields": {
-            "document_type": "tenderNotice",
-            "title": "Consultation on cycle provision",
-            "description": "A consultation document inviting citizen input into cycle provision.",
-            "url": "http://example.com/consultations/cycle-provision/",
-            "date_published": "2021-12-12T14:27:40Z",
+            "document_type": "technicalSpecifications",
+            "title": "Spécifications techniques des constructions",
+            "description": "Ce document contient toutes les spécifications techniques des travaux",
+            "url": "http://example.com",
+            "date_published": "2021-12-30T19:01:20Z",
             "date_modified": null,
-            "document_format": "text/html",
+            "document_format": "application/pdf",
             "language": "en"
         }
     },
@@ -102,7 +86,7 @@
         "model": "ocds_master_tables.entity",
         "pk": 2,
         "fields": {
-            "name": "Any Corp",
+            "name": "Government of Madagascar",
             "identifier": 2,
             "address": 1,
             "contact_point": 2
@@ -112,17 +96,7 @@
         "model": "ocds_master_tables.entity",
         "pk": 3,
         "fields": {
-            "name": "Road contructor corp",
-            "identifier": 3,
-            "address": 1,
-            "contact_point": 3
-        }
-    },
-    {
-        "model": "ocds_master_tables.entity",
-        "pk": 4,
-        "fields": {
-            "name": "Road Construct Ltd",
+            "name": "Calos",
             "identifier": 3,
             "address": 1,
             "contact_point": 3
@@ -142,8 +116,8 @@
         "pk": 2,
         "fields": {
             "scheme": "GB-LAC",
-            "legal_name": "AnyCorp Ltd",
-            "uri": "http://www.anycorp.example"
+            "legal_name": "Madagascar",
+            "uri": "http://www.mada-gov.example"
         }
     },
     {
@@ -151,17 +125,17 @@
         "pk": 3,
         "fields": {
             "scheme": "GB-LAC",
-            "legal_name": "Road Construct",
-            "uri": "http://www.road-c.example"
+            "legal_name": "Calos",
+            "uri": "http://calos.example/uri"
         }
     },
     {
         "model": "ocds_master_tables.item",
         "pk": 1,
         "fields": {
-            "description": "Highway construction",
-            "classification": 1,
-            "quantity": 50,
+            "description": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).",
+            "classification": null,
+            "quantity": 250,
             "unit": 1
         }
     },
@@ -169,9 +143,9 @@
         "model": "ocds_master_tables.item",
         "pk": 2,
         "fields": {
-            "description": "Some Description about the item",
-            "classification": 2,
-            "quantity": 50,
+            "description": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).",
+            "classification": null,
+            "quantity": 2500,
             "unit": 2
         }
     },
@@ -179,9 +153,42 @@
         "model": "ocds_master_tables.milestone",
         "pk": 1,
         "fields": {
-            "title": "Consultation Period",
-            "description": "A consultation period is open for citizen input to shape the final plans.",
-            "due_date": "2015-04-15",
+            "title": "Phase 1",
+            "description": "Nettoyage des eaux",
+            "due_date": "2025-12-30",
+            "date_modified": null,
+            "status": "scheduled"
+        }
+    },
+    {
+        "model": "ocds_master_tables.milestone",
+        "pk": 2,
+        "fields": {
+            "title": "Phase 2",
+            "description": "Construction",
+            "due_date": "2027-12-30",
+            "date_modified": null,
+            "status": "scheduled"
+        }
+    },
+    {
+        "model": "ocds_master_tables.milestone",
+        "pk": 5,
+        "fields": {
+            "title": "Phase 1",
+            "description": "Nettoyage des eaux",
+            "due_date": "2025-12-30",
+            "date_modified": null,
+            "status": "scheduled"
+        }
+    },
+    {
+        "model": "ocds_master_tables.milestone",
+        "pk": 6,
+        "fields": {
+            "title": "Phase 2",
+            "description": "Construction",
+            "due_date": "2027-12-30",
             "date_modified": null,
             "status": "scheduled"
         }
@@ -190,88 +197,104 @@
         "model": "ocds_master_tables.period",
         "pk": 1,
         "fields": {
-            "start_date": "2021-12-12",
-            "end_date": "2021-12-22"
+            "start_date": "2021-12-30",
+            "end_date": "2022-12-30"
         }
     },
     {
         "model": "ocds_master_tables.period",
         "pk": 2,
         "fields": {
-            "start_date": "2021-12-12",
-            "end_date": "2022-03-12"
+            "start_date": "2021-12-30",
+            "end_date": "2022-12-30"
         }
     },
     {
         "model": "ocds_master_tables.period",
         "pk": 3,
         "fields": {
-            "start_date": "2022-05-12",
-            "end_date": "2022-10-12"
+            "start_date": "2022-12-30",
+            "end_date": "2023-12-30"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 4,
+        "fields": {
+            "start_date": "2027-12-30",
+            "end_date": "2029-12-30"
+        }
+    },
+    {
+        "model": "ocds_master_tables.period",
+        "pk": 5,
+        "fields": {
+            "start_date": "2027-12-30",
+            "end_date": "2029-12-30"
         }
     },
     {
         "model": "ocds_master_tables.unit",
         "pk": 1,
         "fields": {
-            "name": "Miles",
+            "name": "Kilomètre",
+            "value": 3
+        }
+    },
+    {
+        "model": "ocds_master_tables.unit",
+        "pk": 2,
+        "fields": {
+            "name": "Litres",
             "value": 4
         }
     },
     {
-        "model": "ocds_master_tables.unit",
-        "pk": 2,
-        "fields": {
-            "name": "Miles",
-            "value": 6
-        }
-    },
-    {
         "model": "ocds_master_tables.value",
         "pk": 1,
         "fields": {
-            "amount": "500000.00",
-            "currency": "GBP"
+            "amount": "250000.00",
+            "currency": "MGA"
         }
     },
     {
         "model": "ocds_master_tables.value",
         "pk": 2,
         "fields": {
-            "amount": "1000000.00",
-            "currency": "GBP"
+            "amount": "125000.00",
+            "currency": "MGA"
         }
     },
     {
         "model": "ocds_master_tables.value",
         "pk": 3,
         "fields": {
-            "amount": "2500000.00",
-            "currency": "GBP"
+            "amount": "10000.00",
+            "currency": "MGA"
         }
     },
     {
         "model": "ocds_master_tables.value",
         "pk": 4,
         "fields": {
-            "amount": "25000.00",
-            "currency": "GBP"
+            "amount": "1500.00",
+            "currency": "MGA"
         }
     },
     {
         "model": "ocds_master_tables.value",
         "pk": 5,
         "fields": {
-            "amount": "25000.00",
-            "currency": "GBP"
+            "amount": "125000.00",
+            "currency": "MGA"
         }
     },
     {
         "model": "ocds_master_tables.value",
         "pk": 6,
         "fields": {
-            "amount": "250000000.00",
-            "currency": "GBP"
+            "amount": "-25000.00",
+            "currency": "MGA"
         }
     },
     {
@@ -279,7 +302,7 @@
         "pk": 1,
         "fields": {
             "titre_projet": "SP001",
-            "description": "Some description about the given project."
+            "description": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes)."
         }
     },
     {
@@ -294,51 +317,30 @@
         }
     },
     {
+        "model": "ocds_release.target",
+        "pk": 1,
+        "fields": {
+            "name": "social"
+        }
+    },
+    {
         "model": "ocds_release.record",
         "pk": 1,
         "fields": {
-            "ocid": "a"
-        }
-    },
-    {
-        "model": "ocds_release.record",
-        "pk": 2,
-        "fields": {
-            "ocid": "ocds-213czf-000-00001"
-        }
-    },
-    {
-        "model": "ocds_release.publishedrelease",
-        "pk": 1,
-        "fields": {
-            "ref_record": 1,
-            "release": "{\"ocid\":\"a-1-2021-12-12 16:36:26.952338\",\"date\":\"2021-12-12T16:36:26.952338Z\",\"tag\":[\"tender\",\"planning\"],\"initiation_type\":\"tender\",\"buyer\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"planning\":{\"id\":1,\"raison\":\"Rationale about why this project has been planned\",\"budget\":1},\"tender\":{\"id\":1,\"buyer\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"min_value\":{\"id\":2,\"amount\":\"1000000.00\",\"currency\":\"GBP\"},\"value\":{\"id\":3,\"amount\":\"2500000.00\",\"currency\":\"GBP\"},\"tender_period\":{\"id\":1,\"start_date\":\"2021-12-12\",\"end_date\":\"2021-12-22\"},\"enquiry_period\":{\"id\":2,\"start_date\":\"2021-12-12\",\"end_date\":\"2022-03-12\"},\"award_period\":{\"id\":3,\"start_date\":\"2022-05-12\",\"end_date\":\"2022-10-12\"},\"procuring_entity\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"amendments\":[],\"items\":[{\"id\":1,\"classification\":{\"id\":1,\"scheme\":\"CPV\",\"description\":\"CPV Descriptions\",\"uri\":\"http://cpv.data.ac.uk/code-45233130\"},\"unit\":{\"id\":1,\"name\":\"Miles\",\"value\":4},\"description\":\"Highway construction\",\"quantity\":50}],\"documents\":[{\"id\":1,\"document_type\":\"tenderNotice\",\"title\":\"Consultation on cycle provision\",\"description\":\"A consultation document inviting citizen input into cycle provision.\",\"url\":\"http://example.com/consultations/cycle-provision/\",\"date_published\":\"2021-12-12T14:27:40Z\",\"date_modified\":null,\"document_format\":\"text/html\",\"language\":\"en\",\"tender\":1}],\"milestones\":[{\"id\":1,\"title\":\"Consultation Period\",\"description\":\"A consultation period is open for citizen input to shape the final plans.\",\"due_date\":\"2015-04-15\",\"date_modified\":null,\"status\":\"scheduled\"}],\"tenderers\":[{\"id\":2,\"identifier\":{\"id\":2,\"scheme\":\"GB-LAC\",\"legal_name\":\"AnyCorp Ltd\",\"uri\":\"http://www.anycorp.example\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":2,\"name\":\"AnyLtd Contact\",\"email\":\"anyltd@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://any.ltd.example\"},\"name\":\"Any Corp\"}],\"number_of_tenderer\":1,\"title\":\"Highway construction\",\"description\":\"Some description about higwhay construction project\",\"status\":\"planning\",\"procurement_method\":\"open\",\"procurement_method_rationale\":\"Reasons about why procurement method is set to open.\",\"award_criteria\":\"bestProposal\",\"award_criteria_details\":\"Details about why best proposal has been choosen for award criteria\",\"submission_method\":\"electronicSubmission\",\"submission_method_details\":\"\",\"has_enquiries\":false,\"eligibility_criteria\":\"\"},\"awards\":[{\"value\":{\"id\":5,\"amount\":\"25000.00\",\"currency\":\"GBP\"},\"contract_period\":null,\"suppliers\":[{\"id\":3,\"identifier\":{\"id\":3,\"scheme\":\"GB-LAC\",\"legal_name\":\"Road Construct\",\"uri\":\"http://www.road-c.example\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":3,\"name\":\"Road Construct contact\",\"email\":\"rc@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"Road contructor corp\"}],\"items\":[],\"documents\":[],\"amendments\":[],\"title\":\"Award for highway construction\",\"description\":null,\"status\":\"pending\",\"date\":\"2021-12-12T14:31:20Z\"}],\"contracts\":[],\"parties\":[]}"
-        }
-    },
-    {
-        "model": "ocds_release.publishedrelease",
-        "pk": 2,
-        "fields": {
-            "ref_record": 1,
-            "release": "{\"ocid\":\"a-2-2021-12-12 17:34:32.483137\",\"date\":\"2021-12-12T17:34:32.483137Z\",\"tag\":[\"tender\",\"planning\"],\"initiation_type\":\"tender\",\"buyer\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"planning\":{\"id\":1,\"raison\":\"Rationale about why this project has been planned\",\"budget\":1},\"tender\":{\"id\":1,\"buyer\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"min_value\":{\"id\":2,\"amount\":\"1000000.00\",\"currency\":\"GBP\"},\"value\":{\"id\":3,\"amount\":\"2500000.00\",\"currency\":\"GBP\"},\"tender_period\":{\"id\":1,\"start_date\":\"2021-12-12\",\"end_date\":\"2021-12-22\"},\"enquiry_period\":{\"id\":2,\"start_date\":\"2021-12-12\",\"end_date\":\"2022-03-12\"},\"award_period\":{\"id\":3,\"start_date\":\"2022-05-12\",\"end_date\":\"2022-10-12\"},\"procuring_entity\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"amendments\":[],\"items\":[{\"id\":1,\"classification\":{\"id\":1,\"scheme\":\"CPV\",\"description\":\"CPV Descriptions\",\"uri\":\"http://cpv.data.ac.uk/code-45233130\"},\"unit\":{\"id\":1,\"name\":\"Miles\",\"value\":4},\"description\":\"Highway construction\",\"quantity\":50}],\"documents\":[{\"id\":1,\"document_type\":\"tenderNotice\",\"title\":\"Consultation on cycle provision\",\"description\":\"A consultation document inviting citizen input into cycle provision.\",\"url\":\"http://example.com/consultations/cycle-provision/\",\"date_published\":\"2021-12-12T14:27:40Z\",\"date_modified\":null,\"document_format\":\"text/html\",\"language\":\"en\",\"tender\":1}],\"milestones\":[{\"id\":1,\"title\":\"Consultation Period\",\"description\":\"A consultation period is open for citizen input to shape the final plans.\",\"due_date\":\"2015-04-15\",\"date_modified\":null,\"status\":\"scheduled\"}],\"tenderers\":[{\"id\":2,\"identifier\":{\"id\":2,\"scheme\":\"GB-LAC\",\"legal_name\":\"AnyCorp Ltd\",\"uri\":\"http://www.anycorp.example\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":2,\"name\":\"AnyLtd Contact\",\"email\":\"anyltd@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://any.ltd.example\"},\"name\":\"Any Corp\"}],\"number_of_tenderer\":1,\"title\":\"Highway construction\",\"description\":\"Some description about higwhay construction project\",\"status\":\"planning\",\"procurement_method\":\"open\",\"procurement_method_rationale\":\"Reasons about why procurement method is set to open.\",\"award_criteria\":\"bestProposal\",\"award_criteria_details\":\"Details about why best proposal has been choosen for award criteria\",\"submission_method\":\"electronicSubmission\",\"submission_method_details\":\"\",\"has_enquiries\":false,\"eligibility_criteria\":\"\"},\"awards\":[{\"value\":{\"id\":5,\"amount\":\"25000.00\",\"currency\":\"GBP\"},\"contract_period\":null,\"suppliers\":[{\"id\":3,\"identifier\":{\"id\":3,\"scheme\":\"GB-LAC\",\"legal_name\":\"Road Construct\",\"uri\":\"http://www.road-c.example\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":3,\"name\":\"Road Construct contact\",\"email\":\"rc@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"Road contructor corp\"}],\"items\":[],\"documents\":[],\"amendments\":[],\"title\":\"Award for highway construction\",\"description\":null,\"status\":\"pending\",\"date\":\"2021-12-12T14:31:20Z\"}],\"contracts\":[],\"parties\":[]}"
-        }
-    },
-    {
-        "model": "ocds_release.publishedrelease",
-        "pk": 3,
-        "fields": {
-            "ref_record": 1,
-            "release": "{\"ocid\":\"a-3-2021-12-12 17:35:36.683975\",\"date\":\"2021-12-12T17:35:36.683975Z\",\"tag\":[\"tender\",\"planning\"],\"initiation_type\":\"tender\",\"buyer\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"planning\":{\"id\":1,\"raison\":\"Rationale about why this project has been planned\",\"budget\":1},\"tender\":{\"id\":1,\"buyer\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"min_value\":{\"id\":2,\"amount\":\"1000000.00\",\"currency\":\"GBP\"},\"value\":{\"id\":3,\"amount\":\"2500000.00\",\"currency\":\"GBP\"},\"tender_period\":{\"id\":1,\"start_date\":\"2021-12-12\",\"end_date\":\"2021-12-22\"},\"enquiry_period\":{\"id\":2,\"start_date\":\"2021-12-12\",\"end_date\":\"2022-03-12\"},\"award_period\":{\"id\":3,\"start_date\":\"2022-05-12\",\"end_date\":\"2022-10-12\"},\"procuring_entity\":{\"id\":1,\"identifier\":{\"id\":1,\"scheme\":\"GB-LAC\",\"legal_name\":\"London Borough of Barnet\",\"uri\":\"http://www.barnet.gov.uk/\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":1,\"name\":\"London Borough of Barnet\",\"email\":\"r@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"London Borough of Barnet\"},\"amendments\":[],\"items\":[{\"id\":1,\"classification\":{\"id\":1,\"scheme\":\"CPV\",\"description\":\"CPV Descriptions\",\"uri\":\"http://cpv.data.ac.uk/code-45233130\"},\"unit\":{\"id\":1,\"name\":\"Miles\",\"value\":4},\"description\":\"Highway construction\",\"quantity\":50}],\"documents\":[{\"id\":1,\"document_type\":\"tenderNotice\",\"title\":\"Consultation on cycle provision\",\"description\":\"A consultation document inviting citizen input into cycle provision.\",\"url\":\"http://example.com/consultations/cycle-provision/\",\"date_published\":\"2021-12-12T14:27:40Z\",\"date_modified\":null,\"document_format\":\"text/html\",\"language\":\"en\",\"tender\":1}],\"milestones\":[{\"id\":1,\"title\":\"Consultation Period\",\"description\":\"A consultation period is open for citizen input to shape the final plans.\",\"due_date\":\"2015-04-15\",\"date_modified\":null,\"status\":\"scheduled\"}],\"tenderers\":[{\"id\":2,\"identifier\":{\"id\":2,\"scheme\":\"GB-LAC\",\"legal_name\":\"AnyCorp Ltd\",\"uri\":\"http://www.anycorp.example\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":2,\"name\":\"AnyLtd Contact\",\"email\":\"anyltd@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://any.ltd.example\"},\"name\":\"Any Corp\"}],\"number_of_tenderer\":1,\"title\":\"Highway construction\",\"description\":\"Some description about higwhay construction project\",\"status\":\"planning\",\"procurement_method\":\"open\",\"procurement_method_rationale\":\"Reasons about why procurement method is set to open.\",\"award_criteria\":\"bestProposal\",\"award_criteria_details\":\"Details about why best proposal has been choosen for award criteria\",\"submission_method\":\"electronicSubmission\",\"submission_method_details\":\"\",\"has_enquiries\":false,\"eligibility_criteria\":\"\"},\"awards\":[{\"value\":{\"id\":5,\"amount\":\"25000.00\",\"currency\":\"GBP\"},\"contract_period\":null,\"suppliers\":[{\"id\":3,\"identifier\":{\"id\":3,\"scheme\":\"GB-LAC\",\"legal_name\":\"Road Construct\",\"uri\":\"http://www.road-c.example\"},\"address\":{\"id\":1,\"country_name\":\"United Kingdom\",\"region\":\"London\",\"locality\":\"London\",\"postal_code\":\"N11 1NP\"},\"contact_point\":{\"id\":3,\"name\":\"Road Construct contact\",\"email\":\"rc@ex.com\",\"telephone\":\"12345 456 343\",\"fax_number\":\"12345 456 343\",\"url\":\"http://example.com/contact/\"},\"name\":\"Road contructor corp\"}],\"items\":[],\"documents\":[],\"amendments\":[],\"title\":\"Award for highway construction\",\"description\":null,\"status\":\"pending\",\"date\":\"2021-12-12T14:31:20Z\"}],\"contracts\":[],\"parties\":[]}"
+            "ocid": "ocds-261",
+            "target": 1,
+            "implementation_address": 1,
+            "implementation_value": 1
         }
     },
     {
         "model": "ocds_release.release",
-        "pk": 2,
+        "pk": 1,
         "fields": {
             "ref_record": 1,
-            "ocid": "a-1-2021-12-12 12:57:16.803420+00:00",
-            "date": "2021-12-12T14:31:44.817Z",
-            "tag": "[\"planning\", \"tender\"]",
+            "ocid": "ocds-261-1-2021-12-30 18:34:47.487638+00:00",
+            "date": "2021-12-30T18:57:21.485Z",
+            "tag": "[\"planning\"]",
             "initiation_type": "tender",
             "buyer": 1,
             "planning": 1,
@@ -346,45 +348,37 @@
         }
     },
     {
-        "model": "ocds_release.release",
-        "pk": 3,
-        "fields": {
-            "ref_record": 2,
-            "ocid": "ocds-213czf-000-00001-1-2021-12-13 08:03:12.035763+00:00",
-            "date": "2021-12-13T08:11:12.064Z",
-            "tag": "[\"planning\", \"tender\", \"award\", \"contract\", \"implementation\", \"contractTermination\"]",
-            "initiation_type": "tender",
-            "buyer": 1,
-            "planning": null,
-            "tender": null
-        }
-    },
-    {
-        "model": "ocds_release.releaseaward",
+        "model": "ocds_release.role",
         "pk": 1,
         "fields": {
-            "ref_release": 2
+            "release": 1,
+            "entity": 1,
+            "role": "[\"buyer\"]"
         }
     },
     {
-        "model": "ocds_release.releaseaward",
+        "model": "ocds_release.role",
+        "pk": 2,
+        "fields": {
+            "release": 1,
+            "entity": 2,
+            "role": "[\"procuringEntity\"]"
+        }
+    },
+    {
+        "model": "ocds_release.role",
         "pk": 3,
         "fields": {
-            "ref_release": 3
-        }
-    },
-    {
-        "model": "ocds_release.releasecontract",
-        "pk": 1,
-        "fields": {
-            "ref_release": 3
+            "release": 1,
+            "entity": 3,
+            "role": "[\"supplier\", \"tenderer\", \"interestedParty\"]"
         }
     },
     {
         "model": "ocds_planning.planning",
-        " pk": 1,
+        "pk": 1,
         "fields": {
-            "raison": "Rationale about why this project has been planned",
+            "raison": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).",
             "budget": 1
         }
     },
@@ -396,32 +390,30 @@
         }
     },
     {
-        "model": "ocds_tender.buyer",
-        "pk": 1,
-        "fields": {}
-    },
-    {
         "model": "ocds_tender.tender",
         "pk": 1,
         "fields": {
             "buyer": 1,
-            "title": "Highway construction",
-            "description": "Some description about higwhay construction project",
+            "title": "Highway maintenance",
+            "description": "Budget allocation for highway maintenance, aligned with 2015 strategic plan.",
             "status": "planning",
             "procurement_method": "open",
-            "procurement_method_rationale": "Reasons about why procurement method is set to open.",
-            "award_criteria": "bestProposal",
-            "award_criteria_details": "Details about why best proposal has been choosen for award criteria",
+            "procurement_method_rationale": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).",
+            "award_criteria": "lowestCost",
+            "award_criteria_details": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).",
             "submission_method": "electronicSubmission",
-            "submission_method_details": "",
+            "submission_method_details": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).",
             "min_value": 2,
-            "value": 3,
+            "value": 1,
             "tender_period": 1,
             "enquiry_period": 2,
             "has_enquiries": false,
-            "eligibility_criteria": "",
+            "eligibility_criteria": "On sait depuis longtemps que travailler avec du texte lisible et contenant du sens est source de distractions, et empêche de se concentrer sur la mise en page elle-même. L'avantage du Lorem Ipsum sur un texte générique comme 'Du texte. Du texte. Du texte.' est qu'il possède une distribution de lettres plus ou moins normale, et en tout cas comparable avec celle du français standard. De nombreuses suites logicielles de mise en page ou éditeurs de sites Web ont fait du Lorem Ipsum leur faux texte par défaut, et une recherche pour 'Lorem Ipsum' vous conduira vers de nombreux sites qui n'en sont encore qu'à leur phase de construction. Plusieurs versions sont apparues avec le temps, parfois par accident, souvent intentionnellement (histoire d'y rajouter de petits clins d'oeil, voire des phrases embarassantes).",
             "award_period": 3,
-            "procuring_entity": 1
+            "procuring_entity": 2,
+            "tenderers": [
+                3
+            ]
         }
     },
     {
@@ -432,7 +424,7 @@
         }
     },
     {
-        "model": "ocds_tender.tenderdocument",
+        "model": "ocds_tender.tenderitem",
         "pk": 2,
         "fields": {
             "tender": 1
@@ -446,80 +438,93 @@
         }
     },
     {
-        "model": "ocds_tender.tenderer",
+        "model": "ocds_tender.tendermilestone",
         "pk": 2,
         "fields": {
-            "ref_tender": 1
+            "tender": 1
         }
     },
     {
         "model": "ocds_awards.award",
         "pk": 1,
         "fields": {
+            "release": 1,
             "title": "Award for highway construction",
-            "description": null,
+            "description": "Calos corp has been awarded for highway construction",
             "status": "pending",
-            "date": "2021-12-12T14:31:20Z",
-            "value": 5,
-            "contract_period": null
-        }
-    },
-    {
-        "model": "ocds_awards.award",
-        "pk": 2,
-        "fields": {
-            "title": "A title",
-            "description": "Budget allocation for highway maintenance, aligned with 2015 strategic plan.",
-            "status": "active",
-            "date": "2021-12-13T08:00:17Z",
-            "value": null,
-            "contract_period": null
-        }
-    },
-    {
-        "model": "ocds_awards.award",
-        "pk": 3,
-        "fields": {
-            "title": "test_award",
-            "description": null,
-            "status": null,
-            "date": null,
-            "value": null,
-            "contract_period": null
-        }
-    },
-    {
-        "model": "ocds_awards.supplier",
-        "pk": 3,
-        "fields": {
-            "ref_award": 1
-        }
-    },
-    {
-        "model": "ocds_awards.supplier",
-        "pk": 4,
-        "fields": {
-            "ref_award": 2
-        }
-    },
-    {
-        "model": "ocds_awards.awarditem",
-        "pk": 2,
-        "fields": {
-            "ref_award": 2
+            "date": "2021-12-30T18:33:01Z",
+            "value": 2,
+            "contract_period": 4,
+            "suppliers": [
+                3
+            ]
         }
     },
     {
         "model": "ocds_contracts.contract",
         "pk": 1,
         "fields": {
-            "ref_award": 2,
-            "title": "Some contract title",
-            "description": "Some description about the contract",
-            "status": "active",
-            "period": null,
-            "date_signed": "2021-12-13T08:03:05Z",
-            "value": null
+            "ref_award": 1,
+            "title": "Highway Construction contract",
+            "description": "Contract between Calos corp and Buyer",
+            "status": "pending",
+            "period": 5,
+            "date_signed": "2021-12-30T18:34:37Z",
+            "value": 2
+        }
+    },
+    {
+        "model": "ocds_implementation.implementation",
+        "pk": 2,
+        "fields": {
+            "contract": 1
+        }
+    },
+    {
+        "model": "ocds_implementation.transaction",
+        "pk": 3,
+        "fields": {
+            "implementation": 2,
+            "source": "http://source.transaction.example",
+            "date": "2021-12-30T18:58:45Z",
+            "value": 5,
+            "payer": 1,
+            "payee": 3,
+            "uri": "http://source.transaction.example/spends/1"
+        }
+    },
+    {
+        "model": "ocds_implementation.transaction",
+        "pk": 4,
+        "fields": {
+            "implementation": 2,
+            "source": "http://source.transaction.example",
+            "date": "2021-12-30T18:59:18Z",
+            "value": 6,
+            "payer": 3,
+            "payee": 2,
+            "uri": "http://source.transaction.example/spends/2"
+        }
+    },
+    {
+        "model": "ocds_implementation.implementationmilestone",
+        "pk": 5,
+        "fields": {
+            "ref_implementation": 2
+        }
+    },
+    {
+        "model": "ocds_implementation.implementationmilestone",
+        "pk": 6,
+        "fields": {
+            "ref_implementation": 2
+        }
+    },
+    {
+        "model": "ocds_implementation.implementationdocument",
+        "pk": 3,
+        "fields": {
+            "ref_implementation": 2
         }
     }
 ]
