@@ -7,6 +7,8 @@ from ocds_master_tables.serializers import (
     PeriodSerializer,
     ValueSerializer,
 )
+from ocds_contracts.serializers import ContractSerializer
+
 from rest_framework import serializers
 
 
@@ -17,6 +19,7 @@ class AwardSerializer(serializers.ModelSerializer):
     items = ItemSerializer(many=True)
     documents = DocumentSerializer(many=True)
     amendments = AmendmentSerializer(many=True)
+    contract = ContractSerializer()
 
     class Meta:
         model = Award

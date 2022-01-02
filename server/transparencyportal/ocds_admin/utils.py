@@ -2,11 +2,14 @@ from django.db.models.deletion import ProtectedError
 from ocds_master_tables.models import (
     Address,
     Budget,
+    Classification,
     ContactPoint,
     Entity,
     Identifier,
+    Milestone,
     Period,
     Projet,
+    Unit,
     Value,
 )
 from ocds_planning.models import Planning
@@ -17,14 +20,6 @@ from ocds_contracts.models import Contract
 from ocds_implementation.models import Implementation, Transaction
 
 from openpyxl import worksheet
-
-# def compare_and_update(incoming_data, db_data, model):
-#     if not isinstance(incoming_data, model) or not isinstance(db_data, model):
-#         raise Exception('Data instances must be instance of %s' % model)
-#     for (field_name, value) in incoming_data.__dict__.items():
-#         if not (field_name == '_state' or field_name == 'id'):
-#             setattr(db_data, field_name, value)
-#     db_data.save()
 
 def set_related_fields(db_instance, related_fields: list):
     """
@@ -386,22 +381,24 @@ def create_awards(ws: worksheet):
                 ('contract_period', incoming_contract_period)
             ]
             set_related_fields(award, related_fields)
-            contract = award.contract
-            contract.value = award.value
-            contract.period = award.contract_period
-            implementation = contract.implementation
         except Award.DoesNotExist:
-            award = Award(
+            award = Award.objects.create(
                 pk=flat_object[key_map["id"]],
                 value=incoming_value,
                 contract_period=incoming_contract_period
             )
+        try:
+            contract = award.contract
+            contract.value = award.value
+            contract.period = award.contract_period
         except Contract.DoesNotExist:
-            contract = Contract(
+            contract = Contract.objects.create(
                 ref_award=award,
                 period=incoming_contract_period,
                 value=incoming_value
             )
+        try:
+            implementation = contract.implementation
         except Implementation.DoesNotExist:
             implementation = Implementation(
                 contract = contract
@@ -492,14 +489,168 @@ def create_transactions(ws : worksheet):
         transaction.payee = payee
         transaction.save()
 
-def import_xls(file):
+def create_items(ws : worksheet):
+    key_map = {
+        "item_id": 0,
+        "step_name": 1,
+        "ref_step": 2,
+        "description": 3,
+        "quantity": 4,
+        "unit_name": 5,
+        "unit_value_amount": 6,
+        "unit_value_currency": 7,
+        "classification_scheme": 8,
+        "classification_description": 9,
+        "classification_uri": 10
+    }
+    for flat_object in ws.iter_rows(min_row=4, values_only=True):
+        if not flat_object[0]:
+            continue
+        try:
+            step_name = flat_object[key_map["step_name"]]
+            if step_name == 'tender':
+                ref_object = Tender.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'award':
+                ref_object = Award.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'contract':
+                ref_object = Contract.objects.get(pk=flat_object[key_map["ref_step"]])
+        except:
+            print("%s object with ID : %s does not exist" % (flat_object[key_map["step_name"]], flat_object[key_map["ref_step"]]))
+            continue
+        items = ref_object.items
+        incoming_value = Value.objects.create(
+            amount=flat_object[key_map["unit_value_amount"]],
+            currency=flat_object[key_map["unit_value_currency"]]
+        )
+        incoming_unit = Unit.objects.create(
+            name=flat_object[key_map["unit_name"]],
+            value=incoming_value
+        )
+        incoming_classification = Classification.objects.create(
+            scheme=flat_object[key_map["classification_scheme"]],
+            description=flat_object[key_map["classification_description"]],
+            uri=flat_object[key_map["classification_uri"]]
+        )
+        try:
+            item = items.get(pk=flat_object[key_map["item_id"]])
+            related_fields = [
+                ('classification', incoming_classification),
+                ('unit', incoming_unit),
+            ]
+            set_related_fields(item, related_fields)
+            item.quantity = flat_object[key_map["quantity"]]
+            item.description = flat_object[key_map["description"]]
+            item.save()
+        except:
+            item = items.create(
+                pk=flat_object[key_map["item_id"]],
+                quantity = flat_object[key_map["quantity"]],
+                description = flat_object[key_map["description"]],
+                classification=incoming_classification,
+                unit=incoming_unit
+            )
 
+def create_milestones(ws : worksheet):
+    key_map = {
+        "milestone_id": 0,
+        "step_name": 1,
+        "ref_step": 2,
+        "title": 3,
+        "description": 4,
+        "due_date": 5,
+        "date_modified": 6,
+        "status": 7
+    }
+    for flat_object in ws.iter_rows(min_row=4, values_only=True):
+        if not flat_object[0]:
+            continue
+        try:
+            step_name = flat_object[key_map["step_name"]]
+            if step_name == 'planning':
+                ref_object = Planning.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'tender':
+                ref_object = Tender.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'contract':
+                ref_object = Contract.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'implementation':
+                ref_object = Implementation.objects.get(pk=flat_object[key_map["ref_step"]])
+        except:
+            print("%s object with ID : %s does not exist" % (flat_object[key_map["step_name"]], flat_object[key_map["ref_step"]]))
+            continue
+        milestones = ref_object.milestones
+        try:
+            milestone = milestones.get(pk=flat_object[key_map["milestone_id"]])
+            milestone.title = flat_object[key_map["title"]]
+            milestone.description = flat_object[key_map["description"]]
+            milestone.due_date = flat_object[key_map["due_date"]]
+            milestone.date_modified = flat_object[key_map["date_modified"]]
+            milestone.status = flat_object[key_map["status"]]
+            milestone.save()
+        except:
+            milestone = milestones.create(
+                pk=flat_object[key_map["milestone_id"]],
+                title = flat_object[key_map["title"]],
+                description = flat_object[key_map["description"]],
+                due_date = flat_object[key_map["due_date"]],
+                date_modified = flat_object[key_map["date_modified"]],
+                status = flat_object[key_map["status"]]
+            )
 
-    def create_document(worksheet):
-        pass
-
-    def create_item(worksheet):
-        pass
-
-    def create_milestone(worksheet):
-        pass
+def create_documents(ws: worksheet):
+    key_map = {
+        "document_id": 0,
+        "step_name": 1,
+        "ref_step": 2,
+        "type": 3,
+        "title": 4,
+        "description": 5,
+        "url": 6,
+        "date_published": 7,
+        "date_modified": 8,
+        "format": 9,
+        "language": 10
+    }
+    for flat_object in ws.iter_rows(min_row=4, values_only=True):
+        if not flat_object[0]:
+            continue
+        try:
+            step_name = flat_object[key_map["step_name"]]
+            if step_name == 'planning':
+                ref_object = Planning.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'tender':
+                ref_object = Tender.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'award':
+                ref_object = Award.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'contract':
+                ref_object = Contract.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'implementation':
+                ref_object = Implementation.objects.get(pk=flat_object[key_map["ref_step"]])
+            if step_name == 'milestone':
+                ref_object = Milestone.objects.get(pk=flat_object[key_map["ref_step"]])
+        except:
+            print("%s object with ID : %s does not exist" % (flat_object[key_map["step_name"]], flat_object[key_map["ref_step"]]))
+            continue
+        documents = ref_object.documents
+        try:
+            document = documents.get(pk=flat_object[key_map["document_id"]])
+            document.document_type = flat_object[key_map["type"]]
+            document.title = flat_object[key_map["title"]]
+            document.description = flat_object[key_map["description"]]
+            document.url = flat_object[key_map["url"]]
+            document.date_published = flat_object[key_map["date_published"]]
+            document.date_modified = flat_object[key_map["date_modified"]]
+            document.document_format = flat_object[key_map["format"]]
+            document.language = flat_object[key_map["language"]]
+            document.save()
+        except:
+            document = documents.create(
+                pk = flat_object[key_map["document_id"]],
+                document_type = flat_object[key_map["type"]],
+                title = flat_object[key_map["title"]],
+                description = flat_object[key_map["description"]],
+                url = flat_object[key_map["url"]],
+                date_published = flat_object[key_map["date_published"]],
+                date_modified = flat_object[key_map["date_modified"]],
+                document_format = flat_object[key_map["format"]],
+                language = flat_object[key_map["language"]]
+            )

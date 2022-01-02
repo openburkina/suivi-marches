@@ -33,7 +33,7 @@ class TargetViewSet(viewsets.ModelViewSet):
 
 class BuyerList(APIView):
     def get(self, request):
-        buyers = Entity.objects.filter(role__name__contains=["buyer"])
+        buyers = Entity.objects.filter(role__role__contains=["buyer"])
         data = EntitySerializer(buyers, many=True).data
         return Response(data)
 
