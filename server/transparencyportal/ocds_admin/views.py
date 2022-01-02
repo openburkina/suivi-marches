@@ -20,13 +20,13 @@ def import_data_view(request):
     # plannings = wb.worksheets[3]
     # tenders = wb.worksheets[4]
     # tenderers = wb.worksheets[5]
-    # awards = wb.worksheets[6]
-    suppliers = wb.worksheets[7]
+    awards = wb.worksheets[6]
+    # suppliers = wb.worksheets[7]
     # create_records(records)
     # create_parties(parties)
     # create_plannings(plannings)
     # create_tenders(tenders)
     # create_tenderers(tenderers)
-    # create_awards(awards)
-    create_suppliers(suppliers)
+    create_awards(awards)
+    # create_suppliers(suppliers)
     return HttpResponse("Import done")

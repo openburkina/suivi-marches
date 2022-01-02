@@ -13,6 +13,9 @@ from ocds_planning.models import Planning
 from ocds_release.models import Record, Release, Target
 from ocds_tender.models import Tender
 from ocds_awards.models import Award
+from ocds_contracts.models import Contract
+from ocds_implementation.models import Implementation
+
 from openpyxl import worksheet
 
 # def compare_and_update(incoming_data, db_data, model):
@@ -350,6 +353,10 @@ def create_awards(ws: worksheet):
         "date": 5,
         "value_amount": 6,
         "value_currency": 7,
+        "contract_title": 8,
+        "contract_description": 9,
+        "contract_status": 10,
+        "contract_date": 11,
         "contract_period_start": 12,
         "contract_period_end": 13
     }
@@ -379,11 +386,25 @@ def create_awards(ws: worksheet):
                 ('contract_period', incoming_contract_period)
             ]
             set_related_fields(award, related_fields)
+            contract = award.contract
+            contract.value = award.value
+            contract.period = award.contract_period
+            implementation = contract.implementation
         except Award.DoesNotExist:
             award = Award(
                 pk=flat_object[key_map["id"]],
                 value=incoming_value,
                 contract_period=incoming_contract_period
+            )
+        except Contract.DoesNotExist:
+            contract = Contract(
+                ref_award=award,
+                period=incoming_contract_period,
+                value=incoming_value
+            )
+        except Implementation.DoesNotExist:
+            implementation = Implementation(
+                contract = contract
             )
         award.title = flat_object[key_map["title"]]
         award.description = flat_object[key_map["description"]]
@@ -391,6 +412,12 @@ def create_awards(ws: worksheet):
         award.date = flat_object[key_map["date"]]
         award.release = release
         award.save()
+        contract.title = flat_object[key_map["contract_title"]]
+        contract.description = flat_object[key_map["contract_description"]]
+        contract.status = flat_object[key_map["contract_status"]]
+        contract.date_signed = flat_object[key_map["contract_date"]]
+        contract.save()
+        implementation.save()
 
 def create_suppliers(ws: worksheet):
     key_map = {
@@ -418,17 +445,6 @@ def create_suppliers(ws: worksheet):
         award_release.add_role(incoming_supplier, 'supplier')
 
 def import_xls(file):
-
-
-
-
-
-    def create_contract(worksheet):
-        pass
-
-    def create_implementation(worksheet):
-        pass
-
 
     def create_transaction(worksheet):
         pass
