@@ -36,5 +36,4 @@ urlpatterns += [
     path("records/", include(record_urlpatterns)),
     path("releases/", include(release_urlpatterns)),
     path('docs/', include("api_doc.urls")),
-    path('import/', include("ocds_admin.urls"))
 ]

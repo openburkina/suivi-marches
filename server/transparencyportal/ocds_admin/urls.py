@@ -1,6 +1,7 @@
 from django.urls import path
-from ocds_admin.views import import_data_view
+from ocds_admin.views import index, UploadFileView
 
 urlpatterns = [
-    path("perform/", import_data_view, name="import-data")
+    path("", index, name="ocds-admin-index"),
+    path("import/", UploadFileView.as_view(), name="import-data")
 ]

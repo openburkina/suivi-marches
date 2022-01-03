@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="py-5">
+  <a href="{% url 'ocds-admin-index' %}">&#60 Retour</a>
+  <form class="form-horizontal py-3" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button type="submit" class="btn btn-primary">Importer</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

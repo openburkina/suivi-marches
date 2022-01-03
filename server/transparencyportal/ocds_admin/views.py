@@ -1,7 +1,11 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.views import View
+from django.contrib import messages
+
 from openpyxl import load_workbook
 
+from .forms import UploadFileForm
 from .utils import (
     create_parties,
     create_plannings,
@@ -16,9 +20,26 @@ from .utils import (
     create_documents
 )
 
+def index(request):
+    return render(request, 'ocds_admin/index.html')
 
-def import_data_view(request):
-    wb = load_workbook("/app/transparencyportal/upload/imports/local_test.xlsx")
+class UploadFileView(View):
+    def get(self, request):
+        return render(request, 'ocds_admin/upload_file.html', {'form': UploadFileForm()})
+
+    def post(self, request):
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = request.FILES['file'].file
+            import_data(file)
+            messages.success(request, message="Importation des données effectuée avec succès")
+        else:
+            messages.warning(request, message="Vérifiez que le fichier est bien de type xlsx")
+        return render(request, 'ocds_admin/upload_file.html', {'form': form})
+
+def import_data(filename):
+    wb = load_workbook(filename)
+    output_message = ""
     records = wb.worksheets[1]
     parties = wb.worksheets[2]
     plannings = wb.worksheets[3]
@@ -41,4 +62,4 @@ def import_data_view(request):
     create_items(items)
     create_milestones(milestones)
     create_documents(documents)
-    return HttpResponse("Import done")
+    return output_message
