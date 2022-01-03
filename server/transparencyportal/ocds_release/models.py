@@ -13,7 +13,7 @@ class Target(models.Model):
     name = models.CharField(max_length=255)
 
 class Record(models.Model):
-    ocid = models.CharField(max_length=255)
+    ocid = models.CharField(max_length=255, unique=True)
     target = models.ForeignKey(Target, on_delete=models.PROTECT, null=True)
     implementation_address = models.ForeignKey(Address, on_delete=models.PROTECT, null=True)
     implementation_value = models.ForeignKey(Value, on_delete=models.PROTECT, null=True)
@@ -36,7 +36,7 @@ class Role(models.Model):
 
 class Release(models.Model):
     ref_record = models.OneToOneField(Record, related_name='compiled_release', on_delete=models.DO_NOTHING, null=True, blank=True)
-    ocid = models.CharField(max_length=255, editable=False)
+    ocid = models.CharField(max_length=255, editable=False, unique=True)
     date = models.DateTimeField(auto_now_add=True)
     tag = ChoiceArrayField(models.CharField(max_length=255, choices=RELEASE_TAG_CHOICES))
     initiation_type = models.CharField(max_length=255, default='tender', choices=INITIATION_TYPE)

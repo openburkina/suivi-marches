@@ -19,7 +19,17 @@ from ocds_awards.models import Award
 from ocds_contracts.models import Contract
 from ocds_implementation.models import Implementation, Transaction
 
-from openpyxl import worksheet
+from openpyxl.worksheet import worksheet
+
+def match_values(db_instance, local_instance):
+    if not type(db_instance) == type(local_instance):
+        raise Exception('Data instances must be instance of the same model')
+    for (field_name, value) in local_instance.__dict__.items():
+        if not (field_name == '_state' or field_name == 'id'):
+            old_value = getattr(db_instance, field_name)
+            if str(old_value) != str(value):
+                setattr(db_instance, field_name, value)
+                db_instance.save()
 
 def set_related_fields(db_instance, related_fields: list):
     """
@@ -27,16 +37,64 @@ def set_related_fields(db_instance, related_fields: list):
     """
     for field in related_fields:
         if not getattr(db_instance, field[0]):
+            field[1].save()
             setattr(db_instance, field[0], field[1])
         else:
-            to_delete = getattr(db_instance, field[0])
-            setattr(db_instance, field[0], field[1])
-            db_instance.save()
-            try:
-                to_delete.delete()
-            except ProtectedError:
-                print("Object : %s cannot be deleted. It is referenced elsewhere." % to_delete)
+            match_values(getattr(db_instance, field[0]), field[1])
     db_instance.save()
+
+def get_engaged_objects(model, ws, col_index, lookup_field, select_related_fields=(), prefetch_related_fields=()):
+    engaged_objects = {}
+    for col in ws.iter_cols(min_row=4, min_col=col_index, max_col=col_index, values_only=True):
+        for identifier in col:
+            if not identifier:
+                continue
+            try:
+                engaged_objects[identifier]
+                continue
+            except:
+                try:
+                    objs = model.objects
+                    if select_related_fields:
+                        objs = objs.select_related(select_related_fields)
+                    if prefetch_related_fields:
+                        objs = objs.prefetch_related(prefetch_related_fields)
+                    engaged_objects[identifier] = objs.get(**{lookup_field:identifier})
+                except model.DoesNotExist:
+                    print("%s object with %s : %s does not exist" % (str(model), lookup_field, identifier))
+                    continue
+    return engaged_objects
+
+def get_multiple_engaged_objects(ws, col_index, lookup_field, modifiers, modifier_col_index, select_related_fields=(), prefetch_related_fields=()):
+    """
+    modifiers : {modifier_name: modifier_class}
+    """
+    engaged_objects = {}
+    for key, value in modifiers.items():
+        engaged_objects[key] = {}
+
+    for col in ws.iter_cols(min_row=4, min_col=col_index, max_col=col_index, values_only=True):
+        for i in range(len(col)):
+            identifier = col[i]
+            if not identifier:
+                continue
+            engaged_objects_modifier = ws.cell(row=i+4, column=modifier_col_index).value
+            model = modifiers[engaged_objects_modifier]
+            try:
+                engaged_objects[engaged_objects_modifier][identifier]
+                continue
+            except:
+                try:
+                    objs = model.objects
+                    if select_related_fields:
+                        objs = objs.select_related(select_related_fields)
+                    if prefetch_related_fields:
+                        objs = objs.prefetch_related(prefetch_related_fields)
+                    engaged_objects[engaged_objects_modifier][identifier] = objs.get(**{lookup_field:identifier})
+                except model.DoesNotExist:
+                    print("%s object with %s : %s does not exist" % (str(model), lookup_field, identifier))
+                    continue
+    return engaged_objects
 
 def create_records(ws: worksheet):
     key_map = {
@@ -52,7 +110,7 @@ def create_records(ws: worksheet):
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
-        incoming_address = Address.objects.create(
+        incoming_address = Address(
             country_name=flat_object[key_map["address_country"]],
             region=flat_object[key_map["address_region"]],
             locality=flat_object[key_map["address_locality"]],
@@ -60,15 +118,17 @@ def create_records(ws: worksheet):
             locality_longitude=flat_object[key_map["address_longitude"]],
             locality_latitude=flat_object[key_map["address_latitude"]]
         )
-        incoming_target = Target.objects.create(name=flat_object[key_map["target"]])
+        incoming_target = Target(name=flat_object[key_map["target"]])
         try:
-            record = Record.objects.get(ocid=flat_object[key_map["ocid"]])
+            record = Record.objects.select_related('implementation_address', 'target', 'compiled_release').get(ocid=flat_object[key_map["ocid"]])
             related_fields = [
                 ('implementation_address', incoming_address),
                 ('target', incoming_target),
             ]
             set_related_fields(record, related_fields)
         except Record.DoesNotExist:
+            incoming_address.save()
+            incoming_target.save()
             record = Record.objects.create(
                 ocid=flat_object[key_map["ocid"]],
                 implementation_address=incoming_address,
@@ -102,18 +162,16 @@ def create_parties(ws: worksheet):
         "contact_fax": 15,
         "contact_url": 16
     }
+    releases = get_engaged_objects(Release, ws, 2, 'ref_record__ocid')
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
-            release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
-        except Record.DoesNotExist:
-            print("Record object with OCID : %s does not exist" % flat_object[key_map["record_ocid"]])
+            release = releases[flat_object[key_map["record_ocid"]]]
+        except:
+            print("Release reference not found")
             continue
-        except Release.DoesNotExist:
-            print("Record object with OCID : %s does not have a release" % flat_object[key_map["record_ocid"]])
-            continue
-        incoming_address = Address.objects.create(
+        incoming_address = Address(
             country_name=flat_object[key_map["address_country"]],
             region=flat_object[key_map["address_region"]],
             locality=flat_object[key_map["address_locality"]],
@@ -121,12 +179,12 @@ def create_parties(ws: worksheet):
             locality_longitude=flat_object[key_map["address_longitude"]],
             locality_latitude=flat_object[key_map["address_latitude"]]
         )
-        incoming_identifier = Identifier.objects.create(
+        incoming_identifier = Identifier(
             scheme=flat_object[key_map["id_schema"]],
             legal_name=flat_object[key_map["id_legal_name"]],
             uri=flat_object[key_map["id_uri"]]
         )
-        incoming_contact = ContactPoint.objects.create(
+        incoming_contact = ContactPoint(
             name=flat_object[key_map["contact_name"]],
             email=flat_object[key_map["contact_mail"]],
             telephone=flat_object[key_map["contact_phone"]],
@@ -134,7 +192,7 @@ def create_parties(ws: worksheet):
             url=flat_object[key_map["contact_url"]],
         )
         try:
-            entity = Entity.objects.get(pk=flat_object[key_map["party_id"]])
+            entity = Entity.objects.select_related('identifier', 'address', 'contact_point').get(pk=flat_object[key_map["party_id"]])
             related_fields = [
                 ('address', incoming_address),
                 ('identifier', incoming_identifier),
@@ -142,6 +200,9 @@ def create_parties(ws: worksheet):
             ]
             set_related_fields(entity, related_fields)
         except Entity.DoesNotExist:
+            incoming_address.save()
+            incoming_identifier.save()
+            incoming_contact.save()
             entity = Entity(
                 pk=flat_object[key_map["party_id"]],
                 address=incoming_address,
@@ -164,16 +225,14 @@ def create_plannings(ws : worksheet):
         "budget_currency": 7,
         "budget_uri": 8
     }
+    releases = get_engaged_objects(Release, ws, 1, 'ref_record__ocid')
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
-            release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
-        except Record.DoesNotExist:
-            print("Record object with OCID : %s does not exist" % flat_object[key_map["record_ocid"]])
-            continue
-        except Release.DoesNotExist:
-            print("Record object with OCID : %s does not have a release" % flat_object[key_map["record_ocid"]])
+            release = releases[flat_object[key_map["record_ocid"]]]
+        except:
+            print("Release reference not found")
             continue
         incoming_amount = Value.objects.create(
             amount=flat_object[key_map["budget_amount"]],
@@ -183,7 +242,7 @@ def create_plannings(ws : worksheet):
             titre_projet=flat_object[key_map["title"]],
             description=flat_object[key_map["description"]]
         )
-        incoming_budget = Budget.objects.create(
+        incoming_budget = Budget(
             source=flat_object[key_map["budget_source"]],
             uri=flat_object[key_map["budget_uri"]],
             projet=incoming_project,
@@ -191,12 +250,13 @@ def create_plannings(ws : worksheet):
             description=flat_object[key_map["rationale"]]
         )
         try:
-            planning = Planning.objects.get(pk=flat_object[key_map["planning_id"]])
+            planning = Planning.objects.select_related('budget').get(pk=flat_object[key_map["planning_id"]])
             related_fields = [
                 ('budget', incoming_budget)
             ]
             set_related_fields(planning, related_fields)
         except Planning.DoesNotExist:
+            incoming_budget.save()
             planning = Planning(
                 pk=flat_object[key_map["planning_id"]],
                 budget=incoming_budget
@@ -233,20 +293,16 @@ def create_tenders(ws: worksheet):
         "award_period_end": 22,
         "eligibility_criteria": 23,
     }
+    releases = get_engaged_objects(Release, ws, 1, 'ref_record__ocid')
+    buyers = get_engaged_objects(Entity, ws, 3, 'pk')
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
-            release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
-            buyer_entity = Entity.objects.get(pk=flat_object[key_map["buyer"]])
-        except Record.DoesNotExist:
-            print("Record object with OCID : %s does not exist" % flat_object[key_map["record_ocid"]])
-            continue
-        except Release.DoesNotExist:
-            print("Record object with OCID : %s does not have a release" % flat_object[key_map["record_ocid"]])
-            continue
-        except Entity.DoesNotExist:
-            print("Buyer with id : %s does not exist" % flat_object[key_map["buyer"]])
+            release = releases[flat_object[key_map["record_ocid"]]]
+            buyer_entity = buyers[flat_object[key_map["buyer"]]]
+        except:
+            print("Reference not found")
             continue
         try:
             procuring_entity = Entity.objects.get(pk=flat_object[key_map["procuring_entity"]])
@@ -254,29 +310,29 @@ def create_tenders(ws: worksheet):
             print("Entity with id : %s does not exist" % flat_object[key_map["procuring_entity"]])
             continue
 
-        incoming_min_value = Value.objects.create(
+        incoming_min_value = Value(
             amount=flat_object[key_map["min_value_amount"]],
             currency=flat_object[key_map["min_value_currency"]]
         )
-        incoming_value = Value.objects.create(
+        incoming_value = Value(
             amount=flat_object[key_map["value_amount"]],
             currency=flat_object[key_map["value_currency"]]
         )
-        incoming_tender_period = Period.objects.create(
+        incoming_tender_period = Period(
             start_date=flat_object[key_map["tender_period_start"]],
             end_date=flat_object[key_map["tender_period_end"]]
         )
-        incoming_enquiry_period = Period.objects.create(
+        incoming_enquiry_period = Period(
             start_date=flat_object[key_map["enquiry_period_start"]],
             end_date=flat_object[key_map["enquiry_period_end"]]
         )
-        incoming_award_period = Period.objects.create(
+        incoming_award_period = Period(
             start_date=flat_object[key_map["award_period_start"]],
             end_date=flat_object[key_map["award_period_end"]]
         )
 
         try:
-            tender = Tender.objects.get(pk=flat_object[key_map["tender_id"]])
+            tender = Tender.objects.select_related('min_value', 'value', 'tender_period', 'enquiry_period', 'award_period').get(pk=flat_object[key_map["tender_id"]])
             related_fields = [
                 ('min_value', incoming_min_value),
                 ('value', incoming_value),
@@ -286,6 +342,11 @@ def create_tenders(ws: worksheet):
             ]
             set_related_fields(tender, related_fields)
         except Tender.DoesNotExist:
+            incoming_min_value.save()
+            incoming_value.save()
+            incoming_tender_period.save()
+            incoming_enquiry_period.save()
+            incoming_award_period.save()
             tender = Tender(
                 pk=flat_object[key_map["tender_id"]],
                 min_value=incoming_min_value,
@@ -318,21 +379,20 @@ def create_tenderers(ws: worksheet):
         "tender_id": 0,
         "tenderer_id": 1
     }
+    tenders = get_engaged_objects(Tender, ws, 1, 'pk', 'release')
+    tenderers = get_engaged_objects(Entity, ws, 2, 'pk')
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
-            tender = Tender.objects.get(pk=flat_object[key_map["tender_id"]])
+            tender = tenders[flat_object[key_map["tender_id"]]]
             tender_release = tender.release
-            incoming_tenderer = Entity.objects.get(pk=flat_object[key_map["tenderer_id"]])
-        except Tender.DoesNotExist:
-            print("Tender object with ID : %s does not exist" % flat_object[key_map["tender_id"]])
-            continue
+            incoming_tenderer = tenderers[flat_object[key_map["tenderer_id"]]]
         except Release.DoesNotExist:
-            print("Release object with ID : %s does not refer to a release" % flat_object[key_map["tender_id"]])
+            print("Release object does not refer to a release")
             continue
-        except Entity.DoesNotExist:
-            print("Entity object with ID : %s does not exist" % flat_object[key_map["tenderer_id"]])
+        except:
+            print("Reference not found")
             continue
         tender.tenderers.add(incoming_tenderer)
         tender_release.parties.add(incoming_tenderer)
@@ -358,30 +418,30 @@ def create_awards(ws: worksheet):
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
-        incoming_value = Value.objects.create(
+        releases = get_engaged_objects(Release, ws, 1, 'ref_record__ocid')
+        try:
+            release = releases[flat_object[key_map["record_ocid"]]]
+        except:
+            print("Release reference not found")
+            continue
+        incoming_value = Value(
             amount=flat_object[key_map["value_amount"]],
             currency=flat_object[key_map["value_currency"]]
         )
-        incoming_contract_period = Period.objects.create(
+        incoming_contract_period = Period(
             start_date=flat_object[key_map["contract_period_start"]],
             end_date=flat_object[key_map["contract_period_end"]]
         )
         try:
-            release = Record.objects.get(ocid=flat_object[key_map["record_ocid"]]).compiled_release
-        except Record.DoesNotExist:
-            print("Record object with OCID : %s does not exist" % flat_object[key_map["tender_id"]])
-            continue
-        except Release.DoesNotExist:
-            print("Record object with OCID : %s does not have a release" % flat_object[key_map["tender_id"]])
-            continue
-        try:
-            award = Award.objects.get(pk=flat_object[key_map["id"]])
+            award = Award.objects.select_related('value', 'contract_period', 'contract__period', 'contract__value', 'release').get(pk=flat_object[key_map["id"]])
             related_fields = [
                 ('value', incoming_value),
                 ('contract_period', incoming_contract_period)
             ]
             set_related_fields(award, related_fields)
         except Award.DoesNotExist:
+            incoming_value.save()
+            incoming_contract_period.save()
             award = Award.objects.create(
                 pk=flat_object[key_map["id"]],
                 value=incoming_value,
@@ -392,6 +452,8 @@ def create_awards(ws: worksheet):
             contract.value = award.value
             contract.period = award.contract_period
         except Contract.DoesNotExist:
+            incoming_value.save()
+            incoming_contract_period.save()
             contract = Contract.objects.create(
                 ref_award=award,
                 period=incoming_contract_period,
@@ -421,21 +483,20 @@ def create_suppliers(ws: worksheet):
         "award_id": 0,
         "supplier_id": 1
     }
+    awards = get_engaged_objects(Award, ws, 1, 'pk', 'release')
+    suppliers = get_engaged_objects(Entity, ws, 2, 'pk')
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
-            award = Award.objects.get(pk=flat_object[key_map["award_id"]])
+            award = awards[flat_object[key_map["award_id"]]]
             award_release = award.release
-            incoming_supplier = Entity.objects.get(pk=flat_object[key_map["supplier_id"]])
-        except Award.DoesNotExist:
-            print("Award object with ID : %s does not exist" % flat_object[key_map["award_id"]])
-            continue
+            incoming_supplier = suppliers[flat_object[key_map["supplier_id"]]]
         except Release.DoesNotExist:
             print("Award object with ID : %s does not refer to a release" % flat_object[key_map["award_id"]])
             continue
-        except Entity.DoesNotExist:
-            print("Entity object with ID : %s does not exist" % flat_object[key_map["supplier_id"]])
+        except:
+            print("Reference not found")
             continue
         award.suppliers.add(incoming_supplier)
         award_release.parties.add(incoming_supplier)
@@ -453,30 +514,31 @@ def create_transactions(ws : worksheet):
         "payer_id": 7,
         "payee_id": 8
     }
+    implementations = get_engaged_objects(Implementation, ws, 1, 'contract__ref_award__pk')
+    payers = get_engaged_objects(Entity, ws, 8, 'pk')
+    payees = get_engaged_objects(Entity, ws, 9, 'pk')
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
-            implementation = Award.objects.get(pk=flat_object[key_map["award_id"]]).contract.implementation
-            payer = Entity.objects.get(pk=flat_object[key_map["payer_id"]])
-            payee = Entity.objects.get(pk=flat_object[key_map["payee_id"]])
-        except Award.DoesNotExist:
-            print("Award object with ID : %s does not exist" % flat_object[key_map["tender_id"]])
+            implementation = implementations[flat_object[key_map["award_id"]]]
+            payer = payers[flat_object[key_map["payer_id"]]]
+            payee = payees[flat_object[key_map["payee_id"]]]
+        except:
+            print("Reference not found")
             continue
-        except Entity.DoesNotExist:
-            print("Entity does not exist")
-            continue
-        incoming_value = Value.objects.create(
+        incoming_value = Value(
             amount=flat_object[key_map["value_amount"]],
             currency=flat_object[key_map["value_currency"]]
         )
         try:
-            transaction = Transaction.objects.get(pk=flat_object[key_map["transaction_id"]])
+            transaction = Transaction.objects.select_related('value', 'implementation', 'payer', 'payee').get(pk=flat_object[key_map["transaction_id"]])
             related_fields = [
                 ('value', incoming_value)
             ]
             set_related_fields(transaction, related_fields)
         except Transaction.DoesNotExist:
+            incoming_value.save()
             transaction = Transaction(
                 pk=flat_object[key_map["transaction_id"]],
                 value=incoming_value
@@ -503,36 +565,36 @@ def create_items(ws : worksheet):
         "classification_description": 9,
         "classification_uri": 10
     }
+    modifiers = {
+        'tender': Tender,
+        'award': Award,
+        'contract': Contract
+    }
+    ref_objects = get_multiple_engaged_objects(ws, 3, 'pk', modifiers, 2, prefetch_related_fields=('items'))
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
             step_name = flat_object[key_map["step_name"]]
-            if step_name == 'tender':
-                ref_object = Tender.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'award':
-                ref_object = Award.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'contract':
-                ref_object = Contract.objects.get(pk=flat_object[key_map["ref_step"]])
+            ref_object = ref_objects[step_name][flat_object[key_map["ref_step"]]]
         except:
-            print("%s object with ID : %s does not exist" % (flat_object[key_map["step_name"]], flat_object[key_map["ref_step"]]))
-            continue
+            print("Reference not found")
         items = ref_object.items
-        incoming_value = Value.objects.create(
+        incoming_value = Value(
             amount=flat_object[key_map["unit_value_amount"]],
             currency=flat_object[key_map["unit_value_currency"]]
         )
-        incoming_unit = Unit.objects.create(
+        incoming_unit = Unit(
             name=flat_object[key_map["unit_name"]],
             value=incoming_value
         )
-        incoming_classification = Classification.objects.create(
+        incoming_classification = Classification(
             scheme=flat_object[key_map["classification_scheme"]],
             description=flat_object[key_map["classification_description"]],
             uri=flat_object[key_map["classification_uri"]]
         )
         try:
-            item = items.get(pk=flat_object[key_map["item_id"]])
+            item = items.select_related('classification', 'unit').get(pk=flat_object[key_map["item_id"]])
             related_fields = [
                 ('classification', incoming_classification),
                 ('unit', incoming_unit),
@@ -542,6 +604,9 @@ def create_items(ws : worksheet):
             item.description = flat_object[key_map["description"]]
             item.save()
         except:
+            incoming_value.save()
+            incoming_unit.save()
+            incoming_classification.save()
             item = items.create(
                 pk=flat_object[key_map["item_id"]],
                 quantity = flat_object[key_map["quantity"]],
@@ -561,22 +626,21 @@ def create_milestones(ws : worksheet):
         "date_modified": 6,
         "status": 7
     }
+    modifiers = {
+        'planning': Planning,
+        'tender': Tender,
+        'contract': Contract,
+        'implementation': Implementation,
+    }
+    ref_objects = get_multiple_engaged_objects(ws, 3, 'pk', modifiers, 2, prefetch_related_fields=('milestones'))
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
             step_name = flat_object[key_map["step_name"]]
-            if step_name == 'planning':
-                ref_object = Planning.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'tender':
-                ref_object = Tender.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'contract':
-                ref_object = Contract.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'implementation':
-                ref_object = Implementation.objects.get(pk=flat_object[key_map["ref_step"]])
+            ref_object = ref_objects[step_name][flat_object[key_map["ref_step"]]]
         except:
-            print("%s object with ID : %s does not exist" % (flat_object[key_map["step_name"]], flat_object[key_map["ref_step"]]))
-            continue
+            print("Reference not found")
         milestones = ref_object.milestones
         try:
             milestone = milestones.get(pk=flat_object[key_map["milestone_id"]])
@@ -610,23 +674,21 @@ def create_documents(ws: worksheet):
         "format": 9,
         "language": 10
     }
+    modifiers = {
+        'planning': Planning,
+        'tender': Tender,
+        'award': Award,
+        'contract': Contract,
+        'implementation': Implementation,
+        'milestone': Milestone
+    }
+    ref_objects = get_multiple_engaged_objects(ws, 3, 'pk', modifiers, 2, prefetch_related_fields=('documents'))
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         try:
             step_name = flat_object[key_map["step_name"]]
-            if step_name == 'planning':
-                ref_object = Planning.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'tender':
-                ref_object = Tender.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'award':
-                ref_object = Award.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'contract':
-                ref_object = Contract.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'implementation':
-                ref_object = Implementation.objects.get(pk=flat_object[key_map["ref_step"]])
-            if step_name == 'milestone':
-                ref_object = Milestone.objects.get(pk=flat_object[key_map["ref_step"]])
+            ref_object = ref_objects[step_name][flat_object[key_map["ref_step"]]]
         except:
             print("%s object with ID : %s does not exist" % (flat_object[key_map["step_name"]], flat_object[key_map["ref_step"]]))
             continue
