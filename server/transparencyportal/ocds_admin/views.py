@@ -1,3 +1,5 @@
+from threading import Thread
+
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
@@ -31,13 +33,17 @@ class UploadFileView(View):
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             file = request.FILES['file'].file
-            import_data(file)
-            messages.success(request, message="Importation des données effectuée avec succès")
+            try:
+                import_data(file)
+                messages.success(request, message="Importation des données effectuée avec succès")
+            except:
+                messages.error(request, message="Une erreur est survenue lors de l'importation")
         else:
             messages.warning(request, message="Vérifiez que le fichier est bien de type xlsx")
         return render(request, 'ocds_admin/upload_file.html', {'form': form})
 
 def import_data(filename):
+    a = [] + "s"
     wb = load_workbook(filename)
     output_message = ""
     records = wb.worksheets[1]
@@ -51,15 +57,38 @@ def import_data(filename):
     documents = wb.worksheets[9]
     items = wb.worksheets[10]
     milestones = wb.worksheets[11]
-    create_records(records)
-    create_parties(parties)
-    create_plannings(plannings)
-    create_tenders(tenders)
-    create_tenderers(tenderers)
-    create_awards(awards)
-    create_suppliers(suppliers)
-    create_transactions(transactions)
-    create_items(items)
-    create_milestones(milestones)
-    create_documents(documents)
+    t_records = Thread(target=create_records, args=(records,))
+    t_parties = Thread(target=create_parties, args=(parties,))
+    t_plannings = Thread(target=create_plannings, args=(plannings,))
+    t_tenders = Thread(target=create_tenders, args=(tenders,))
+    t_tenderers = Thread(target=create_tenderers, args=(tenderers,))
+    t_awards = Thread(target=create_awards, args=(awards,))
+    t_suppliers = Thread(target=create_suppliers, args=(suppliers,))
+    t_transactions = Thread(target=create_transactions, args=(transactions,))
+    t_items = Thread(target=create_items, args=(items,))
+    t_milestones = Thread(target=create_milestones, args=(milestones,))
+    t_documents = Thread(target=create_documents, args=(documents,))
+
+    t_records.start()
+    t_records.join()
+    t_parties.start()
+    t_parties.join()
+
+    t_plannings.start()
+    t_tenders.start()
+    t_awards.start()
+
+    t_tenders.join()
+    t_tenderers.start()
+    t_awards.join()
+    t_suppliers.start()
+
+    t_plannings.join()
+    t_transactions.start()
+    t_items.start()
+    t_milestones.start()
+
+    t_milestones.join()
+    t_documents.start()
+
     return output_message
