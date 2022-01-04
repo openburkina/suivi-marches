@@ -96,9 +96,10 @@ class DoneRecordList(APIView):
         return Response(data)
 
 class SumRecord(APIView):
-    def post(self, request, region_id):
+    def post(self, request):
+        region = self.request.query_params.get('region')
         queryset = Record.objects.filter(
-            implementation_address__region__iexact = region_id
+            implementation_address__region__iexact = region
         )
         data = RecordSumSerializer(queryset, many=True, context={'request': request}).data
         return Response({

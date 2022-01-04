@@ -5,6 +5,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from datetime import date, datetime
+from rest_framework import status
+
 
 
 from ocds_tender.models import Buyer, Tender
@@ -30,6 +32,9 @@ class BuyerViewSet(viewsets.ModelViewSet):
 
 class TenderStateAndMount(APIView):
     def post(self, request,year_val=None):
+        if len(year_val) < 4:
+            print("Date error")
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         sting_date_deb = year_val+'-01-01'
         string_date_fin = year_val+'-12-31'
        # now_deb = date(*map(int,sting_date_deb.split('-')))

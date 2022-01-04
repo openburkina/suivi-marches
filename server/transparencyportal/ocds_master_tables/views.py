@@ -8,7 +8,7 @@ from .constants import page_id_1, facebook_access_token_1
 # Create your views here.
 
 class FacebookPublishView(APIView):
-    msg = 'Suivi des marchés publique Test d"API'
+    msg = "Ceci est un message test pour la publication des informations d'un marché publics"
     payload = {
         'message': msg,
         'access_token': facebook_access_token_1

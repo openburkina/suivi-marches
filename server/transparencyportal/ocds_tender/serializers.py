@@ -58,5 +58,5 @@ class TenderStateMount(serializers.ModelSerializer):
     value = ValueSerializer()
     class Meta:
         model = Tender
-        fields = ('value',
+        fields = ('title','value',
         'status')

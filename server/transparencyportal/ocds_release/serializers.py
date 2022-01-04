@@ -53,7 +53,7 @@ class TargetSerializer(serializers.ModelSerializer):
         exclude = ['id']
 
 class RecordSumSerializer(serializers.ModelSerializer):
-    #value = ValueSerializer()
+    implementation_value = ValueSerializer()
     class Meta:
         model = Record
         fields ='__all__'

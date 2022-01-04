@@ -11,7 +11,7 @@ record_urlpatterns = [
     path(r'<int:record_id>/items', RecordItemList.as_view(), name='record-item-list'),
     path(r'<int:record_id>/stages', RecordStageList.as_view(), name='record-stage-list'),
     path(r'target/<str:target_name>', RecordByTarget.as_view(), name='record-by-target'),
-    path(r'<int:region_id>/amount_value', SumRecord.as_view(), name='record-count-all'),
+    path(r'amount_value', SumRecord.as_view(), name='record-count-all'),
 ]
 
 release_urlpatterns = [
