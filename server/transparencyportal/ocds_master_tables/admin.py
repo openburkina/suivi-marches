@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Organization, Period, Unit, Value, Projet, Budget
+from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Period, Unit, Value, Projet, Budget
 admin.site.register(Address)
 admin.site.register(Amendment)
 admin.site.register(Change)
@@ -13,7 +13,6 @@ admin.site.register(Item)
 admin.site.register(ItemAdditionalClassification)
 admin.site.register(Milestone)
 admin.site.register(MilestoneDocument)
-admin.site.register(Organization)
 admin.site.register(Period)
 admin.site.register(Unit)
 admin.site.register(Value)

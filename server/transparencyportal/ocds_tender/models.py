@@ -1,12 +1,24 @@
 from django.db import models
-from ocds_master_tables.models import Amendment, Document, Entity, Item, Milestone, Period, Value
-from .constants import TENDER_STATUS, PROCUREMENT_METHOD, AWARD_CRITERIA, SUBMISSION_METHOD
+from ocds_master_tables.models import (
+    Amendment,
+    Document,
+    Entity,
+    Item,
+    Milestone,
+    Period,
+    Value,
+)
 
-class Buyer(Entity):
-    pass
+from .constants import (
+    AWARD_CRITERIA,
+    PROCUREMENT_METHOD,
+    SUBMISSION_METHOD,
+    TENDER_STATUS,
+)
+
 
 class Tender(models.Model):
-    buyer = models.ForeignKey(Buyer, related_name='tenders', on_delete=models.DO_NOTHING)
+    buyer = models.ForeignKey(Entity, related_name='as_buyer_tenders', on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=255, null=True, blank=True)
     description = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=255, choices=TENDER_STATUS, null=True, blank=True)
@@ -24,6 +36,7 @@ class Tender(models.Model):
     eligibility_criteria = models.TextField(null=True, blank=True)
     award_period = models.ForeignKey(Period, on_delete=models.DO_NOTHING, related_name='as_award_period_tenders', null=True, blank=True)
     procuring_entity = models.ForeignKey(Entity, on_delete=models.DO_NOTHING, related_name='as_procuring_entity_tenders', null=True, blank=True)
+    tenderers = models.ManyToManyField(Entity, related_name='as_tenderer_tenders')
 
     @property
     def number_of_tenderer(self):
@@ -43,6 +56,3 @@ class TenderDocument(Document):
 
 class TenderMilestone(Milestone):
     tender = models.ForeignKey(Tender,related_name='milestones', on_delete=models.DO_NOTHING)
-
-class Tenderer(Entity):
-    ref_tender = models.ForeignKey(Tender,related_name='tenderers', on_delete=models.DO_NOTHING)

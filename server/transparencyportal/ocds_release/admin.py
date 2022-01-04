@@ -1,19 +1,17 @@
 from django.contrib import admin
-from .models import Release, ReleaseAward, ReleaseContract, ReleaseParty, Record, Target
 
+from ocds_awards.admin import AwardInline
 
-class AwardInline(admin.StackedInline):
-    model = ReleaseAward
+from .models import Release, Record, Role, Target
+
 
 class ReleaseInline(admin.StackedInline):
     model = Release
     readonly_fields = ['ocid', 'date']
 
-class ContractInline(admin.StackedInline):
-    model = ReleaseContract
-
-class PartyInline(admin.StackedInline):
-    model = ReleaseParty
+class RoleInline(admin.StackedInline):
+    model = Role
+    extra = 1
 
 @admin.register(Record)
 class RecordAdmin(admin.ModelAdmin):
@@ -24,7 +22,7 @@ class RecordAdmin(admin.ModelAdmin):
 @admin.register(Release)
 class ReleaseAdmin(admin.ModelAdmin):
     inlines = [
-        AwardInline, ContractInline, PartyInline
+        AwardInline, RoleInline
     ]
 
 admin.site.register(Target)
