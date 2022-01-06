@@ -10,6 +10,11 @@ from ocds_release.constants import PARTY_ROLE
 from ocds_release.models import Record, Release, Target
 from rest_framework import serializers
 
+class BuyerTotalRecordSerializer(serializers.Serializer):
+    in_progress = ValueSerializer(many=True)
+    done = ValueSerializer(many=True)
+    total = ValueSerializer(many=True)
+
 class TargetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Target

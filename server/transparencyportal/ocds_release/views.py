@@ -1,4 +1,6 @@
 import json
+from django.db.models.aggregates import Sum
+from django.db.models.expressions import F
 
 from django.shortcuts import get_object_or_404
 
@@ -6,6 +8,7 @@ from ocds_master_tables.models import Entity
 from ocds_master_tables.serializers import EntitySerializer
 from ocds_release.models import PublishedRelease, Record, Release, Target
 from ocds_release.serializers import (
+    BuyerTotalRecordSerializer,
     RecordItemSerializer,
     RecordSerializer,
     RecordStageSerializer,
@@ -48,6 +51,39 @@ class BuyerList(APIView):
         buyers = Entity.objects.filter(role__role__contains=["buyer"])
         data = EntitySerializer(buyers, many=True).data
         return Response(data)
+
+class BuyerTotalRecordView(APIView):
+    def get(self, request, buyer_id):
+        buyers = Entity.objects.filter(role__role__contains=["buyer"])
+        buyer_instance = get_object_or_404(buyers, pk=buyer_id)
+        output_instance = {
+            'in_progress' : [],
+            'done': [],
+            'total': []
+        }
+        in_progress_sum = Record.objects\
+                        .filter(compiled_release__buyer = buyer_instance.pk)\
+                        .exclude(compiled_release__tag__contains = ['contractTermination'])\
+                        .annotate(currency=F('implementation_value__currency'))\
+                        .values('currency')\
+                        .annotate(amount=Sum('implementation_value__amount'))
+        done_sum = Record.objects\
+                        .filter(compiled_release__buyer = buyer_instance.pk)\
+                        .filter(compiled_release__tag__contains = ['contractTermination'])\
+                        .annotate(currency=F('implementation_value__currency'))\
+                        .values('currency')\
+                        .annotate(amount=Sum('implementation_value__amount'))
+        total = Record.objects\
+                        .filter(compiled_release__buyer = buyer_instance.pk)\
+                        .annotate(currency=F('implementation_value__currency'))\
+                        .values('currency')\
+                        .annotate(amount=Sum('implementation_value__amount'))
+        output_instance['in_progress'] = in_progress_sum
+        output_instance['done'] = done_sum
+        output_instance['total'] = total
+        data = BuyerTotalRecordSerializer(output_instance).data
+        return Response(data)
+
 
 class PublishedReleaseView(APIView):
     def get(self, request, pk):
