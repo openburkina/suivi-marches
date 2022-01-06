@@ -6,7 +6,6 @@ from ocds_master_tables.models import Entity
 from ocds_master_tables.serializers import EntitySerializer
 from ocds_release.models import PublishedRelease, Record, Release, Target
 from ocds_release.serializers import (
-    RecordByTargetSerializer,
     RecordItemSerializer,
     RecordSerializer,
     RecordStageSerializer,
@@ -22,6 +21,19 @@ from rest_framework.views import APIView
 class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
+
+    def get_queryset(self):
+        queryset = Record.objects.all()
+        country = self.request.query_params.get('country')
+        region = self.request.query_params.get('region')
+        target = self.request.query_params.get('target')
+        if country is not None:
+            queryset = queryset.filter(implementation_address__country_name__iexact=country)
+        if region is not None:
+            queryset = queryset.filter(implementation_address__region__iexact=region)
+        if target is not None:
+            queryset = queryset.filter(target__name__iexact=target)
+        return queryset
 
 class ReleaseViewSet(viewsets.ModelViewSet):
     queryset = Release.objects.all()
@@ -76,21 +88,6 @@ class RecordStageList(APIView):
         output_instance['award_period'] = record_instance.compiled_release.tender.award_period
         output_instance['awards'] = record_instance.compiled_release.awards.all()
         data = RecordStageSerializer(output_instance).data
-        return Response(data)
-
-class RecordByTarget(APIView):
-    def get(self, request, target_name):
-        country = self.request.query_params.get('country')
-        region = self.request.query_params.get('region')
-        records = Record.objects.filter(target__name=target_name)
-        if country:
-            records = records.filter(implementation_address__country_name__iexact=country)
-        if region:
-            records = records.filter(implementation_address__region__iexact=region)
-        output_instance = {
-            'records' : records
-        }
-        data = RecordByTargetSerializer(output_instance, context={'request': request}).data
         return Response(data)
 
 class InProgressRecordList(APIView):

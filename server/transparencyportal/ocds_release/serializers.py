@@ -1,5 +1,6 @@
 from ocds_awards.serializers import AwardPeriodSerializer, AwardSerializer
 from ocds_master_tables.serializers import (
+    AddressSerializer,
     EntitySerializer,
     ItemSerializer,
     PeriodSerializer,
@@ -9,6 +10,10 @@ from ocds_release.constants import PARTY_ROLE
 from ocds_release.models import Record, Release, Target
 from rest_framework import serializers
 
+class TargetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Target
+        exclude = ['id']
 
 class ReleaseSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:release-detail")
@@ -27,6 +32,8 @@ class RecordSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name="api:record-detail")
     compiled_release = serializers.HyperlinkedRelatedField(view_name="api:release-detail", read_only=True)
     releases = serializers.HyperlinkedRelatedField(view_name="api:published-release-detail", read_only=True, many=True)
+    target = TargetSerializer()
+    implementation_address = AddressSerializer()
 
     class Meta:
         model = Record
@@ -42,14 +49,6 @@ class RecordItemSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
     items = ItemSerializer(many=True)
-
-class RecordByTargetSerializer(serializers.Serializer):
-    records = serializers.HyperlinkedRelatedField(view_name="api:record-detail", read_only=True, many=True)
-
-class TargetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Target
-        exclude = ['id']
 
 class RecordSumSerializer(serializers.ModelSerializer):
     implementation_value = ValueSerializer()
