@@ -3,6 +3,7 @@ from ocds_master_tables.serializers import (
     EntitySerializer,
     ItemSerializer,
     PeriodSerializer,
+    ValueSerializer
 )
 from ocds_release.constants import PARTY_ROLE
 from ocds_release.models import Record, Release, Target

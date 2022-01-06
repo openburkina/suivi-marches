@@ -38,12 +38,9 @@ class UploadFileView(View):
                 messages.success(request, message="Importation des données effectuée avec succès")
             except:
                 messages.error(request, message="Une erreur est survenue lors de l'importation")
-        else:
-            messages.warning(request, message="Vérifiez que le fichier est bien de type xlsx")
         return render(request, 'ocds_admin/upload_file.html', {'form': form})
 
 def import_data(filename):
-    a = [] + "s"
     wb = load_workbook(filename)
     output_message = ""
     records = wb.worksheets[1]

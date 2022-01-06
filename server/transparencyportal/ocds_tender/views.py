@@ -15,8 +15,8 @@ from rest_framework import status
 
 
 
-from ocds_tender.models import Buyer, Tender
-from ocds_tender.serializers import BuyerSerializer, TenderSerializer, RatingSerializer, TenderStateMount
+from ocds_tender.models import Tender
+from ocds_tender.serializers import TenderSerializer, RatingSerializer, TenderStateMount
 
 from ocds_master_tables.models import Entity
 
