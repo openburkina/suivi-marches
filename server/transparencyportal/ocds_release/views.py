@@ -140,7 +140,7 @@ class RecordStageList(APIView):
         return Response(data)
 
 class InProgressRecordList(APIView):
-    @swagger_auto_schema(responses={200:RecordSerializer})
+    @swagger_auto_schema(responses={200:RecordSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         queryset = Record.objects.filter(compiled_release__buyer = buyer_instance.pk).exclude(compiled_release__tag__contains = ['contractTermination'])
@@ -148,7 +148,7 @@ class InProgressRecordList(APIView):
         return Response(data)
 
 class DoneRecordList(APIView):
-    @swagger_auto_schema(responses={200:RecordSerializer})
+    @swagger_auto_schema(responses={200:RecordSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         queryset = Record.objects.filter(
