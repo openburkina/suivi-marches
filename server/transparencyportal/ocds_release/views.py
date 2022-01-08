@@ -19,9 +19,10 @@ from ocds_release.serializers import (
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
-
-class RecordViewSet(viewsets.ModelViewSet):
+class RecordViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
 
@@ -38,21 +39,31 @@ class RecordViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(target__name__iexact=target)
         return queryset
 
-class ReleaseViewSet(viewsets.ModelViewSet):
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('country', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+        openapi.Parameter('region', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+        openapi.Parameter('target', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+    ])
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+class ReleaseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Release.objects.all()
     serializer_class = ReleaseSerializer
 
-class TargetViewSet(viewsets.ModelViewSet):
+class TargetViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Target.objects.all()
     serializer_class = TargetSerializer
 
 class BuyerList(APIView):
+    @swagger_auto_schema(responses={200:EntitySerializer(many=True)})
     def get(self, request):
         buyers = Entity.objects.filter(role__role__contains=["buyer"])
         data = EntitySerializer(buyers, many=True).data
         return Response(data)
 
 class BuyerTotalRecordView(APIView):
+    @swagger_auto_schema(responses={200:BuyerTotalRecordSerializer})
     def get(self, request, buyer_id):
         buyers = Entity.objects.filter(role__role__contains=["buyer"])
         buyer_instance = get_object_or_404(buyers, pk=buyer_id)
@@ -91,6 +102,7 @@ class PublishedReleaseView(APIView):
         return Response(json.loads(published_release_instance.release))
 
 class RecordItemList(APIView):
+    @swagger_auto_schema(responses={200:RecordItemSerializer})
     def get(self, request, record_id):
         record_instance = get_object_or_404(Record, pk=record_id)
         output_instance = {
@@ -108,6 +120,7 @@ class RecordItemList(APIView):
         return Response(data)
 
 class RecordStageList(APIView):
+    @swagger_auto_schema(responses={200:RecordStageSerializer})
     def get(self, request, record_id):
         record_instance = get_object_or_404(Record, pk=record_id)
         output_instance = {
@@ -127,6 +140,7 @@ class RecordStageList(APIView):
         return Response(data)
 
 class InProgressRecordList(APIView):
+    @swagger_auto_schema(responses={200:RecordSerializer})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         queryset = Record.objects.filter(compiled_release__buyer = buyer_instance.pk).exclude(compiled_release__tag__contains = ['contractTermination'])
@@ -134,6 +148,7 @@ class InProgressRecordList(APIView):
         return Response(data)
 
 class DoneRecordList(APIView):
+    @swagger_auto_schema(responses={200:RecordSerializer})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         queryset = Record.objects.filter(
@@ -144,6 +159,9 @@ class DoneRecordList(APIView):
         return Response(data)
 
 class SumRecord(APIView):
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter(name='region', in_=openapi.IN_QUERY, type=openapi.TYPE_STRING)
+    ])
     def post(self, request):
         region = self.request.query_params.get('region')
         queryset = Record.objects.filter(

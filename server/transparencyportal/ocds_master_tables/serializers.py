@@ -75,7 +75,13 @@ class PeriodSerializer(serializers.ModelSerializer):
         model = Period
         fields = '__all__'
 
+class ValueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Value
+        fields = '__all__'
+
 class UnitSerializer(serializers.ModelSerializer):
+    value = ValueSerializer()
     class Meta:
         model = Unit
         fields = '__all__'
@@ -85,11 +91,6 @@ class ItemSerializer(serializers.ModelSerializer):
     unit = UnitSerializer()
     class Meta:
         model = Item
-        fields = '__all__'
-
-class ValueSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Value
         fields = '__all__'
 
 class ProjetSerializer(serializers.ModelSerializer):

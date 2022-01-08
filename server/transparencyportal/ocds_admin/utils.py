@@ -580,7 +580,7 @@ def create_items(ws : worksheet):
         except:
             print("Reference not found")
         items = ref_object.items
-        incoming_value = Value(
+        incoming_value = Value.objects.create(
             amount=flat_object[key_map["unit_value_amount"]],
             currency=flat_object[key_map["unit_value_currency"]]
         )
@@ -604,7 +604,6 @@ def create_items(ws : worksheet):
             item.description = flat_object[key_map["description"]]
             item.save()
         except:
-            incoming_value.save()
             incoming_unit.save()
             incoming_classification.save()
             item = items.create(
