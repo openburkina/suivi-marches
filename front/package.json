@@ -11,7 +11,6 @@
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "prepare": "husky install",
     "lint": "npm run lint:js && npm run lint:style"
-    
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
@@ -25,6 +24,7 @@
     "nuxt": "^2.15.7",
     "nuxt-leaflet": "0.0.25",
     "sass-loader": "^10",
+    "vue-apexcharts": "^1.6.2",
     "vue-chartjs": "^3.4.0",
     "vuetify": "^2.5.5"
   },

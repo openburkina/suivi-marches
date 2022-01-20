@@ -13,7 +13,7 @@
             v-bind="attrs"
             v-on="on"
           >
-           More
+          Region
           <v-icon class="ml-4"> mdi-chevron-down</v-icon>
           </v-btn>
         </template>

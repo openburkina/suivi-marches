@@ -1,10 +1,13 @@
 <template>
-<div>
-      <p class="display-2 text-center font-weight-bold mb-5">Explore  <span id="explore"></span></p>
-      <Tabs />
-</div>
+    <div>
+        <Caroussel />
+        <p class="display-2 text-center font-weight-bold mb-5 mt-5">Explore  <span id="explore"></span></p>
+       
+        <Tabs />
+    </div>
 </template>
 <script>
+import Caroussel from '~/components/caroussel.vue'
 export default {
    
 }

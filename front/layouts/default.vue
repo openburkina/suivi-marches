@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <Caroussel />
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -62,7 +61,7 @@
       fixed
       height="90"
       v-bind:elevation="scrollPosition>28?4:0"
-      v-bind:color="scrollPosition<28?'transparent':'indigo lighten-1'"
+      color="indigo lighten-1"
     >
         <img
           :src="require('~/assets/img/logo.png')" height="60" width="50"
@@ -83,23 +82,16 @@
           <span class="mr-2 white--text">Travaux</span>
         </v-btn>
         <v-btn text to="/donors">
-          <span class="mr-2  white--text">Donors</span>
-        </v-btn>
-        <v-btn text to="/sustainable">
-          <span class="mr-2  white--text">SUSTAINABLE DEVELOPMENT GOALS</span>
-        </v-btn>
-        <v-btn text to="/approche">
-          <span class="mr-2  white--text">OUR APPROACHES</span>
+          <span class="mr-2  white--text">Bailleur</span>
         </v-btn>
         <!-- More menu -->
           <Menu />
       </div>
     </v-app-bar>
     <v-main>
-      <v-container>
-       <Nuxt />
-      </v-container>
-          <Footer />
+      
+        <Nuxt />
+        <Footer />
     </v-main>
     <v-scale-transition>
       <v-btn
