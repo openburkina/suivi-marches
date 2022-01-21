@@ -20,7 +20,7 @@ from ocds_tender.serializers import TenderSerializer, RatingSerializer, TenderSt
 
 from ocds_master_tables.models import Entity
 
-class TenderViews(viewsets.ModelViewSet):
+class TenderViews(viewsets.ReadOnlyModelViewSet):
     queryset = Tender.objects.all()
     serializer_class = TenderSerializer
 
