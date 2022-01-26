@@ -87,5 +87,12 @@ export default {
     options: {
         fix: true
       }
+  },
+
+  watchers: {
+    webpack: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
   }
 }
