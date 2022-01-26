@@ -36,8 +36,10 @@ export const mutations = {
                 scheme:el.identifier.scheme,
                 legal_name:el.identifier.legal_name,
             })
+            
         })
         state.list = state.listOfCleanData
+        state.listOfCleanData = []
     },
     
     // setter de Liste de tous les travaux fait par un buyers

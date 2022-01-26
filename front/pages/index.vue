@@ -7,7 +7,6 @@
     </div>
 </template>
 <script>
-import Caroussel from '~/components/caroussel.vue'
 export default {
    
 }
