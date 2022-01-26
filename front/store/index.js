@@ -1,13 +1,14 @@
 import axios from 'axios'
 
 export const state = () => ({
-    list: null,
+    list: [],
     recordsDone: [],
     recordsInprogress:[],
     totauxByBuyer:[],
     records:[],
     tendersYear:[],
-    bByRegion:[]
+    bByRegion:[],
+    listOfCleanData:[]
   })
 
 export const mutations = {
@@ -15,6 +16,28 @@ export const mutations = {
     // setter de Liste de tous les buyers
     listOfBuyers(state,paylaod){
         state.list = paylaod
+        state.list.forEach(el => {
+            console.log(el)
+            state.listOfCleanData.push({
+                id:el.id,
+                name:el.name,
+                country_name:el.address.country_name,
+                locality:el.address.locality,
+                latitude:el.address.locality_latitude,
+                longitude:el.address.locality_longitude,
+                postal:el.address.postal_code,
+                region:el.address.region,
+                email:el.contact_point.email,
+                fax_number:el.contact_point.fax_number,
+                contact_name:el.contact_point.name,
+                telephone:el.contact_point.telephone,
+                url:el.contact_point.url,
+                uri:el.identifier.uri,
+                scheme:el.identifier.scheme,
+                legal_name:el.identifier.legal_name,
+            })
+        })
+        state.list = state.listOfCleanData
     },
     
     // setter de Liste de tous les travaux fait par un buyers
