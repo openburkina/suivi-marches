@@ -4,6 +4,7 @@ from django.db.models.expressions import F
 
 from django.shortcuts import get_object_or_404
 
+from ocds_implementation.serializers import TransactionSerializer
 from ocds_master_tables.models import Entity
 from ocds_master_tables.serializers import EntitySerializer
 from ocds_release.models import PublishedRelease, Record, Release, Target
@@ -95,6 +96,13 @@ class BuyerTotalRecordView(APIView):
         data = BuyerTotalRecordSerializer(output_instance).data
         return Response(data)
 
+class BuyerTransactionList(APIView):
+    @swagger_auto_schema(responses={200:TransactionSerializer(many=True)})
+    def get(self, request, buyer_id):
+        buyer_instance = get_object_or_404(Entity, pk=buyer_id)
+        transactions = buyer_instance.as_payer_transactions.all()
+        data = TransactionSerializer(transactions, many=True).data
+        return Response(data)
 
 class PublishedReleaseView(APIView):
     def get(self, request, pk):

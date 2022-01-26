@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     BuyerList,
     BuyerTotalRecordView,
+    BuyerTransactionList,
     DoneRecordList,
     InProgressRecordList,
     PublishedReleaseView,
@@ -16,6 +17,7 @@ buyer_urlpatterns = [
     path(r'<int:buyer_id>/records/in_progress/', InProgressRecordList.as_view(), name='buyer-records-inprogress'),
     path(r'<int:buyer_id>/records/done/', DoneRecordList.as_view(), name='buyer-records-done'),
     path(r'<int:buyer_id>/records/total/', BuyerTotalRecordView.as_view(), name='buyer-records-total'),
+    path(r'<int:buyer_id>/transactions/', BuyerTransactionList.as_view(), name='buyer-transactions-list'),
 ]
 
 record_urlpatterns = [

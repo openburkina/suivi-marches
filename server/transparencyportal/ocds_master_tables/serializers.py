@@ -73,18 +73,18 @@ class MilestoneDocumentSerializer(serializers.ModelSerializer):
 class PeriodSerializer(serializers.ModelSerializer):
     class Meta:
         model = Period
-        fields = '__all__'
+        exclude =['id']
 
 class ValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = Value
-        fields = '__all__'
+        exclude =['id']
 
 class UnitSerializer(serializers.ModelSerializer):
     value = ValueSerializer()
     class Meta:
         model = Unit
-        fields = '__all__'
+        exclude =['id']
 
 class ItemSerializer(serializers.ModelSerializer):
     classification = ClassificationSerializer()
