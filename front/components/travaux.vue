@@ -1,6 +1,6 @@
 <template>
   <div>
-     <v-tabs v-model="tab" centered slider-size="1" hide-slider class="mb-5" active-class="active">
+     <v-tabs v-model="tab" centered slider-size="1" hide-slider class="mb-5 mt-16" active-class="active">
         <v-tab
         >
           <v-btn outlined rounded
@@ -22,10 +22,10 @@
         </v-tab>
     </v-tabs>
      <v-tabs-items v-model="tab">
-      <v-tab-item>
+      <v-tab-item class="mx-5 mt-16 mb-16 elevation-4">
         <TravauxContentDone title='Travaux terminés' :done=done />
       </v-tab-item>
-    <v-tab-item>
+    <v-tab-item class="mx-5 mt-16 mb-16 elevation-4">
         <TravauxContentInprogress title='Travaux en cours' :inprogress=inprogress />
       </v-tab-item>
     </v-tabs-items>
