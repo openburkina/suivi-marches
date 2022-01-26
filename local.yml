@@ -11,6 +11,10 @@ services:
       dockerfile: Dockerfile
     image: transparencyportal_local_nuxt
     container_name: nuxt
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+      - /app/.nuxt
     depends_on:
       - django
     ports:
