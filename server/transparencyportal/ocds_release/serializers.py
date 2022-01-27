@@ -30,6 +30,11 @@ class BuyerRecordByStatusSerializer(serializers.Serializer):
     done = serializers.IntegerField()
     total = serializers.IntegerField()
 
+class RecordValueGroupedSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+
 class BuyerTotalRecordSerializer(serializers.Serializer):
     in_progress = ValueSerializer(many=True)
     done = ValueSerializer(many=True)

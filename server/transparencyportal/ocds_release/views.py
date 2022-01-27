@@ -1,6 +1,7 @@
 import json
 from django.db.models.aggregates import Sum
-from django.db.models.expressions import F
+from django.db.models.expressions import F, Value
+from django.db.models.functions import Concat
 from django.db.models import Q, Subquery, OuterRef, ExpressionWrapper, ManyToManyField
 
 from django.shortcuts import get_object_or_404
@@ -13,6 +14,7 @@ from ocds_release.serializers import (
     BuyerRecordByStatusSerializer,
     BuyerRecordSerializer,
     BuyerTotalRecordSerializer,
+    RecordValueGroupedSerializer,
     RecordItemSerializer,
     RecordSerializer,
     RecordStageSerializer,
@@ -140,7 +142,6 @@ class BuyerRecordByStatus(APIView):
             return Response('Year not specified', status=500)
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         releases = Release.objects.filter(buyer = buyer_instance, date__year=year)
-        print(releases)
         output = {
             'planning': 0,
             'tender': 0,
@@ -153,6 +154,41 @@ class BuyerRecordByStatus(APIView):
         for release in releases:
             output[release.step] += 1
         data = BuyerRecordByStatusSerializer(output).data
+        return Response(data)
+
+class BuyerRecordValuesGrouped(APIView):
+    @swagger_auto_schema(
+        responses={200:BuyerRecordByStatusSerializer(many=True)},
+        manual_parameters=[
+            openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
+            openapi.Parameter('group_by', openapi.IN_QUERY, type=openapi.TYPE_STRING, enum=['region', 'sector'], required=True)
+        ]
+    )
+    def get(self, request, buyer_id):
+        year = self.request.query_params.get('year')
+        group_by = self.request.query_params.get('group_by')
+        if year is None:
+            return Response('Year not specified', status=500)
+        if not group_by in ['region', 'sector']:
+            return Response('Group field not specified', status=500)
+
+        buyer_instance = get_object_or_404(Entity, pk=buyer_id)
+        records = Record.objects.filter(
+                compiled_release__buyer=buyer_instance,
+                compiled_release__date__year=year
+            )
+        if group_by == 'region':
+            records = records.annotate(
+                name=Concat(
+                    F('implementation_address__region'),
+                    Value(', '),
+                    F('implementation_address__country_name')
+                )
+            ).values('name')
+        if group_by == 'sector':
+            records = records.annotate(name=F('target__name')).values('name')
+        records = records.annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        data = RecordValueGroupedSerializer(records, many=True).data
         return Response(data)
 
 class PublishedReleaseView(APIView):

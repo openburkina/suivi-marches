@@ -4,6 +4,7 @@ from .views import (
     BuyerList,
     BuyerRecordByStatus,
     BuyerRecordList,
+    BuyerRecordValuesGrouped,
     BuyerTotalRecordView,
     BuyerTransactionList,
     DoneRecordList,
@@ -17,6 +18,7 @@ from .views import (
 buyer_urlpatterns = [
     path(r'', BuyerList.as_view(), name='buyer-list'),
     path(r'<int:buyer_id>/records/', BuyerRecordList.as_view(), name='buyer-records-list'),
+    path(r'<int:buyer_id>/records/values', BuyerRecordValuesGrouped.as_view(), name='buyer-records-grouped-values'),
     path(r'<int:buyer_id>/records/by_status', BuyerRecordByStatus.as_view(), name='buyer-records-bystatus-list'),
     path(r'<int:buyer_id>/records/in_progress/', InProgressRecordList.as_view(), name='buyer-records-inprogress'),
     path(r'<int:buyer_id>/records/done/', DoneRecordList.as_view(), name='buyer-records-done'),
