@@ -45,6 +45,16 @@ class Release(models.Model):
     tender = models.OneToOneField('ocds_tender.Tender', on_delete=models.DO_NOTHING, null=True, blank=True)
     parties = models.ManyToManyField(Entity, through='Role')
 
+    @property
+    def step(self):
+        for (step, verbose) in reversed(RELEASE_TAG_CHOICES):
+            if step in self.tag:
+                return step
+
+    @property
+    def suppliers(self):
+        return self.parties.filter(role__role__contains=['supplier']).values_list('name', flat=True)
+
     def add_role(self, party, role_name):
         role_instance, created = Role.objects.get_or_create(release=self, entity=party)
         if role_instance.role:

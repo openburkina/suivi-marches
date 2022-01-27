@@ -10,6 +10,38 @@ from ocds_release.constants import PARTY_ROLE
 from ocds_release.models import Record, Release, Target
 from rest_framework import serializers
 
+class BuyerRecordSerializer(serializers.Serializer):
+    record_ocid = serializers.CharField()
+    suppliers = serializers.ListField()
+    title = serializers.CharField()
+    sector = serializers.CharField()
+    country = serializers.CharField()
+    region = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+    step = serializers.CharField()
+    last_update = serializers.DateTimeField()
+
+class BuyerRecordByStatusSerializer(serializers.Serializer):
+    planning = serializers.IntegerField()
+    tender = serializers.IntegerField()
+    award = serializers.IntegerField()
+    contract = serializers.IntegerField()
+    implementation = serializers.IntegerField()
+    done = serializers.IntegerField()
+    total = serializers.IntegerField()
+
+class RecordValueGroupedSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+
+class RecordSectorGroupedSerializer(serializers.Serializer):
+    year = serializers.IntegerField(source='compiled_release__date__year')
+    sector = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+
 class BuyerTotalRecordSerializer(serializers.Serializer):
     in_progress = ValueSerializer(many=True)
     done = ValueSerializer(many=True)
