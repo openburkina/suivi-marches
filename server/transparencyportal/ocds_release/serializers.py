@@ -20,7 +20,15 @@ class BuyerRecordSerializer(serializers.Serializer):
     value = ValueSerializer()
     step = serializers.CharField()
     last_update = serializers.DateTimeField()
-    
+
+class BuyerRecordByStatusSerializer(serializers.Serializer):
+    planning = serializers.IntegerField()
+    tender = serializers.IntegerField()
+    award = serializers.IntegerField()
+    contract = serializers.IntegerField()
+    implementation = serializers.IntegerField()
+    done = serializers.IntegerField()
+    total = serializers.IntegerField()
 
 class BuyerTotalRecordSerializer(serializers.Serializer):
     in_progress = ValueSerializer(many=True)

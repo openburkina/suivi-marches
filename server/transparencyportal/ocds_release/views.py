@@ -10,6 +10,7 @@ from ocds_master_tables.models import Entity
 from ocds_master_tables.serializers import EntitySerializer
 from ocds_release.models import PublishedRelease, Record, Release, Role, Target
 from ocds_release.serializers import (
+    BuyerRecordByStatusSerializer,
     BuyerRecordSerializer,
     BuyerTotalRecordSerializer,
     RecordItemSerializer,
@@ -123,9 +124,36 @@ class BuyerRecordList(APIView):
                 value = F('ref_record__implementation_value'),
                 last_update = F('date')
             )
-        print(releases[0].suppliers)
         data = BuyerRecordSerializer(releases, many=True).data
         return Response(data)        
+
+class BuyerRecordByStatus(APIView):
+    @swagger_auto_schema(
+        responses={200:BuyerRecordByStatusSerializer(many=True)},
+        manual_parameters=[
+            openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING)
+        ]
+    )
+    def get(self, request, buyer_id):
+        year = self.request.query_params.get('year')
+        if year is None:
+            return Response('Year not specified', status=500)
+        buyer_instance = get_object_or_404(Entity, pk=buyer_id)
+        releases = Release.objects.filter(buyer = buyer_instance, date__year=year)
+        print(releases)
+        output = {
+            'planning': 0,
+            'tender': 0,
+            'award': 0,
+            'contract': 0,
+            'implementation': 0,
+            'done': 0,
+            'total': releases.count(),
+        }
+        for release in releases:
+            output[release.step] += 1
+        data = BuyerRecordByStatusSerializer(output).data
+        return Response(data)
 
 class PublishedReleaseView(APIView):
     def get(self, request, pk):
