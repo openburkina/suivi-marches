@@ -35,6 +35,12 @@ class RecordValueGroupedSerializer(serializers.Serializer):
     value = serializers.FloatField()
     currency = serializers.CharField()
 
+class RecordSectorGroupedSerializer(serializers.Serializer):
+    year = serializers.IntegerField(source='compiled_release__date__year')
+    sector = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+
 class BuyerTotalRecordSerializer(serializers.Serializer):
     in_progress = ValueSerializer(many=True)
     done = ValueSerializer(many=True)

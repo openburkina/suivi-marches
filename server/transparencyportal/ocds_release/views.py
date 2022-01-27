@@ -1,7 +1,8 @@
 import json
+from locale import currency
 from django.db.models.aggregates import Sum
 from django.db.models.expressions import F, Value
-from django.db.models.functions import Concat
+from django.db.models.functions import Concat, TruncYear
 from django.db.models import Q, Subquery, OuterRef, ExpressionWrapper, ManyToManyField
 
 from django.shortcuts import get_object_or_404
@@ -16,6 +17,7 @@ from ocds_release.serializers import (
     BuyerTotalRecordSerializer,
     RecordValueGroupedSerializer,
     RecordItemSerializer,
+    RecordSectorGroupedSerializer,
     RecordSerializer,
     RecordStageSerializer,
     RecordSumSerializer,
@@ -128,6 +130,33 @@ class BuyerRecordList(APIView):
             )
         data = BuyerRecordSerializer(releases, many=True).data
         return Response(data)        
+
+class BuyerRecordSectorValues(APIView):
+    @swagger_auto_schema(
+        responses={200:BuyerRecordByStatusSerializer(many=True)},
+        manual_parameters=[
+            openapi.Parameter('start_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
+            openapi.Parameter('end_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True)
+        ]
+    )
+    def get(self, request, buyer_id):
+        start_year = self.request.query_params.get('start_year')
+        end_year = self.request.query_params.get('end_year')
+        if start_year is None or end_year is None:
+            return Response('Year not specified', status=500)
+        if int(start_year) > int(end_year):
+            return Response('Start year is after end year', status=500)
+
+        buyer_instance = get_object_or_404(Entity, pk=buyer_id)
+        records = Record.objects.filter(
+            compiled_release__buyer=buyer_instance,
+            compiled_release__date__year__gte=start_year,
+            compiled_release__date__year__lte=end_year,
+        ).values('compiled_release__date__year', sector=F('target__name'))\
+            .annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        data = RecordSectorGroupedSerializer(records, many=True).data
+        return Response(data)
+
 
 class BuyerRecordByStatus(APIView):
     @swagger_auto_schema(
