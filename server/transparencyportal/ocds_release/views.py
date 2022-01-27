@@ -8,7 +8,7 @@ from django.db.models import Q, Subquery, OuterRef, ExpressionWrapper, ManyToMan
 from django.shortcuts import get_object_or_404
 
 from ocds_implementation.serializers import TransactionSerializer
-from ocds_master_tables.models import Entity
+from ocds_master_tables.models import Entity, Value as Amount
 from ocds_master_tables.serializers import EntitySerializer
 from ocds_release.models import PublishedRelease, Record, Release, Role, Target
 from ocds_release.serializers import (
@@ -125,7 +125,8 @@ class BuyerRecordList(APIView):
                 sector = F('ref_record__target__name'),
                 country = F('ref_record__implementation_address__country_name'),
                 region = F('ref_record__implementation_address__region'),
-                value = F('ref_record__implementation_value'),
+                value = F('ref_record__implementation_value__amount'),
+                currency = F('ref_record__implementation_value__currency'),
                 last_update = F('date')
             )
         data = BuyerRecordSerializer(releases, many=True).data

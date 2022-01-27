@@ -17,7 +17,8 @@ class BuyerRecordSerializer(serializers.Serializer):
     sector = serializers.CharField()
     country = serializers.CharField()
     region = serializers.CharField()
-    value = ValueSerializer()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
     step = serializers.CharField()
     last_update = serializers.DateTimeField()
 
