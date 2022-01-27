@@ -40,7 +40,7 @@
             <v-list-item-title>Projects</v-list-item-title>
           </v-list-item>
           
-          <v-list-item to="/donors">
+          <v-list-item to="projet">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -81,7 +81,7 @@
          <v-btn to="/projet" text>
           <span class="mr-2 white--text">Travaux</span>
         </v-btn>
-        <v-btn text to="/donors">
+        <v-btn text to="/projet">
           <span class="mr-2  white--text">Bailleur</span>
         </v-btn>
         <!-- More menu -->

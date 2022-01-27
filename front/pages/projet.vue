@@ -86,7 +86,7 @@ export default {
       else return 'mdi-check'
     },
     createEditLink(buyers) {
-      return this.$router.push({ path: '/works/' + buyers.id })
+      return this.$router.push({ path: '/projets/' + buyers.id })
     },
   },
 }

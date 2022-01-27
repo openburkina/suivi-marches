@@ -5,11 +5,11 @@
 <script>
 export default {
    validate({ params }){
-       return /^\d+$/.test(params.works)
+       return /^\d+$/.test(params.projets)
     },
   data(){
     return {
-        id: this.$route.params.works
+        id: this.$route.params.projets
     }
   },
   mounted(){

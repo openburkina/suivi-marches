@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ progress }}
      <v-tabs v-model="tab" centered slider-size="1" hide-slider class="mb-5 mt-16" active-class="active">
         <v-tab
         >
@@ -20,15 +21,27 @@
             Travaux en cours
           </v-btn>
         </v-tab>
+        <v-tab>
+          <v-btn outlined rounded color="success"> 
+            <v-icon left>
+              mdi-chart-bar
+            </v-icon>
+            Statistiques
+          </v-btn>
+        </v-tab>
     </v-tabs>
      <v-tabs-items v-model="tab">
       <v-tab-item class="mx-5 mt-16 mb-16 elevation-4">
         <TravauxContentDone title='Travaux terminés' :done=done />
       </v-tab-item>
-    <v-tab-item class="mx-5 mt-16 mb-16 elevation-4">
+      <v-tab-item class="mx-5 mt-16 mb-16 elevation-4">
         <TravauxContentInprogress title='Travaux en cours' :inprogress=inprogress />
       </v-tab-item>
+      <v-tab-item class="mx-5">
+        <PieChart :pieChartData="label" :pieOptions="statas" />
+      </v-tab-item>
     </v-tabs-items>
+    
   </div>
 </template>
 
@@ -44,8 +57,22 @@ export default {
   },
     data () {
       return {
-        tab: null
+        tab: null,
+        label:{
+          labels: ['Términé', 'En cours'],
+        },
       }
+    },
+    computed:{
+    recordsDone(){
+      return this.$store.state.recordsDone
+    },
+    progress(){
+      return this.$store.state.recordsInprogress
+    },
+    statas(){
+      return [this.recordsDone.length, this.progress.length]
     }
+  },
 }
 </script>

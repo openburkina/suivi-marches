@@ -9,6 +9,8 @@ export const state = () => ({
     tendersYear:[],
     bByRegion:[],
     listOfCleanData:[],
+    stats:[],
+    tmpStat:[],
     
   })
 
@@ -46,14 +48,13 @@ export const mutations = {
     // setter de Liste de tous les travaux fait par un buyers
     listRecordsDone(state,paylaod){
         state.recordsDone = paylaod
-        console.log(state.recordsDone)
+       
     },
 
     // setter de Liste de tous les travaux en cours par buyers
     listRecordsInprogress(state,paylaod){
         state.recordsInprogress = paylaod
-        console.log(state.recordsInprogress)
-
+       
     },
     
     // setter de Liste de tous les travauxd'un buyers par region
