@@ -1,14 +1,16 @@
 import json
 from django.db.models.aggregates import Sum
 from django.db.models.expressions import F
+from django.db.models import Q, Subquery, OuterRef, ExpressionWrapper, ManyToManyField
 
 from django.shortcuts import get_object_or_404
 
 from ocds_implementation.serializers import TransactionSerializer
 from ocds_master_tables.models import Entity
 from ocds_master_tables.serializers import EntitySerializer
-from ocds_release.models import PublishedRelease, Record, Release, Target
+from ocds_release.models import PublishedRelease, Record, Release, Role, Target
 from ocds_release.serializers import (
+    BuyerRecordSerializer,
     BuyerTotalRecordSerializer,
     RecordItemSerializer,
     RecordSerializer,
@@ -22,6 +24,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+
 
 class RecordViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Record.objects.all()
@@ -103,6 +106,26 @@ class BuyerTransactionList(APIView):
         transactions = buyer_instance.as_payer_transactions.all()
         data = TransactionSerializer(transactions, many=True).data
         return Response(data)
+
+class BuyerRecordList(APIView):
+    @swagger_auto_schema(responses={200:BuyerRecordSerializer(many=True)})
+    def get(self, request, buyer_id):
+        buyer_instance = get_object_or_404(Entity, pk=buyer_id)
+        releases = Release.objects\
+            .filter(
+                buyer = buyer_instance,
+            ).annotate(
+                record_ocid = F('ref_record__ocid'),
+                title = F('tender__title'),
+                sector = F('ref_record__target__name'),
+                country = F('ref_record__implementation_address__country_name'),
+                region = F('ref_record__implementation_address__region'),
+                value = F('ref_record__implementation_value'),
+                last_update = F('date')
+            )
+        print(releases[0].suppliers)
+        data = BuyerRecordSerializer(releases, many=True).data
+        return Response(data)        
 
 class PublishedReleaseView(APIView):
     def get(self, request, pk):
