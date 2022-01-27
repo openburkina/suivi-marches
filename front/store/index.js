@@ -8,7 +8,8 @@ export const state = () => ({
     records:[],
     tendersYear:[],
     bByRegion:[],
-    listOfCleanData:[]
+    listOfCleanData:[],
+    
   })
 
 export const mutations = {
@@ -114,7 +115,15 @@ export const actions = {
             `http://localhost:8000/api/buyers/${id}/records/in_progress/`)
             .then(res=>{
                 commit("listRecordsInprogress",res.data)
-            })
+        })
+    },
+
+    async allRecordsInprogress({commit}){
+        await axios.get(
+            `http://localhost:8000/api/buyers/records/in_progress/`)
+            .then(res=>{
+                commit("listRecordsInprogress",res.data)
+        })
     },
 
     /*
