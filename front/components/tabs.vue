@@ -35,97 +35,21 @@
        <v-container>
       <v-row no-gutters class="mx-3 mt-5">
       <v-col order="6">
-        <v-card
-          class="my-5"
-          max-width="500"
-          outlined
-          tile
-          elevation="5"
-
-        >
-          <v-card-title class="display-1">Statut des projets</v-card-title>
-          <v-divider></v-divider>
-          <apexchart
-            type="donut"
-            :options="chartOptionsD"
-            :series="seriesD"
-            :max-width="500"
-            :height="300"
-          ></apexchart>
-          
-        </v-card>
+        <PieChart :pieChartData="chartOptionsD" :pieOptions="seriesD" />
       </v-col>
       <v-col order="6">
-        <v-card
-          class="my-5"
-          outlined
-          tile
-          elevation="5"
-          max-width="500"
-        >
-          <v-card-title class="display-1">Montant par secteurs</v-card-title>
-          <v-divider></v-divider>
-          <apexchart
-            type="line"
-            :options="chartOptionsLine"
-            :series="seriesLine"
-            :max-width="500"
-            :height="300"
-          ></apexchart>
-        </v-card>
+       <LineChart :chartOptionsLine="chartOptionsLine" :lineSeries="seriesLine" />
       </v-col>
     </v-row>
 
 
     <v-row no-gutters class="mx-3 mt-5">
-       <v-col order="6"
-        ><v-card
-        
-         class="my-5"
-          outlined
-          tile
-          elevation="5"
-          max-width="500"
-        >
-          <v-card-title class="text-h5"
-            >Montant par r&eacute;gions</v-card-title
-          >
-          <v-card-subtitle
-            >Montant des projets par r&eacute;gions</v-card-subtitle
-          >
-          <v-divider></v-divider>
-          <apexchart
-            type="bar"
-            :options="chartOptionsBar1"
-            :series="seriesBar1"
-            :max-width="500"
-            :height="300"
-          ></apexchart> </v-card
-      ></v-col>
-      <v-col order="6"
-        ><v-card 
-        
-         class="my-5"
-          outlined
-          tile
-          elevation="5"
-          max-width="500"
-        >
-          <v-card-title class="text-h5"
-            >Montant par secteurs</v-card-title
-          >
-          <v-card-subtitle
-            >Montant des projets par secteurs</v-card-subtitle
-          >
-          <v-divider></v-divider>
-          <apexchart
-            type="bar"
-            :options="chartOptionsBar2"
-            :series="seriesBar2"
-            :max-width="500"
-            :height="300"
-          ></apexchart> </v-card
-      ></v-col>
+       <v-col order="6">
+         <BarChart :chartOptionsBar="chartOptionsBar1" :seriesBar="seriesBar1" />
+       </v-col>
+      <v-col order="6">
+         <BarChart :chartOptionsBar="chartOptionsBar2" :seriesBar="seriesBar2" />
+        </v-col>
     </v-row>
     </v-container>
       </v-tab-item>
@@ -236,20 +160,16 @@
       seriesD: [34, 66],
       //
       // CAROUSEL DATA
-      //
-      items: [
-        {
-          src: require('~/assets/img/image3.jpg'),
-        },
-        {
-          src: require('~/assets/img/image1.jpg'),
-        },
-        {
-          src: require('~/assets/img/image2.jpg'),
-        },
-      ],
-       
       }
     },
+  mounted(){
+    this.$store.dispatch('fetchBuyers')
+  },
+ 
+  computed:{
+    buyers(){
+      return this.$store.state.list
+    }
+  },
   }
 </script>
