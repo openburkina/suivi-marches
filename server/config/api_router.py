@@ -8,6 +8,9 @@ from transparencyportal.ocds_release.urls import (
     record_urlpatterns,
     release_urlpatterns,
 )
+from transparencyportal.ocds_master_tables.urls import (
+    region_urlpatterns
+)
 from transparencyportal.ocds_release.views import (
     RecordViewSet,
     ReleaseViewSet,
@@ -35,5 +38,6 @@ urlpatterns += [
     path("buyers/", include(buyer_urlpatterns)),
     path("records/", include(record_urlpatterns)),
     path("releases/", include(release_urlpatterns)),
+    path("regions/", include(region_urlpatterns)),
     path('docs/', include("api_doc.urls")),
 ]
