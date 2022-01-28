@@ -47,8 +47,14 @@ export default {
             value: 'name',
           },
         
-          { text: 'url', value: 'url' },
+          { text: 'country', value: 'country' },
+          { text: 'target_name', value: 'target_name' },
+          { text: 'region', value: 'region' },
           { text: 'compiled_release', value: 'compiled_release' },
+          { text: ' postal_code', value: ' postal_code' },
+          { text: 'url', value: 'url' },
+          { text: 'ocid', value: 'ocid' },
+          { text: ' implementation_value', value: ' implementation_value' },
         ],
     }
   },

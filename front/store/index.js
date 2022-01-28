@@ -11,6 +11,7 @@ export const state = () => ({
     listOfCleanData:[],
     stats:[],
     tmpStat:[],
+    tmpList:[],
     
   })
 
@@ -48,12 +49,49 @@ export const mutations = {
     // setter de Liste de tous les travaux fait par un buyers
     listRecordsDone(state,paylaod){
         state.recordsDone = paylaod
+        state.tmpList = []
+        state.recordsDone.forEach((el)=>{
+            state.tmpList.push({
+                url:el.url,
+                compiled_release:el.compiled_release,
+                target_name:el.target.name,
+                country:el.implementation_address.country_name,
+                region:el.implementation_address.region,
+                locality:el.implementation_address.locality,
+                postal_code:el.implementation_address.postal_code,
+                longitude:el.implementation_address.locality_longitude,
+                latitude:el.implementation_address.locality_latitude,
+                ocid:el.ocid,
+                implementation_value:el.implementation_value
+            })
+           
+        })
+        state.recordsDone = state.tmpList
+        state.tmpList = []
        
     },
 
     // setter de Liste de tous les travaux en cours par buyers
     listRecordsInprogress(state,paylaod){
         state.recordsInprogress = paylaod
+        state.recordsInprogress.forEach((el)=>{
+            state.tmpList.push({
+                url:el.url,
+                compiled_release:el.compiled_release,
+                target_name:el.target.name,
+                country:el.implementation_address.country_name,
+                region:el.implementation_address.region,
+                locality:el.implementation_address.locality,
+                postal_code:el.implementation_address.postal_code,
+                longitude:el.implementation_address.locality_longitude,
+                latitude:el.implementation_address.locality_latitude,
+                ocid:el.ocid,
+                implementation_value:el.implementation_value
+            })
+           
+        })
+        state.recordsInprogress = state.tmpList
+        state.tmpList = []
        
     },
     
@@ -177,3 +215,8 @@ export const actions = {
 }
 export const getters = {}
 
+
+
+
+// Colaboration : 
+// etude : doc,url
