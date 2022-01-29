@@ -1,10 +1,50 @@
 from rest_framework import serializers
 from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Period, Unit, Value, Projet, Budget
 
-
 class RegionSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     country = serializers.CharField(source='implementation_address__country_name')
     region = serializers.CharField(source='implementation_address__region')
+
+# Specific serializers. 
+class RecordAggregateSerializer(serializers.Serializer):
+    record_ocid = serializers.CharField()
+    suppliers = serializers.ListField()
+    title = serializers.CharField()
+    sector = serializers.CharField()
+    buyer_name = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+    step = serializers.CharField()
+    last_update = serializers.DateTimeField()
+
+class RecordValueBySectorYearSerializer(serializers.Serializer):
+    year = serializers.IntegerField(source='compiled_release__date__year')
+    sector = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+
+class RecordNumberByStatusYearSerializer(serializers.Serializer):
+    planning = serializers.IntegerField()
+    tender = serializers.IntegerField()
+    award = serializers.IntegerField()
+    contract = serializers.IntegerField()
+    implementation = serializers.IntegerField()
+    done = serializers.IntegerField()
+    total = serializers.IntegerField()
+
+class RecordValueEvolutionBySectorSerializer(serializers.Serializer):
+    year = serializers.IntegerField(source='compiled_release__date__year')
+    sector = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+
+class RecordValueByGenericSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+
+# End specific serializers.
 
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
