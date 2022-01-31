@@ -44,15 +44,16 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Region</v-list-item-title>
+            <v-list-item-title>Bailleurs</v-list-item-title>
           </v-list-item>
-          
-          <v-list-item to="/sustainable">
+
+          <v-list-item to="region">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>SUSTAINABLE DEVELOPMENT GOALS</v-list-item-title>
+            <v-list-item-title>Region</v-list-item-title>
           </v-list-item>
+          
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

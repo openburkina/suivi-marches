@@ -1,5 +1,5 @@
 <template>
-  <SingleRegion :done=region />
+  <RegionHelper :done=region />
 </template>
 
 <script>
