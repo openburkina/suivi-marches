@@ -76,7 +76,7 @@
       />
       <div v-else>
         <v-btn to="/" text>
-          <span class="mr-2 white--text">Home</span>
+          <span class="mr-2 white--text">Acceuil</span>
         </v-btn>
          <v-btn to="/projet" text>
           <span class="mr-2 white--text">Travaux</span>
