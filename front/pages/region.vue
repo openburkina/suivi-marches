@@ -76,7 +76,7 @@ export default {
       else return 'mdi-check'
     },
     createEditLink(region) {
-      this.$store.state.regionName = region.region
+      this.$store.state.regionName = `Region de : ${region.region}`
       return this.$router.push({ path: '/regions/' + region.id})
     },
   },

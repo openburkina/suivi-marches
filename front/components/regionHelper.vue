@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{  }}
      <v-tabs v-model="tab" centered slider-size="1" hide-slider class="mb-5 mt-16" active-class="active">
         <v-tab
         >
@@ -23,7 +24,7 @@
     </v-tabs>
      <v-tabs-items v-model="tab">
       <v-tab-item class="mx-5 mt-16 mb-16 elevation-4">
-        <SingleRegion title='Travaux de' :done=done />
+        <SingleRegion :title=this.$store.state.regionName :done=done />
       </v-tab-item>
       <v-tab-item class="mx-5">
         <v-container>
