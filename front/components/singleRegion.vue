@@ -2,6 +2,17 @@
   <v-card>
     <v-card-title>
       {{title}}
+      <div width="100" class="ml-4">
+         <v-combobox
+          v-model="select"
+          :items="items"
+          label="Choisir l'intervalle des années"
+          multiple
+          chips
+          counter="2"
+          auto-select-first
+        ></v-combobox>
+        </div>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -40,6 +51,10 @@ export default {
   data(){
     return {
       search: '',
+      items: [],
+      annee:2018,
+      select:null,
+
         headers: [
           {
             align: 'start',
@@ -57,6 +72,12 @@ export default {
         ],
     }
   },
+  mounted(){
+    for(this.annee;this.annee<2032;this.annee++){
+      this.items.push(this.annee)
+    }
+  },
+  computed:{},
   methods:{
     clicked(row){
      
