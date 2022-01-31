@@ -77,6 +77,7 @@
         color="white"
         @click.stop="drawer = !drawer"
       />
+      <!-- hello -->
       <div v-else>
         <v-btn to="/" text>
           <span class="mr-2 white--text">Acceuil</span>
