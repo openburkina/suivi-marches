@@ -37,14 +37,14 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Projects</v-list-item-title>
+            <v-list-item-title>Travaux</v-list-item-title>
           </v-list-item>
           
           <v-list-item to="projet">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Donors</v-list-item-title>
+            <v-list-item-title>Region</v-list-item-title>
           </v-list-item>
           
           <v-list-item to="/sustainable">
@@ -63,9 +63,12 @@
       v-bind:elevation="scrollPosition>28?4:0"
       color="indigo lighten-1"
     >
+        
+        <a href="/">
         <img
           :src="require('~/assets/img/logo.png')" height="60" width="50"
         >
+        </a>
   
       <v-spacer />
       <v-app-bar-nav-icon
@@ -85,7 +88,9 @@
           <span class="mr-2  white--text">Bailleur</span>
         </v-btn>
         <!-- More menu -->
-          <Menu />
+        <v-btn text to="/region">
+          <span class="mr-2  white--text">Region</span>
+        </v-btn>
       </div>
     </v-app-bar>
     <v-main>
