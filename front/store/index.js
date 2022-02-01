@@ -17,6 +17,7 @@ export const state = () => ({
     listOfRegion: [],
     listRegions:[],
     regionName:'',
+    stataSerie:[],
     
   })
 
@@ -54,6 +55,7 @@ export const mutations = {
     // setter de Liste de tous les travaux fait par un buyers
     listRecordsDone(state,paylaod){
         state.recordsDone = paylaod
+
         state.tmpList = []
         state.recordsDone.forEach((el)=>{
             state.tmpList.push({
@@ -72,6 +74,10 @@ export const mutations = {
            
         })
         state.recordsDone = state.tmpList
+        state.tmpList = []
+        state.tmpList.push(state.recordsDone.length)
+        state.tmpList.push(state.recordsInprogress.length)
+        state.stataSerie = state.tmpList
         state.tmpList = []
        
     },
@@ -152,6 +158,11 @@ export const mutations = {
 
     },
 
+
+    // { params: {
+//   mail,
+//   firstname
+// }}
      // setter de Liste de tous les marché par année
     listBuyerByRegion(state,paylaod){
         state.bByRegion = paylaod

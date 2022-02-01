@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{this.$store.state.stataSerie}}
      <v-tabs v-model="tab" centered slider-size="1" hide-slider class="mb-5 mt-16" active-class="active">
         <v-tab
         >
