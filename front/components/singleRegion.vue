@@ -61,7 +61,7 @@ export default {
             sortable: false,
             value: 'name',
           },
-          { text: 'id', value: 'id' },
+         
           { text: 'title', value: 'title' },
           { text: 'buyer_name', value: 'buyer_name' },
           { text: 'sector', value: 'sector' },
