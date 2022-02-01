@@ -177,6 +177,7 @@ export const actions = {
     */
     // Liste de tous les buyers
     async fetchBuyers({ commit }){
+        let form = new FormData()
         await axios.get(
             "http://localhost:8000/api/buyers",
           ).then(res=>{
