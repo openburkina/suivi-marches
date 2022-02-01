@@ -370,6 +370,8 @@ def create_tenders(ws: worksheet):
         tender.save()
 
         release.tender = tender
+        release.ref_record.implementation_value = tender.value
+        release.ref_record.save()
         release.buyer = buyer_entity
         release.update_buyer_role()
         release.save()

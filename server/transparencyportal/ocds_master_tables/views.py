@@ -62,7 +62,7 @@ class RegionRecordNumberByStatusYearView(APIView):
         region_instance = get_object_or_404(Address, pk=region_id)
         releases = Release.objects.filter(
             ref_record__implementation_address = region_instance,
-            date__year=year
+            tender__tender_period__start_date__year=year
         )
         output = {
             'planning': 0,
@@ -97,9 +97,9 @@ class RegionRecordValueEvolutionBySectorView(APIView):
         region_instance = get_object_or_404(Address, pk=region_id)
         records = Record.objects.filter(
             implementation_address=region_instance,
-            compiled_release__date__year__gte=start_year,
-            compiled_release__date__year__lte=end_year,
-        ).values('compiled_release__date__year', sector=F('target__name'))\
+            compiled_release__tender__tender_period__start_date__year__gte=start_year,
+            compiled_release__tender__tender_period__start_date__year__lte=end_year,
+        ).values('compiled_release__tender__tender_period__start_date__year', sector=F('target__name'))\
             .annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
         data = RecordValueEvolutionBySectorSerializer(records, many=True).data
         return Response(data)
@@ -123,7 +123,7 @@ class RegionRecordValueByGenericView(APIView):
         region_instance = get_object_or_404(Address, pk=region_id)
         records = Record.objects.filter(
                 implementation_address=region_instance,
-                compiled_release__date__year=year
+                compiled_release__tender__tender_period__start_date__year=year
             )
         if group_by == 'buyer':
             records = records.annotate(

@@ -37,7 +37,7 @@ class RecordValueGroupedSerializer(serializers.Serializer):
     currency = serializers.CharField()
 
 class RecordSectorGroupedSerializer(serializers.Serializer):
-    year = serializers.IntegerField(source='compiled_release__date__year')
+    year = serializers.IntegerField(source='compiled_release__tender__tender_period__start_date__year')
     sector = serializers.CharField()
     value = serializers.FloatField()
     currency = serializers.CharField()
