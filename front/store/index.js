@@ -12,6 +12,11 @@ export const state = () => ({
     stats:[],
     tmpStat:[],
     tmpList:[],
+    listOfRecords:[],
+    particularName:'',
+    listOfRegion: [],
+    listRegions:[],
+    regionName:'',
     
   })
 
@@ -101,9 +106,42 @@ export const mutations = {
         console.log(state.totauxByBuyer)
 
     },
+    listOfRecords(state,paylaod){
+        state.listOfRecords = paylaod
+        state.listOfRecords.forEach((el)=>{
+            state.tmpList.push({
+                title: el.title,
+                record_ocid:el.record_ocid,
+                sector: el.sector,
+                country: el.country,
+                region: el.region,
+                value: el.value,
+                currency: el.currency,
+                step: el.step,
+                last_update: el.last_update
+            })
+        })
+        state.listOfRecords = state.tmpList
+        state.tmpList = []
+
+    },
+
     // setter de Liste de tous les tenders
     listSpecification(state,paylaod){
         state.records = paylaod
+        console.log(state.records)
+
+    },
+     // setter de Liste de tous les tenders
+    particularRegion(state,paylaod){
+        state.listRegions = paylaod
+        console.log(state.listRegions)
+
+    },
+    
+     // setter de Liste de tous les tenders
+    getRegion(state,paylaod){
+        state.listOfRegion = paylaod
         console.log(state.records)
 
     },
@@ -134,6 +172,22 @@ export const actions = {
               commit("listOfBuyers",res.data)}
         )
     },
+    
+     /*
+        ###################################################################
+    */
+    // Liste de tous les travaux fait par un buyers
+    async region({commit}){
+        await axios.get(
+            "http://localhost:8000/api/regions")
+            .then(res=>{
+                commit("getRegion",res.data)
+            })
+    },
+    /*
+        ###################################################################
+    */
+    
      /*
         ###################################################################
     */
@@ -148,6 +202,23 @@ export const actions = {
     /*
         ###################################################################
     */
+
+
+     /*
+        ###################################################################
+    */
+    // Une region en particulier
+    async oneRegion({commit},id){
+        console.log(id)
+        await axios.get(
+            `http://localhost:8000/api/regions/${id}/records/`)
+            .then(res=>{
+                commit("particularRegion",res.data)
+            })
+    },
+    /*
+        ###################################################################
+    */
     // Liste de tous les travaux en cours par buyers
     async recordsInprogress({commit},id){
         await axios.get(
@@ -156,6 +227,14 @@ export const actions = {
                 commit("listRecordsInprogress",res.data)
         })
     },
+    async records({commit},id){
+        await axios.get(
+            `http://localhost:8000/api/buyers/${id}/records/`)
+            .then(res=>{
+                commit("listOfRecords",res.data)
+        })
+    },
+
 
     async allRecordsInprogress({commit}){
         await axios.get(

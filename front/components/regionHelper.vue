@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{  }}
      <v-tabs v-model="tab" centered slider-size="1" hide-slider class="mb-5 mt-16" active-class="active">
         <v-tab
         >
@@ -23,13 +24,13 @@
     </v-tabs>
      <v-tabs-items v-model="tab">
       <v-tab-item class="mx-5 mt-16 mb-16 elevation-4">
-        <TravauxContentDone :title=this.$store.state.particularName :done=done />
+        <SingleRegion :title=this.$store.state.regionName :done=done />
       </v-tab-item>
       <v-tab-item class="mx-5">
         <v-container>
         <v-row>
           <v-col order="6">
-            <PieChart :pieChartData="label" :pieOptions="statas" />
+            <PieChart :pieChartData="label" :pieOptions="[1,5]" />
           </v-col>
           <v-col order="6">
             <LineChart :chartOptionsLine="chartOptionsLine" :lineSeries="seriesLine" />
@@ -114,16 +115,5 @@ export default {
       
       }
     },
-    computed:{
-    recordsDone(){
-      return this.$store.state.listOfRecords
-    },
-    progress(){
-      return this.$store.state.listOfRecords
-    },
-    statas(){
-      return [this.recordsDone.length, this.progress.length]
-    }
-  },
 }
 </script>

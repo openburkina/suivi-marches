@@ -167,8 +167,11 @@
   },
  
   computed:{
-    buyers(){
-      return this.$store.state.list
+    done(){
+      return this.$store.state.recordsDone.length
+    },
+    pregress(){
+      return this.$store.state.recordsInprogress.length
     }
   },
   }
