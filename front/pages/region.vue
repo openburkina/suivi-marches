@@ -18,7 +18,7 @@
       </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="region"
+        :items="regions"
         :search="search"
         :items-per-page=5
         :options=
@@ -49,7 +49,6 @@ export default {
             sortable: false,
          
           },
-        { text: 'id', value: 'id' },
         { text: 'country', value: 'country' },
         { text: 'region', value: 'region' },
         
@@ -62,7 +61,7 @@ export default {
   },
  
   computed:{
-    region(){
+    regions(){
       return this.$store.state.listOfRegion
     },
    
@@ -76,9 +75,9 @@ export default {
       if (statut < 1) return 'mdi-close'
       else return 'mdi-check'
     },
-    createEditLink(region) {
-      this.$store.state.regionName = `Region de : ${region.region}`
-      return this.$router.push({ path: '/regions/' + region.id})
+    createEditLink(regions) {
+      this.$store.state.regionName = `Region de : ${regions.region}`
+      return this.$router.push({ path: '/regions/' + regions.country + '/' + regions.region})
     },
   },
 }

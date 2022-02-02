@@ -8,8 +8,8 @@ urlpatterns = [
 
 region_urlpatterns = [
         path(r'', RegionListView.as_view(), name='region-list'),
-        path(r'<int:region_id>/records', RegionRecordListView.as_view(), name='region-record-list'),
-        path(r'<int:region_id>/records/sector_values', RegionRecordValueEvolutionBySectorView.as_view(), name='region-records-sector-values'),
-        path(r'<int:region_id>/records/values', RegionRecordValueByGenericView.as_view(), name='region-records-grouped-values'),
-        path(r'<int:region_id>/records/by_status', RegionRecordNumberByStatusYearView.as_view(), name='region-records-bystatus-list')
+        path(r'records', RegionRecordListView.as_view(), name='region-record-list'),
+        path(r'records/sector_values', RegionRecordValueEvolutionBySectorView.as_view(), name='region-records-sector-values'),
+        path(r'records/values', RegionRecordValueByGenericView.as_view(), name='region-records-grouped-values'),
+        path(r'records/by_status', RegionRecordNumberByStatusYearView.as_view(), name='region-records-bystatus-list')
 ]

@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Period, Unit, Value, Projet, Budget
 
 class RegionSerializer(serializers.Serializer):
-    id = serializers.IntegerField()
     country = serializers.CharField(source='implementation_address__country_name')
     region = serializers.CharField(source='implementation_address__region')
 
