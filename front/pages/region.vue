@@ -75,17 +75,16 @@ export default {
       if (statut < 1) return 'mdi-close'
       else return 'mdi-check'
     },
-<<<<<<< HEAD
     createEditLink(regions) {
       this.$store.state.regionName = `Region de : ${regions.region}`
       return this.$router.push({ path: '/regions/' + regions.country + '/' + regions.region})
-=======
-    createEditLink(region) {
+    },
+    createEditLink(region){
       this.$store.state.regionName = `Region de : ${region.region}`
       this.$store.state.idRegion = region.id
       return this.$router.push({ path: '/regions/' + region.id})
->>>>>>> d408bb4 (able to get value from combobox)
-    },
-  },
+    }
+  }
 }
+
 </script>
