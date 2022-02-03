@@ -10,6 +10,7 @@
           multiple
           chips
           counter="2"
+          @change="onchange"
           auto-select-first
         ></v-combobox>
         </div>
@@ -79,8 +80,11 @@ export default {
   },
   computed:{},
   methods:{
-    clicked(row){
-     
+    onchange(value){
+     if(value.length!=0){
+       console.log(this.$store.state.idRegion)
+      //  this.$store.dispatch('',this.$store.state.idRegion)
+     }
     }
   }
 }

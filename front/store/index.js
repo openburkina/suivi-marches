@@ -18,6 +18,8 @@ export const state = () => ({
     listRegions:[],
     regionName:'',
     stataSerie:[],
+    recordsTotalOfBuyeur:[],
+    idRegion: 0
     
   })
 
@@ -138,14 +140,20 @@ export const mutations = {
         console.log(state.records)
 
     },
-     // setter de Liste de tous les tenders
+    // setter de Liste de tous les tenders
     particularRegion(state,paylaod){
         state.listRegions = paylaod
         console.log(state.listRegions)
 
     },
+    // setter de liste total d'un records pour un buyeur
+    recordsTotalBuyeur(state,paylaod){
+        state.recordsTotalOfBuyeur = paylaod
+        console.log(state.recordsTotalOfBuyeur)
+
+    },
     
-     // setter de Liste de tous les tenders
+    // setter de Liste de tous les tenders
     getRegion(state,paylaod){
         state.listOfRegion = paylaod
         console.log(state.records)
@@ -177,15 +185,29 @@ export const actions = {
     */
     // Liste de tous les buyers
     async fetchBuyers({ commit }){
-        let form = new FormData()
+      
         await axios.get(
             "http://localhost:8000/api/buyers",
           ).then(res=>{
               commit("listOfBuyers",res.data)}
         )
     },
-    
-     /*
+
+
+    /*
+        ###################################################################
+    */
+    // Liste de tous les buyers
+    async recordsTotalByBuyeur({ commit },id){
+       
+        await axios.get(
+            `http://localhost:8000/api/buyers/${id}/records/total/`,
+          ).then(res=>{
+              commit("recordsTotalBuyeur",res.data)}
+        )
+    },
+
+    /*
         ###################################################################
     */
     // Liste de tous les travaux fait par un buyers
