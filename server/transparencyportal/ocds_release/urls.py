@@ -14,6 +14,7 @@ from .views import (
     RecordItemList,
     RecordStageList,
     SumRecord,
+    BuyerTotalRecord
 )
 
 buyer_urlpatterns = [
@@ -26,6 +27,8 @@ buyer_urlpatterns = [
     path(r'<int:buyer_id>/records/done/', DoneRecordList.as_view(), name='buyer-records-done'),
     path(r'<int:buyer_id>/records/total/', BuyerTotalRecordView.as_view(), name='buyer-records-total'),
     path(r'<int:buyer_id>/transactions/', BuyerTransactionList.as_view(), name='buyer-transactions-list'),
+    path(r'<int:buyer_id>/total/', BuyerTotalRecord.as_view(), name='buyer-transactions-list'),
+
 ]
 
 record_urlpatterns = [

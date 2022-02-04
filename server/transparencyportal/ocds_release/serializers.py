@@ -92,3 +92,8 @@ class RecordSumSerializer(serializers.ModelSerializer):
     class Meta:
         model = Record
         fields ='__all__'
+
+class BuyerRecordTotalSerializer(serializers.Serializer):
+    progress = serializers.ReadOnlyField()
+    done = serializers.ReadOnlyField()
+    #total = serializers.IntegerField()

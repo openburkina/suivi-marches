@@ -51,10 +51,10 @@ export default {
           { text: 'sector', value: 'sector' },
           { text: 'title', value: 'title' },
           { text: 'record_ocid', value: 'record_ocid' },
-          { text: 'currency"', value: 'currency' },
+          { text: 'currency', value: 'currency' },
+          { text: 'value', value: 'value' },
           { text: 'step', value: 'step' },
           { text: 'last_update', value: 'last_update' },
-          { text: 'value', value: 'value' },
         ],
     }
   },

@@ -27,6 +27,17 @@
       </v-tab-item>
       <v-tab-item class="mx-5">
         <v-container>
+        <div width="100" class="ml-4">
+         <v-combobox
+          v-model="select"
+          :items="items"
+          label="Choisir l'intervalle des années"
+          multiple
+          chips
+          counter="2"
+          auto-select-first
+        ></v-combobox>
+        </div>
         <v-row>
           <v-col order="6">
             <PieChart :pieChartData="label" :pieOptions="[1,5]" />
@@ -67,8 +78,11 @@ export default {
     data () {
       return {
         tab: null,
+        items: [],
+        annee:2018,
+        select:null,
         label:{
-          labels: ['Términé', 'En cours'],
+          labels: ['Terminé', 'En cours'],
         },
         chartOptionsLine: {
         chart: {
@@ -114,5 +128,10 @@ export default {
       
       }
     },
+    mounted(){
+    for(this.annee;this.annee<2032;this.annee++){
+      this.items.push(this.annee)
+    }
+  },
 }
 </script>

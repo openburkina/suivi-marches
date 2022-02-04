@@ -23,6 +23,7 @@ from ocds_release.serializers import (
     RecordSumSerializer,
     ReleaseSerializer,
     TargetSerializer,
+    BuyerRecordTotalSerializer
 )
 from rest_framework import status, viewsets
 from rest_framework.response import Response
@@ -295,4 +296,23 @@ class SumRecord(APIView):
         data = RecordSumSerializer(queryset, many=True, context={'request': request}).data
         return Response({
             'entity': data
+        })
+
+class BuyerTotalRecord(APIView):
+    @swagger_auto_schema(responses={200:RecordSerializer(many=True)})
+    def get(self, request, buyer_id):
+        buyer_instance = get_object_or_404(Entity, pk=buyer_id)
+        queryset_progress = Release.objects.filter(
+            buyer = buyer_instance.pk).exclude(tag = ['contractTermination'])
+        queryset_done = Release.objects.filter(
+            buyer = buyer_instance.pk,
+            tag = ['contractTermination']
+        )
+        total_in = queryset_progress.count()
+        total_finish = queryset_done.count()
+        #output_instance['total'] = queryset_progress.count()+queryset_done.count()        
+        #data = BuyerRecordTotalSerializer(output_instance, many=True, context={'request': request}).data
+        return Response({
+            'In_progress': total_in,
+            'Finish' : total_finish
         })
