@@ -9,8 +9,8 @@
         <v-divider></v-divider>
         <apexchart
             type="donut"
-            :options="pieChartData"
-            :series="pieOptions"
+            :options="pieOptions"
+            :series="pieChartData"
             :max-width="500"
             :height="300">
         </apexchart> 

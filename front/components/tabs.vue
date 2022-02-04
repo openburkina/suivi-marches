@@ -35,7 +35,7 @@
        <v-container>
       <v-row no-gutters class="mx-3 mt-5">
       <v-col order="6">
-        <PieChart :pieChartData="chartOptionsD" :pieOptions="seriesD" />
+        <PieChart :pieOptions="chartOptionsD" :pieChartData="seriesD" />
       </v-col>
       <v-col order="6">
        <LineChart :chartOptionsLine="chartOptionsLine" :lineSeries="seriesLine" />

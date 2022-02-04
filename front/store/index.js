@@ -255,9 +255,9 @@ export const actions = {
         ###################################################################
     */
     // Une region en particulier
-    async oneRegion({commit},id){
+    async oneRegion({commit}, {country, region}){
         await axios.get(
-            `http://localhost:8000/api/regions/${id}/records`)
+            `http://localhost:8000/api/regions/records?country=${country}&region=${region}`)
             .then(res=>{
                 commit("particularRegion",res.data)
             })

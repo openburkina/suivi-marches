@@ -26,39 +26,12 @@
         <SingleRegion :title=this.$store.state.regionName :done=done />
       </v-tab-item>
       <v-tab-item class="mx-5">
-        <v-container>
-        <div width="100" class="ml-4">
-         <v-combobox
-          v-model="select"
-          :items="items"
-          label="Choisir l'intervalle des années"
-          multiple
-          chips
-          counter="2"
-          auto-select-first
-        ></v-combobox>
-        </div>
-        <v-row>
-          <v-col order="6">
-            <PieChart :pieChartData="label" :pieOptions="[1,5]" />
-          </v-col>
-          <v-col order="6">
-            <LineChart :chartOptionsLine="chartOptionsLine" :lineSeries="seriesLine" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col order="6">
-            <v-col order="6">
-              <BarChart :chartOptionsBar="chartOptionsBar1" :seriesBar="seriesBar1" />
-            </v-col>
-          </v-col>
-          <v-col order="6">
-            <v-col order="6">
-              <BarChart :chartOptionsBar="chartOptionsBar1" :seriesBar="seriesBar1" />
-            </v-col>
-          </v-col>
-        </v-row>
-         </v-container>
+        <ChartList 
+          :pieChartLabels="['done', 'in progress']" :pieChartData="[3,4]"
+          :lineChartLabels="['2020', '2021', '2022', '2023']" :lineChartData="seriesLine"
+          :barChartOneLabels="['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud']" :barChartOneData="[30, 40, 35, 50]"
+          :barChartTwoLabels="['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud']" :barChartTwoData="[30, 40, 35, 50]"
+        />
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -78,54 +51,24 @@ export default {
     data () {
       return {
         tab: null,
-        items: [],
-        annee:2018,
-        select:null,
-        label:{
-          labels: ['Terminé', 'En cours'],
-        },
-        chartOptionsLine: {
-        chart: {
-          id: 'vuechart-example',
-        },
-        xaxis: {
-          categories: ['Sécurité', 'Santé', 'Éducation', 'Agriculture'],
-        },
-      },
-      seriesLine: [
-        {
-          name: 'Sécurité',
-          data: [10, 20, 30, 40],
-        },
-        {
-          name: 'Santé',
-          data: [15, 25, 35, 50],
-        },
-        {
-          name: 'Éducation',
-          data: [9, 7, 13, 20],
-        },
-        {
-          name: 'Agriculture',
-          data: [5, 3, 8, 26],
-        },
-      ],
-      chartOptionsBar1: {
-        chart: {
-          id: 'vuechart-example',
-        },
-        xaxis: {
-          categories: ['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud'],
-        },
-        colors: '#008FFB',
-      },
-      seriesBar1: [
-        {
-          name: 'Pays',
-          data: [30, 40, 35, 50],
-        },
-      ],
-      
+        seriesLine: [
+          {
+            name: 'Sécurité',
+            data: [10, 20, 30, 40],
+          },
+          {
+            name: 'Santé',
+            data: [15, 25, 35, 50],
+          },
+          {
+            name: 'Éducation',
+            data: [9, 7, 13, 20],
+          },
+          {
+            name: 'Agriculture',
+            data: [5, 3, 8, 26],
+          },
+        ],
       }
     },
     mounted(){

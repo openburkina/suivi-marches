@@ -26,28 +26,12 @@
         <TravauxContentDone :title=this.$store.state.particularName :done=done />
       </v-tab-item>
       <v-tab-item class="mx-5">
-        <v-container>
-        <v-row>
-          <v-col order="6">
-            <PieChart :pieChartData="label" :pieOptions="statas" />
-          </v-col>
-          <v-col order="6">
-            <LineChart :chartOptionsLine="chartOptionsLine" :lineSeries="seriesLine" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col order="6">
-            <v-col order="6">
-              <BarChart :chartOptionsBar="chartOptionsBar1" :seriesBar="seriesBar1" />
-            </v-col>
-          </v-col>
-          <v-col order="6">
-            <v-col order="6">
-              <BarChart :chartOptionsBar="chartOptionsBar1" :seriesBar="seriesBar1" />
-            </v-col>
-          </v-col>
-        </v-row>
-         </v-container>
+        <ChartList 
+          :pieChartLabels="['done', 'in progress']" :pieChartData="statas"
+          :lineChartLabels="['2020', '2021', '2022', '2023']" :lineChartData="seriesLine"
+          :barChartOneLabels="['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud']" :barChartOneData="[30, 40, 35, 50]"
+          :barChartTwoLabels="['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud']" :barChartTwoData="[30, 40, 35, 50]"
+        />
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -55,76 +39,42 @@
 
 <script>
 export default {
-   props: {
+  props: {
     done: {
-        type: []
+      type: []
     },
     inprogress: {
         type: []
     }
   },
-    data () {
-      return {
-        tab: null,
-        label:{
-          labels: ['Términé', 'En cours'],
-        },
-        chartOptionsLine: {
-        chart: {
-          id: 'vuechart-example',
-        },
-        xaxis: {
-          categories: ['Sécurité', 'Santé', 'Éducation', 'Agriculture'],
-        },
-      },
+  data () {
+    return {
+      tab: null,
       seriesLine: [
         {
-          name: 'Sécurité',
-          data: [10, 20, 30, 40],
+            name: 'Sécurité',
+            data: [10, 20, 30, 40],
         },
         {
-          name: 'Santé',
-          data: [15, 25, 35, 50],
+            name: 'Santé',
+            data: [15, 25, 35, 50],
         },
         {
-          name: 'Éducation',
-          data: [9, 7, 13, 20],
+            name: 'Éducation',
+            data: [9, 7, 13, 20],
         },
         {
-          name: 'Agriculture',
-          data: [5, 3, 8, 26],
+            name: 'Agriculture',
+            data: [5, 3, 8, 26],
         },
       ],
-      chartOptionsBar1: {
-        chart: {
-          id: 'vuechart-example',
-        },
-        xaxis: {
-          categories: ['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud'],
-        },
-        colors: '#008FFB',
-      },
-      seriesBar1: [
-        {
-          name: 'Pays',
-          data: [30, 40, 35, 50],
-        },
-      ],
-      
-      }
-    },
-    computed:{
-    recordsDone(){
-      return this.$store.state.listOfRecords
-    },
-    progress(){
-      return this.$store.state.listOfRecords
-    },
-  
-    statas(){
+    }
+  },
+  computed: {
+    statas() {
       console.log(this.$store.state.statasList)
       return this.$store.state.statasList
     }
-  },
+  }
 }
 </script>

@@ -80,11 +80,6 @@ export default {
     createEditLink(regions) {
       this.$store.state.regionName = `Region de : ${regions.region}`
       return this.$router.push({ path: '/regions/' + regions.country + '/' + regions.region})
-    },
-    createEditLink(region){
-      this.$store.state.regionName = `Region de : ${region.region}`
-      this.$store.state.idRegion = region.id
-      return this.$router.push({ path: '/regions/' + region.id})
     }
   }
 }
