@@ -19,7 +19,9 @@ export const state = () => ({
     regionName:'',
     stataSerie:[],
     recordsTotalOfBuyeur:[],
-    idRegion: 0
+    idRegion: 0,
+    statasList: [],
+    tmpStat:{}
     
   })
 
@@ -176,6 +178,17 @@ export const mutations = {
         state.bByRegion = paylaod
         console.log(state.bByRegion)
 
+    },
+
+    
+    statasBuyer(state,paylaod){
+        state.tmpStat = paylaod
+        state.tmpList.push(state.tmpStat.Finish)
+        state.tmpList.push(state.tmpStat.In_progress)
+        state.tmpStat = {}
+        state.statasList = state.tmpList
+        state.tmpList = []
+
     }
 
 }
@@ -247,6 +260,18 @@ export const actions = {
             `http://localhost:8000/api/regions/${id}/records`)
             .then(res=>{
                 commit("particularRegion",res.data)
+            })
+    },
+
+    /*
+        ###################################################################
+    */
+    // Une region en particulier
+    async statasOfBuyer({commit},id){
+        await axios.get(
+            `http://localhost:8000/api/buyers/${id}/total/`)
+            .then(res=>{
+                commit("statasBuyer",res.data)
             })
     },
     

@@ -120,8 +120,10 @@ export default {
     progress(){
       return this.$store.state.listOfRecords
     },
+  
     statas(){
-      return [this.recordsDone.length, this.progress.length]
+      console.log(this.$store.state.statasList)
+      return this.$store.state.statasList
     }
   },
 }

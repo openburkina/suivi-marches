@@ -14,7 +14,7 @@ export default {
   },
   mounted(){
     this.$store.dispatch('records',this.id)
-    // this.$store.dispatch('recordsInprogress',this.id)
+    this.$store.dispatch('statasOfBuyer',this.id)
   },
   computed:{
     done(){
