@@ -49,6 +49,7 @@ export default {
             sortable: false,
          
           },
+        { text: 'id', value: 'id' },
         { text: 'country', value: 'country' },
         { text: 'region', value: 'region' },
         
@@ -62,6 +63,7 @@ export default {
  
   computed:{
     regions(){
+      console.log(this.$store.state.listOfRegion)
       return this.$store.state.listOfRegion
     },
    
