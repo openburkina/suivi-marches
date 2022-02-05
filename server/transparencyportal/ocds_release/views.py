@@ -25,6 +25,12 @@ from ocds_release.serializers import (
     TargetSerializer,
     BuyerRecordTotalSerializer
 )
+from ocds_master_tables.serializers import (
+    RecordValueByGenericSerializer,
+    RecordNumberByStatusYearSerializer,
+    RecordValueBySectorYearSerializer,
+    RecordValueEvolutionBySectorSerializer
+)
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -221,6 +227,100 @@ class BuyerRecordValuesGrouped(APIView):
         records = records.annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
         data = RecordValueGroupedSerializer(records, many=True).data
         return Response(data)
+
+# Accueil
+
+class RecordNumberByStatusYearView(APIView):
+    @swagger_auto_schema(
+        responses={200:RecordNumberByStatusYearSerializer(many=True)},
+        manual_parameters=[
+            openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+            ]
+    )
+    def get(self, request):
+        year = self.request.query_params.get('year')
+        
+        if year is None:
+            return Response('Year not specified', status=500)
+
+        releases = Release.objects.filter(
+            tender__tender_period__start_date__year=year
+        )
+        output = {
+            'planning': 0,
+            'tender': 0,
+            'award': 0,
+            'contract': 0,
+            'implementation': 0,
+            'done': 0,
+            'total': releases.count(),
+        }
+        for release in releases:
+            output[release.step] += 1
+        data = RecordNumberByStatusYearSerializer(output).data
+        return Response(data)
+ 
+class RecordValueEvolutionBySectorView(APIView):
+    @swagger_auto_schema(
+        responses={200:RecordValueEvolutionBySectorSerializer(many=True)},
+        manual_parameters=[
+            openapi.Parameter('start_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
+            openapi.Parameter('end_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
+        ]
+    )
+    def get(self, request):
+        start_year = self.request.query_params.get('start_year')
+        end_year = self.request.query_params.get('end_year')
+
+        if start_year is None or end_year is None:
+            return Response('Year not specified', status=500)
+        if int(start_year) > int(end_year):
+            return Response('Start year is after end year', status=500)
+
+        records = Record.objects.filter(
+            compiled_release__tender__tender_period__start_date__year__gte=start_year,
+            compiled_release__tender__tender_period__start_date__year__lte=end_year,
+        ).values('compiled_release__tender__tender_period__start_date__year', sector=F('target__name'))\
+            .annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        data = RecordValueEvolutionBySectorSerializer(records, many=True).data
+        return Response(data)
+ 
+class RecordValueByGenericView(APIView):
+    @swagger_auto_schema(
+        responses={200:RecordValueByGenericSerializer(many=True)},
+        manual_parameters=[
+            openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
+            openapi.Parameter('group_by', openapi.IN_QUERY, type=openapi.TYPE_STRING, enum=['region', 'sector'], required=True),
+        ]
+    )
+    def get(self, request):
+        year = self.request.query_params.get('year')
+        group_by = self.request.query_params.get('group_by')
+
+        if year is None:
+            return Response('Year not specified', status=500)
+        if not group_by in ['region', 'sector']:
+            return Response('Group field not specified', status=500)
+
+        records = Record.objects.filter(
+                compiled_release__tender__tender_period__start_date__year=year
+            )
+        if group_by == 'region':
+            records = records.annotate(
+                name=Concat(
+                    F('implementation_address__region'),
+                    Value(', '),
+                    F('implementation_address__country_name')
+                )
+            ).values('name')
+        if group_by == 'sector':
+            records = records.annotate(name=F('target__name')).values('name')
+        records = records.annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        data = RecordValueByGenericSerializer(records, many=True).data
+        return Response(data)
+ 
+
+# End Accueil
 
 class PublishedReleaseView(APIView):
     def get(self, request, pk):

@@ -14,7 +14,10 @@ from .views import (
     RecordItemList,
     RecordStageList,
     SumRecord,
-    BuyerTotalRecord
+    BuyerTotalRecord,
+    RecordNumberByStatusYearView,
+    RecordValueEvolutionBySectorView,
+    RecordValueByGenericView
 )
 
 buyer_urlpatterns = [
@@ -35,6 +38,9 @@ record_urlpatterns = [
     path(r'<int:record_id>/items', RecordItemList.as_view(), name='record-item-list'),
     path(r'<int:record_id>/stages', RecordStageList.as_view(), name='record-stage-list'),
     path(r'amount_value', SumRecord.as_view(), name='record-count-all'),
+    path(r'by_status', RecordNumberByStatusYearView.as_view(), name='record-count-all'),
+    path(r'sector_values', RecordValueEvolutionBySectorView.as_view(), name='record-count-all'),
+    path(r'values', RecordValueByGenericView.as_view(), name='record-count-all')
 ]
 
 release_urlpatterns = [

@@ -8,7 +8,14 @@ from rest_framework.response import Response
 
 import requests
 
-from ocds_master_tables.serializers import RegionSerializer, RecordAggregateSerializer, RecordValueByGenericSerializer, RecordNumberByStatusYearSerializer, RecordValueBySectorYearSerializer, RecordValueEvolutionBySectorSerializer
+from ocds_master_tables.serializers import (
+    RegionSerializer,
+    RecordAggregateSerializer,
+    RecordValueByGenericSerializer,
+    RecordNumberByStatusYearSerializer,
+    RecordValueBySectorYearSerializer,
+    RecordValueEvolutionBySectorSerializer
+)
 from ocds_release.models import Record, Release
 from ocds_master_tables.models import Address
 from drf_yasg.utils import swagger_auto_schema
