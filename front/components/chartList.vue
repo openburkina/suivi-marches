@@ -31,15 +31,17 @@ export default {
         barChartOneLabels: Array, barChartOneData: Array,
         barChartTwoLabels: Array, barChartTwoData: Array
     },
-    data() {
-        return {
-            pieChart : {
+    computed: {
+        pieChart() { 
+            return {
                 options : {
                     labels: this.pieChartLabels
                 },
                 series : this.pieChartData
-            },
-            lineChart : {
+            }
+        },
+        lineChart() {
+            return {
                 options : {
                     chart : {
                         id : 'vuechart-example',
@@ -49,8 +51,10 @@ export default {
                     },
                 },
                 series : this.lineChartData
-            },
-            barChartOne : {
+            }
+        },
+        barChartOne() {
+            return {
                 options : {
                     chart: {
                         id: 'vuechart-example',
@@ -64,8 +68,10 @@ export default {
                     name: 'Montant',
                     data: this.barChartOneData
                 }]
-            },
-            barChartTwo : {
+            }
+        },
+        barChartTwo() {
+            return {
                 options : {
                     chart: {
                         id: 'vuechart-example',

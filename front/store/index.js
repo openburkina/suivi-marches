@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { pieStatAdapter, lineStatAdapter, barStatAdapter } from '~/helpers/Adapters'
 
 export const state = () => ({
     list: [],
@@ -21,11 +22,28 @@ export const state = () => ({
     recordsTotalOfBuyeur:[],
     idRegion: 0,
     statasList: [],
-    tmpStat:{}
-    
+    tmpStat:{},
+    homePieStats: {'labels': [], 'data': []},
+    homeBarOneStats: {'labels': [], 'data': []},
+    homeBarTwoStats: {'labels': [], 'data': []},
+    homeLineStats: {'labels': [], 'data': []}
   })
 
 export const mutations = {
+
+    setHomePieStats(state, payload) {
+        state.homePieStats = payload.data
+    },
+    setHomeBarOneStats(state, payload) {
+        state.homeBarOneStats = payload.data
+    },
+    setHomeBarTwoStats(state, payload) {
+        state.homeBarTwoStats = payload.data
+    },
+    setHomeLineStats(state, payload) {
+        state.homeLineStats = payload.data
+    },
+
 
     // setter de Liste de tous les buyers
     listOfBuyers(state,paylaod){
@@ -193,6 +211,35 @@ export const mutations = {
 
 }
 export const actions = {
+
+    async fetchHomePieStats({ commit }, { year }) {
+        await axios.get(
+            `http://localhost:8000/api/records/by_status?year=${year}`
+        ).then(res => {
+            commit("setHomePieStats", {name: "pie", data : pieStatAdapter(res.data)})
+        })
+    },
+    async fetchHomeBarOneStats({ commit }, { year }) {
+        axios.get(
+            `http://localhost:8000/api/records/values?group_by=region&year=${year}`
+        ).then(res => {
+            commit("setHomeBarOneStats", {name: "barOne", data : barStatAdapter(res.data)})
+        })
+    },
+    async fetchHomeBarTwoStats({ commit }, { year }) {
+        axios.get(
+            `http://localhost:8000/api/records/values?group_by=sector&year=${year}`
+        ).then(res => {
+            commit("setHomeBarTwoStats", {name: "barTwo", data : barStatAdapter(res.data)})
+        })
+    },
+    async fetchHomeLineStats({ commit }, { start_year, end_year }) {
+        await axios.get(
+            `http://localhost:8000/api/records/sector_values?start_year=${start_year}&end_year=${end_year}`
+        ).then(res => {
+            commit("setHomeLineStats", {name: "line", data : lineStatAdapter(res.data)})
+        })
+    },
     /*
         ###################################################################
     */

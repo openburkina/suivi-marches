@@ -33,25 +33,13 @@
          <Leaflet />
        </v-container>
        <v-container>
-      <v-row no-gutters class="mx-3 mt-5">
-      <v-col order="6">
-        <PieChart :pieOptions="chartOptionsD" :pieChartData="seriesD" />
-      </v-col>
-      <v-col order="6">
-       <LineChart :chartOptionsLine="chartOptionsLine" :lineSeries="seriesLine" />
-      </v-col>
-    </v-row>
-
-
-    <v-row no-gutters class="mx-3 mt-5">
-       <v-col order="6">
-         <BarChart :chartOptionsBar="chartOptionsBar1" :seriesBar="seriesBar1" />
-       </v-col>
-      <v-col order="6">
-         <BarChart :chartOptionsBar="chartOptionsBar2" :seriesBar="seriesBar2" />
-        </v-col>
-    </v-row>
-    </v-container>
+         <ChartList 
+          :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data"
+          :lineChartLabels="['2020', '2021', '2022', '2023']" :lineChartData="[]"
+          :barChartOneLabels="barOneStats.labels" :barChartOneData="barOneStats.data"
+          :barChartTwoLabels="barTwoStats.labels" :barChartTwoData="barTwoStats.data"
+        />
+        </v-container>
       </v-tab-item>
     <v-tab-item>
         <v-card flat>
@@ -82,91 +70,34 @@
 <script>
   export default {
     
-    data () {
-      return {
-        tab: null,
-         widthChart: 370,
-      //
-      // BAR1 DATA
-      //
-      chartOptionsBar2: {
-        chart: {
-          id: 'vuechart-example',
-        },
-        xaxis: {
-          categories: ['Sécurité', 'Santé', 'Éducation', 'Agriculture'],
-        },
-        colors: '#00E396',
-      },
-      seriesBar2: [
-        {
-          name: 'Secteurs',
-          data: [30, 40, 35, 50],
-        },
-      ],
-      //
-      // BAR1 DATA
-      //
-      chartOptionsBar1: {
-        chart: {
-          id: 'vuechart-example',
-        },
-        xaxis: {
-          categories: ['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud'],
-        },
-        colors: '#008FFB',
-      },
-      seriesBar1: [
-        {
-          name: 'Pays',
-          data: [30, 40, 35, 50],
-        },
-      ],
-      //
-      // LINE DATA
-      //
-      chartOptionsLine: {
-        chart: {
-          id: 'vuechart-example',
-        },
-        xaxis: {
-          categories: ['Sécurité', 'Santé', 'Éducation', 'Agriculture'],
-        },
-      },
-      seriesLine: [
-        {
-          name: 'Sécurité',
-          data: [10, 20, 30, 40],
-        },
-        {
-          name: 'Santé',
-          data: [15, 25, 35, 50],
-        },
-        {
-          name: 'Éducation',
-          data: [9, 7, 13, 20],
-        },
-        {
-          name: 'Agriculture',
-          data: [5, 3, 8, 26],
-        },
-      ],
-      //
-      // DONUT DATA
-      //
-      chartOptionsD: {
-        labels: ['Términé', 'En cours'],
-      },
-      seriesD: [34, 66],
-      //
-      // CAROUSEL DATA
-      }
-    },
+  data () {
+    return {
+      tab: null,
+      widthChart: 370,
+    }
+  },
+
   mounted(){
     this.$store.dispatch('fetchBuyers')
+    this.$store.dispatch('fetchHomePieStats', { year: 2015 })
+    this.$store.dispatch('fetchHomeBarOneStats', { year: 2015 })
+    this.$store.dispatch('fetchHomeBarTwoStats', { year: 2015 })
+    this.$store.dispatch('fetchHomeLineStats', { start_year: 2015, end_year: 2030 })
   },
  
-  computed:{
+  computed: {
+    pieStats() {
+      return this.$store.state.homePieStats
+    },
+    barOneStats() {
+      return this.$store.state.homeBarOneStats
+    },
+    barTwoStats() {
+      return this.$store.state.homeBarTwoStats
+    },
+    lineStats() {
+      return this.$store.state.homeLineStats
+    },
     done(){
       return this.$store.state.recordsDone.length
     },
