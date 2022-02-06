@@ -237,7 +237,7 @@ export const actions = {
         await axios.get(
             `http://localhost:8000/api/records/sector_values?start_year=${start_year}&end_year=${end_year}`
         ).then(res => {
-            commit("setHomeLineStats", {name: "line", data : lineStatAdapter(res.data)})
+            commit("setHomeLineStats", {name: "line", data : lineStatAdapter(res.data, start_year, end_year)})
         })
     },
     /*

@@ -35,7 +35,7 @@
        <v-container>
          <ChartList 
           :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data"
-          :lineChartLabels="['2020', '2021', '2022', '2023']" :lineChartData="[]"
+          :lineChartLabels="lineStats.labels" :lineChartData="lineStats.data"
           :barChartOneLabels="barOneStats.labels" :barChartOneData="barOneStats.data"
           :barChartTwoLabels="barTwoStats.labels" :barChartTwoData="barTwoStats.data"
         />
@@ -82,7 +82,7 @@
     this.$store.dispatch('fetchHomePieStats', { year: 2015 })
     this.$store.dispatch('fetchHomeBarOneStats', { year: 2015 })
     this.$store.dispatch('fetchHomeBarTwoStats', { year: 2015 })
-    this.$store.dispatch('fetchHomeLineStats', { start_year: 2015, end_year: 2030 })
+    this.$store.dispatch('fetchHomeLineStats', { start_year: 2016, end_year: 2021 })
   },
  
   computed: {
