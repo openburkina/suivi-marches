@@ -27,6 +27,10 @@ export const state = () => ({
     homeBarOneStats: {'labels': [], 'data': []},
     homeBarTwoStats: {'labels': [], 'data': []},
     homeLineStats: {'labels': [], 'data': []},
+    regionPieStats: {'labels': [], 'data': []},
+    regionBarOneStats: {'labels': [], 'data': []},
+    regionBarTwoStats: {'labels': [], 'data': []},
+    regionLineStats: {'labels': [], 'data': []},
     buyerPieStats: {'labels': [], 'data': []},
     buyerBarOneStats: {'labels': [], 'data': []},
     buyerBarTwoStats: {'labels': [], 'data': []},
@@ -34,7 +38,6 @@ export const state = () => ({
   })
 
 export const mutations = {
-
     setHomePieStats(state, payload) {
         state.homePieStats = payload.data
     },
@@ -46,6 +49,19 @@ export const mutations = {
     },
     setHomeLineStats(state, payload) {
         state.homeLineStats = payload.data
+    },
+
+    setRegionPieStats(state, payload) {
+        state.regionPieStats = payload.data
+    },
+    setRegionBarOneStats(state, payload) {
+        state.regionBarOneStats = payload.data
+    },
+    setRegionBarTwoStats(state, payload) {
+        state.regionBarTwoStats = payload.data
+    },
+    setRegionLineStats(state, payload) {
+        state.regionLineStats = payload.data
     },
 
     setBuyerPieStats(state, payload) {
@@ -259,6 +275,37 @@ export const actions = {
         })
     },
     // End Home Stats
+    
+    // Region Stats
+    async fetchRegionPieStats({ commit }, { country, region, year }) {
+        await axios.get(
+            `http://localhost:8000/api/regions/records/by_status?country=${country}&region=${region}&year=${year}`
+        ).then(res => {
+            commit("setRegionPieStats", {name: "pie", data : pieStatAdapter(res.data)})
+        })
+    },
+    async fetchRegionBarOneStats({ commit }, { country, region, year }) {
+        axios.get(
+            `http://localhost:8000/api/regions/records/values?country=${country}&region=${region}&group_by=buyer&year=${year}`
+        ).then(res => {
+            commit("setRegionBarOneStats", {name: "barOne", data : barStatAdapter(res.data)})
+        })
+    },
+    async fetchRegionBarTwoStats({ commit }, { country, region, year }) {
+        axios.get(
+            `http://localhost:8000/api/regions/records/values?country=${country}&region=${region}&group_by=sector&year=${year}`
+        ).then(res => {
+            commit("setRegionBarTwoStats", {name: "barTwo", data : barStatAdapter(res.data)})
+        })
+    },
+    async fetchRegionLineStats({ commit }, { country, region, start_year, end_year }) {
+        await axios.get(
+            `http://localhost:8000/api/regions/records/sector_values?country=${country}&region=${region}&start_year=${start_year}&end_year=${end_year}`
+        ).then(res => {
+            commit("setRegionLineStats", {name: "line", data : lineStatAdapter(res.data, start_year, end_year)})
+        })
+    },
+    // End Region Stats
     
     // Buyer Stats
     async fetchBuyerPieStats({ commit }, { buyer_id, year }) {

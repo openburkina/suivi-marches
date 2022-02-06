@@ -26,7 +26,6 @@ export function lineStatAdapter(input_data, start_year, end_year) {
         let new_data = labels.map((year_value, i) => v[start_year+i] || 0 )
         data.push({name: k, data: new_data})
     }
-    console.log(data)
     return {labels, data} 
 }
 
