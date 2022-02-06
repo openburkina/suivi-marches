@@ -26,7 +26,11 @@ export const state = () => ({
     homePieStats: {'labels': [], 'data': []},
     homeBarOneStats: {'labels': [], 'data': []},
     homeBarTwoStats: {'labels': [], 'data': []},
-    homeLineStats: {'labels': [], 'data': []}
+    homeLineStats: {'labels': [], 'data': []},
+    buyerPieStats: {'labels': [], 'data': []},
+    buyerBarOneStats: {'labels': [], 'data': []},
+    buyerBarTwoStats: {'labels': [], 'data': []},
+    buyerLineStats: {'labels': [], 'data': []}
   })
 
 export const mutations = {
@@ -42,6 +46,19 @@ export const mutations = {
     },
     setHomeLineStats(state, payload) {
         state.homeLineStats = payload.data
+    },
+
+    setBuyerPieStats(state, payload) {
+        state.buyerPieStats = payload.data
+    },
+    setBuyerBarOneStats(state, payload) {
+        state.buyerBarOneStats = payload.data
+    },
+    setBuyerBarTwoStats(state, payload) {
+        state.buyerBarTwoStats = payload.data
+    },
+    setBuyerLineStats(state, payload) {
+        state.buyerLineStats = payload.data
     },
 
 
@@ -212,6 +229,7 @@ export const mutations = {
 }
 export const actions = {
 
+    // Home Stats
     async fetchHomePieStats({ commit }, { year }) {
         await axios.get(
             `http://localhost:8000/api/records/by_status?year=${year}`
@@ -240,6 +258,39 @@ export const actions = {
             commit("setHomeLineStats", {name: "line", data : lineStatAdapter(res.data, start_year, end_year)})
         })
     },
+    // End Home Stats
+    
+    // Buyer Stats
+    async fetchBuyerPieStats({ commit }, { buyer_id, year }) {
+        await axios.get(
+            `http://localhost:8000/api/buyers/${buyer_id}/records/by_status?year=${year}`
+        ).then(res => {
+            commit("setBuyerPieStats", {name: "pie", data : pieStatAdapter(res.data)})
+        })
+    },
+    async fetchBuyerBarOneStats({ commit }, { buyer_id, year }) {
+        axios.get(
+            `http://localhost:8000/api/buyers/${buyer_id}/records/values?group_by=region&year=${year}`
+        ).then(res => {
+            commit("setBuyerBarOneStats", {name: "barOne", data : barStatAdapter(res.data)})
+        })
+    },
+    async fetchBuyerBarTwoStats({ commit }, { buyer_id, year }) {
+        axios.get(
+            `http://localhost:8000/api/buyers/${buyer_id}/records/values?group_by=sector&year=${year}`
+        ).then(res => {
+            commit("setBuyerBarTwoStats", {name: "barTwo", data : barStatAdapter(res.data)})
+        })
+    },
+    async fetchBuyerLineStats({ commit }, { buyer_id, start_year, end_year }) {
+        await axios.get(
+            `http://localhost:8000/api/buyers/${buyer_id}/records/sector_values?start_year=${start_year}&end_year=${end_year}`
+        ).then(res => {
+            commit("setBuyerLineStats", {name: "line", data : lineStatAdapter(res.data, start_year, end_year)})
+        })
+    },
+    // End Buyer Stats
+
     /*
         ###################################################################
     */

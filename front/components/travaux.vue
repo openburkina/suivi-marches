@@ -27,10 +27,10 @@
       </v-tab-item>
       <v-tab-item class="mx-5">
         <ChartList 
-          :pieChartLabels="['done', 'in progress']" :pieChartData="statas"
-          :lineChartLabels="['2020', '2021', '2022', '2023']" :lineChartData="seriesLine"
-          :barChartOneLabels="['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud']" :barChartOneData="[30, 40, 35, 50]"
-          :barChartTwoLabels="['Iraq', 'Afghanistan', 'Tunisie', 'Afrique du Sud']" :barChartTwoData="[30, 40, 35, 50]"
+          :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data"
+          :lineChartLabels="lineStats.labels" :lineChartData="lineStats.data"
+          :barChartOneLabels="barOneStats.labels" :barChartOneData="barOneStats.data"
+          :barChartTwoLabels="barTwoStats.labels" :barChartTwoData="barTwoStats.data"
         />
       </v-tab-item>
     </v-tabs-items>
@@ -45,29 +45,15 @@ export default {
     },
     inprogress: {
         type: []
-    }
+    },
+    pieStats: {'labels': [], 'data': []},
+    barOneStats: {'labels': [], 'data': []},
+    barTwoStats: {'labels': [], 'data': []},
+    lineStats: {'labels': [], 'data': []},
   },
   data () {
     return {
       tab: null,
-      seriesLine: [
-        {
-            name: 'Sécurité',
-            data: [10, 20, 30, 40],
-        },
-        {
-            name: 'Santé',
-            data: [15, 25, 35, 50],
-        },
-        {
-            name: 'Éducation',
-            data: [9, 7, 13, 20],
-        },
-        {
-            name: 'Agriculture',
-            data: [5, 3, 8, 26],
-        },
-      ],
     }
   },
   computed: {
