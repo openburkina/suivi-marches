@@ -319,6 +319,22 @@ class RecordValueByGenericView(APIView):
         data = RecordValueByGenericSerializer(records, many=True).data
         return Response(data)
  
+class AllRecordValueGroupByRegion(APIView):
+    @swagger_auto_schema(
+        responses={200:RecordValueByGenericSerializer(many=True)},
+    )
+    def get(self, request):
+        records = Record.objects.all()
+        records = records.annotate(
+            name=Concat(
+                F('implementation_address__region'),
+                Value(', '),
+                F('implementation_address__country_name')
+            )
+        ).values('name')
+        records = records.annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        data = RecordValueByGenericSerializer(records, many=True).data
+        return Response(data)
 
 # End Accueil
 
@@ -388,7 +404,7 @@ class SumRecord(APIView):
     @swagger_auto_schema(manual_parameters=[
         openapi.Parameter(name='region', in_=openapi.IN_QUERY, type=openapi.TYPE_STRING)
     ])
-    def post(self, request):
+    def get(self, request):
         region = self.request.query_params.get('region')
         queryset = Record.objects.filter(
             implementation_address__region__iexact = region

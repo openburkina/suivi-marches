@@ -52,18 +52,9 @@ export default {
         { text: 'Nom', value: 'name' },
         { text: 'Email', value: 'email' },
         { text: 'Pays', value: 'country_name' },
-       // { text: 'Localité', value: 'locality' },
         { text: 'Région', value: 'region' },
         { text: 'telephone', value: 'telephone' },
-       // { text: 'latitude', value: 'latitude' },
-       // { text: 'longitude', value: 'longitude' },
         { text: 'Nom du Contact', value: 'contact_name' },
-        // { text: 'legal_name', value: 'legal_name' },
-        // { text: 'postal', value: 'postal' },
-        // { text: 'url', value: 'url' },
-        // { text: 'uri', value: 'uri' },
-        // { text: 'fax_number', value: 'fax_number' },
-        // { text: 'scheme', value: 'scheme' },
        
       ],
     }
