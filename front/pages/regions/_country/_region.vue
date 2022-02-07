@@ -5,6 +5,11 @@
   :barOneStats= barOneStats
   :barTwoStats= barTwoStats
   :lineStats= lineStats
+
+  v-on:pie-year-change="fetchPieStats($event)"
+  v-on:line-years-change="fetchLineStats($event)"
+  v-on:barone-year-change="fetchBarOneStats($event)"
+  v-on:bartwo-year-change="fetchBarTwoStats($event)"
   />
 </template>
 
@@ -38,13 +43,25 @@ export default {
     }
   },
   mounted(){
-    let country = this.country
-    let region = this.region
-    this.$store.dispatch('fetchRegionPieStats', { country, region, year: 2015 })
-    this.$store.dispatch('fetchRegionBarOneStats', { country, region, year: 2015 })
-    this.$store.dispatch('fetchRegionBarTwoStats', { country, region, year: 2015 })
-    this.$store.dispatch('fetchRegionLineStats', { country, region, start_year: 2016, end_year: 2021 })
-    this.$store.dispatch('oneRegion',{country, region})
+    this.fetchPieStats(new Date().getFullYear())
+    this.fetchBarOneStats(new Date().getFullYear())
+    this.fetchBarTwoStats(new Date().getFullYear())
+    this.fetchLineStats([new Date().getFullYear(), new Date().getFullYear()])
+    this.$store.dispatch('oneRegion',{country: this.country,region: this.region})
+  },
+  methods: {
+    fetchPieStats(year) {
+      this.$store.dispatch('fetchRegionPieStats', { country: this.country,region: this.region, year })
+    },
+    fetchBarOneStats(year) {
+      this.$store.dispatch('fetchRegionBarOneStats', { country: this.country,region: this.region, year })
+    },
+    fetchBarTwoStats(year) {
+      this.$store.dispatch('fetchRegionBarTwoStats', { country: this.country,region: this.region, year })
+    },
+    fetchLineStats([startYear, endYear]) {
+      this.$store.dispatch('fetchRegionLineStats', { country: this.country,region: this.region, start_year: startYear, end_year: endYear })
+    },
   },
 }
 </script>

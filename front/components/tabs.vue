@@ -33,11 +33,11 @@
          <Leaflet />
        </v-container>
        <v-container>
-         <ChartList 
-          :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data"
-          :lineChartLabels="lineStats.labels" :lineChartData="lineStats.data"
-          :barChartOneLabels="barOneStats.labels" :barChartOneData="barOneStats.data"
-          :barChartTwoLabels="barTwoStats.labels" :barChartTwoData="barTwoStats.data"
+        <ChartList 
+          :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data" v-on:pie-year-change="$emit('pie-year-change', $event)"
+          :lineChartLabels="lineStats.labels" :lineChartData="lineStats.data" v-on:line-years-change="$emit('line-years-change', $event)"
+          :barChartOneLabels="barOneStats.labels" :barChartOneData="barOneStats.data" v-on:barone-year-change="$emit('barone-year-change', $event)"
+          :barChartTwoLabels="barTwoStats.labels" :barChartTwoData="barTwoStats.data" v-on:bartwo-year-change="$emit('bartwo-year-change', $event)"
         />
         </v-container>
       </v-tab-item>
@@ -69,41 +69,18 @@
 </template>
 <script>
   export default {
-    
-  data () {
-    return {
-      tab: null,
-      widthChart: 370,
-    }
-  },
-
-  mounted(){
-    this.$store.dispatch('fetchBuyers')
-    this.$store.dispatch('fetchHomePieStats', { year: 2015 })
-    this.$store.dispatch('fetchHomeBarOneStats', { year: 2015 })
-    this.$store.dispatch('fetchHomeBarTwoStats', { year: 2015 })
-    this.$store.dispatch('fetchHomeLineStats', { start_year: 2016, end_year: 2021 })
-  },
- 
-  computed: {
-    pieStats() {
-      return this.$store.state.homePieStats
+    props: {
+      pieStats: {'labels': [], 'data': []},
+      barOneStats: {'labels': [], 'data': []},
+      barTwoStats: {'labels': [], 'data': []},
+      lineStats: {'labels': [], 'data': []},
     },
-    barOneStats() {
-      return this.$store.state.homeBarOneStats
+    data () {
+      return {
+        tab: null,
+        widthChart: 370,
+      }
     },
-    barTwoStats() {
-      return this.$store.state.homeBarTwoStats
-    },
-    lineStats() {
-      return this.$store.state.homeLineStats
-    },
-    done(){
-      return this.$store.state.recordsDone.length
-    },
-    pregress(){
-      return this.$store.state.recordsInprogress.length
-    }
-  },
+  
   }
 </script>

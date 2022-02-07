@@ -27,10 +27,10 @@
       </v-tab-item>
       <v-tab-item class="mx-5">
         <ChartList 
-          :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data"
-          :lineChartLabels="lineStats.labels" :lineChartData="lineStats.data"
-          :barChartOneLabels="barOneStats.labels" :barChartOneData="barOneStats.data"
-          :barChartTwoLabels="barTwoStats.labels" :barChartTwoData="barTwoStats.data"
+          :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data" v-on:pie-year-change="$emit('pie-year-change', $event)"
+          :lineChartLabels="lineStats.labels" :lineChartData="lineStats.data" v-on:line-years-change="$emit('line-years-change', $event)"
+          :barChartOneLabels="barOneStats.labels" :barChartOneData="barOneStats.data" v-on:barone-year-change="$emit('barone-year-change', $event)"
+          :barChartTwoLabels="barTwoStats.labels" :barChartTwoData="barTwoStats.data" v-on:bartwo-year-change="$emit('bartwo-year-change', $event)"
         />
       </v-tab-item>
     </v-tabs-items>

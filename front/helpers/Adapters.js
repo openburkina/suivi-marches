@@ -23,7 +23,7 @@ export function lineStatAdapter(input_data, start_year, end_year) {
         return r;
     }, Object.create(null));
     for (let [k, v] of Object.entries(a)) {
-        let new_data = labels.map((year_value, i) => v[start_year+i] || 0 )
+        let new_data = labels.map((year_value, i) => v[parseInt(start_year)+i] || 0 )
         data.push({name: k, data: new_data})
     }
     return {labels, data} 

@@ -2,21 +2,41 @@
     <v-container>
         <v-row>
             <v-col order="6">
-                <PieChart :pieOptions="pieChart.options" :pieChartData="pieChart.series" />
+                <PieChart 
+                :title="pieTitle" 
+                :pieOptions="pieChart.options" 
+                :pieChartData="pieChart.series" 
+                v-on:year-change="pieYearChange"
+                />
             </v-col>
             <v-col order="6">
-                <LineChart :chartOptionsLine="lineChart.options" :lineSeries="lineChart.series" />
+                <LineChart 
+                :title="lineTitle" 
+                :chartOptionsLine="lineChart.options" 
+                :lineSeries="lineChart.series" 
+                v-on:years-change="lineYearsChange"
+                />
             </v-col>
         </v-row>
         <v-row>
             <v-col order="6">
                 <v-col order="6">
-                    <BarChart :chartOptionsBar="barChartOne.options" :seriesBar="barChartOne.series" />
+                    <BarChart 
+                    :title="barOneTitle" 
+                    :chartOptionsBar="barChartOne.options" 
+                    :seriesBar="barChartOne.series" 
+                    v-on:year-change="barOneYearChange"
+                    />
                 </v-col>
             </v-col>
             <v-col order="6">
                 <v-col order="6">
-                    <BarChart :chartOptionsBar="barChartTwo.options" :seriesBar="barChartTwo.series" />
+                    <BarChart 
+                    :title="barTwoTitle" 
+                    :chartOptionsBar="barChartTwo.options" 
+                    :seriesBar="barChartTwo.series" 
+                    v-on:year-change="barTwoYearChange"
+                    />
                 </v-col>
             </v-col>
         </v-row>
@@ -26,10 +46,10 @@
 <script>
 export default {
     props : {
-        pieChartLabels: Array, pieChartData: Array,
-        lineChartLabels: Array, lineChartData: Array,
-        barChartOneLabels: Array, barChartOneData: Array,
-        barChartTwoLabels: Array, barChartTwoData: Array
+        pieTitle: "", pieChartLabels: Array, pieChartData: Array,
+        lineTitle: "", lineChartLabels: Array, lineChartData: Array,
+        barOneTitle: "", barChartOneLabels: Array, barChartOneData: Array,
+        barTwoTitle: "", barChartTwoLabels: Array, barChartTwoData: Array
     },
     computed: {
         pieChart() { 
@@ -87,6 +107,20 @@ export default {
                 }]
             }
         }
+    },
+    methods: {
+        pieYearChange(value) {
+            this.$emit("pie-year-change", value)
+        },
+        barOneYearChange(value) {
+            this.$emit("barone-year-change", value)
+        },
+        barTwoYearChange(value) {
+            this.$emit("bartwo-year-change", value)
+        },
+        lineYearsChange(value) {
+            this.$emit("line-years-change", value)
+        },
     }
 }
 </script>
