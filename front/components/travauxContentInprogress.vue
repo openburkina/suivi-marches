@@ -46,7 +46,7 @@ export default {
             sortable: false,
             value: 'name',
           },
-         { text: 'country', value: 'country' },
+         { text: 'pays', value: 'country' },
           { text: 'target_name', value: 'target_name' },
           { text: 'region', value: 'region' },
           { text: 'compiled_release', value: 'compiled_release' },

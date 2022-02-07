@@ -49,8 +49,8 @@ export default {
             sortable: false,
          
           },
-        { text: 'country', value: 'country' },
-        { text: 'region', value: 'region' },
+        { text: 'Pays', value: 'country' },
+        { text: 'Région', value: 'region' },
         
       ],
     }

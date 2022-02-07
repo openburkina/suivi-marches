@@ -47,8 +47,8 @@ export default {
             value: 'name',
           },
           { text: 'id', value: 'id' },
-          { text: 'country', value: 'country' },
-          { text: 'region', value: 'region' },
+          { text: 'Pays', value: 'country' },
+          { text: 'Région', value: 'region' },
         ],
     }
   },

@@ -2,18 +2,6 @@
   <v-card>
     <v-card-title>
       {{title}}
-      <div width="100" class="ml-4">
-         <v-combobox
-          v-model="select"
-          :items="items"
-          label="Choisir l'intervalle des années"
-          multiple
-          chips
-          counter="2"
-          @change="onChange"
-          auto-select-first
-        ></v-combobox>
-        </div>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -63,13 +51,13 @@ export default {
             value: 'name',
           },
          
-          { text: 'title', value: 'title' },
-          { text: 'buyer_name', value: 'buyer_name' },
-          { text: 'sector', value: 'sector' },
-          { text: 'value', value: 'value' },
-          { text: 'currency', value: 'currency' },
-          { text: 'step', value: 'step' },
-          { text: 'last_update', value: 'last_update' },
+          { text: 'Titre', value: 'title' },
+          { text: 'Bailleur', value: 'buyer_name' },
+          { text: 'Secteur', value: 'sector' },
+          { text: 'Montants', value: 'value' },
+          { text: 'Devise', value: 'currency' },
+          { text: 'Etape', value: 'step' },
+          { text: 'Dernière Modifications', value: 'last_update' },
         ],
     }
   },

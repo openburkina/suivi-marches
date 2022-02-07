@@ -6,7 +6,7 @@
     tile
     elevation="5">
     <v-card-title class="display-1">
-        Montant par secteur
+        Statut des travaux
     </v-card-title>
     <v-card-subtitle>
         <v-col cols=12 sm=4>
