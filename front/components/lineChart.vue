@@ -5,7 +5,7 @@
     tile
     elevation="5"
     max-width="500">
-    <v-card-title class="display-1">Montant par secteurs</v-card-title>
+    <v-card-title class="display-1" style="word-break: break-word">{{ title }}</v-card-title>
     <v-card-subtitle>
         <v-row>
             <v-col cols=12 sm=4>
@@ -39,7 +39,7 @@
 
 <script>
 export default {
-    props: ["chartOptionsLine","lineSeries"],
+    props: ["title", "chartOptionsLine","lineSeries"],
     data() {
         return {
             years : [new Date().getFullYear(), new Date().getFullYear()]
