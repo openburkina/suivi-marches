@@ -55,7 +55,7 @@ export default {
           { text: 'Bailleur', value: 'buyer_name' },
           { text: 'Secteur', value: 'sector' },
           { text: 'Montants', value: 'value' },
-          { text: 'Devise', value: 'currency' },
+          { text: 'Dévise', value: 'currency' },
           { text: 'Etape', value: 'step' },
           { text: 'Dernière Modifications', value: 'last_update' },
         ],

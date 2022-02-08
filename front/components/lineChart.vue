@@ -5,7 +5,7 @@
     tile
     elevation="5"
     max-width="500">
-    <v-card-title class="display-1">Montant par secteurs</v-card-title>
+    <v-card-title class="display-1">Evolution des Montants par secteurs</v-card-title>
     <v-card-subtitle>
         <v-row>
             <v-col cols=12 sm=4>
