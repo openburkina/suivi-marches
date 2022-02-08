@@ -30,7 +30,7 @@
             <v-list-item-icon>
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
+            <v-list-item-title>Accueil</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="projet">
@@ -51,7 +51,7 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Region</v-list-item-title>
+            <v-list-item-title>Régions</v-list-item-title>
           </v-list-item>
           
         </v-list-item-group>
@@ -81,17 +81,17 @@
       <!-- hello -->
       <div v-else>
         <v-btn to="/" text>
-          <span class="mr-2 white--text">Acceuil</span>
+          <span class="mr-2 white--text">Accueil</span>
         </v-btn>
          <v-btn to="/projet" text>
           <span class="mr-2 white--text">Travaux</span>
         </v-btn>
         <v-btn text to="/projet">
-          <span class="mr-2  white--text">Bailleur</span>
+          <span class="mr-2  white--text">Bailleurs</span>
         </v-btn>
         <!-- More menu -->
         <v-btn text to="/region">
-          <span class="mr-2  white--text">Region</span>
+          <span class="mr-2  white--text">Régions</span>
         </v-btn>
       </div>
     </v-app-bar>

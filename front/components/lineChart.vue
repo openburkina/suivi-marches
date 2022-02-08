@@ -11,6 +11,7 @@
             <v-col cols=12 sm=4>
                 <v-text-field
                     v-model="years[0]"
+                    :rules="[rules.isLess]"
                     label="Année de début"
                     type="number"
                     v-on:change="handleYearChange"
@@ -19,6 +20,7 @@
             <v-col cols=12 sm=4>
                 <v-text-field
                     v-model="years[1]"
+                    :rules="[rules.isGreater]"
                     label="Année de fin"
                     type="number"
                     v-on:change="handleYearChange"
@@ -39,15 +41,25 @@
 
 <script>
 export default {
-    props: ["chartOptionsLine","lineSeries"],
+    props: ["title", "chartOptionsLine","lineSeries"],
     data() {
         return {
-            years : [new Date().getFullYear(), new Date().getFullYear()]
+            years : [new Date().getFullYear(), new Date().getFullYear()],
+            rules : {
+                isLess : (value) => {
+                    if (value <= this.years[1]) return true;
+                    return "L'année doit être inférieure ou égale à l'année de fin."
+                },
+                isGreater : (value) => {
+                    if (value >= this.years[0]) return true;
+                    return "L'année doit être supérieure ou égale à l'année de fin."
+                },
+            }
         }
     },
     methods: {
-        handleYearChange(val) {
-            this.$emit('years-change', this.years)
+        handleYearChange() {
+            if (this.years[0] <= this.years[1]) this.$emit('years-change', this.years);
         }
     }
 }

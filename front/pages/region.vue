@@ -1,10 +1,9 @@
 <template>
   <div>
-    <Titre title="Les regions" />
-    <Title value="Liste des projets"></Title>
+    <Titre title="Régions" />
     <v-card color="indigo lighten-5 elevation-4 mx-4 mt-4 mb-16">
       <v-card-title>
-        Regions
+        Liste des régions
         
         <v-spacer></v-spacer>
         <v-text-field

@@ -5,8 +5,8 @@
     outlined
     tile
     elevation="5">
-    <v-card-title class="display-1">
-        Statut des travaux
+    <v-card-title class="display-1" style="word-break: break-word">
+        {{ title }}
     </v-card-title>
     <v-card-subtitle>
         <v-col cols=12 sm=4>

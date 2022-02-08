@@ -1,10 +1,9 @@
 <template>
   <div>
-   <Titre title="Liste de Bailleurs" />
-    <Title value="Liste des projets"></Title>
+   <Titre title="Bailleurs" />
     <v-card color="indigo lighten-5 elevation-4 mx-4 mt-4 mb-16">
       <v-card-title>
-        Bailleurs
+        Liste des bailleurs
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
