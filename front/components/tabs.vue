@@ -9,7 +9,6 @@
          </v-tab>
         <v-tab>
           <v-btn outlined rounded> DONORS</v-btn>
-         
         </v-tab>
         <v-tab>
           <v-btn outlined rounded>our focus</v-btn>
