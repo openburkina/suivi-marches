@@ -139,6 +139,23 @@ class BuyerRecordList(APIView):
         data = BuyerRecordSerializer(releases, many=True).data
         return Response(data)        
 
+class RecordList(APIView):
+    @swagger_auto_schema(responses={200:BuyerRecordSerializer(many=True)})
+    def get(self, request):
+        releases = Release.objects.all(
+            ).annotate(
+            record_ocid = F('ref_record__ocid'),
+            title = F('tender__title'),
+            sector = F('ref_record__target__name'),
+            country = F('ref_record__implementation_address__country_name'),
+            region = F('ref_record__implementation_address__region'),
+            value = F('ref_record__implementation_value__amount'),
+            currency = F('ref_record__implementation_value__currency'),
+            last_update = F('date')
+            )
+        data = BuyerRecordSerializer(releases, many=True).data
+        return Response(data)        
+
 class BuyerRecordSectorValues(APIView):
     @swagger_auto_schema(
         responses={200:BuyerRecordByStatusSerializer(many=True)},

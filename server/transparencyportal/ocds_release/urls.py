@@ -18,7 +18,8 @@ from .views import (
     RecordNumberByStatusYearView,
     RecordValueEvolutionBySectorView,
     RecordValueByGenericView,
-    AllRecordValueGroupByRegion
+    AllRecordValueGroupByRegion,
+    RecordList
 )
 
 buyer_urlpatterns = [
@@ -42,7 +43,8 @@ record_urlpatterns = [
     path(r'by_status', RecordNumberByStatusYearView.as_view(), name='record-count-all'),
     path(r'sector_values', RecordValueEvolutionBySectorView.as_view(), name='record-count-all'),
     path(r'values', RecordValueByGenericView.as_view(), name='record-count-all'),
-    path(r'amountvalue', AllRecordValueGroupByRegion.as_view(), name='record-count-region')
+    path(r'amountvalue', AllRecordValueGroupByRegion.as_view(), name='record-count-region'),
+    path(r'relaeselist', RecordList.as_view(), name='record-list')
 
 ]
 release_urlpatterns = [
