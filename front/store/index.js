@@ -23,6 +23,7 @@ export const state = () => ({
     idRegion: 0,
     statasList: [],
     tmpStat:{},
+    homeRegionValues: [],
     homePieStats: {'labels': [], 'data': []},
     homeBarOneStats: {'labels': [], 'data': []},
     homeBarTwoStats: {'labels': [], 'data': []},
@@ -38,6 +39,10 @@ export const state = () => ({
   })
 
 export const mutations = {
+    setHomeRegionValues(state, payload) {
+        state.homeRegionValues = payload.data
+    },
+
     setHomePieStats(state, payload) {
         state.homePieStats = payload.data
     },
@@ -244,6 +249,15 @@ export const mutations = {
 
 }
 export const actions = {
+
+    // Home map
+    async fetchHomeRegionValues({ commit }) {
+        await axios.get(
+            `http://localhost:8000/api/records/amountvalue`
+        ).then(res => {
+            commit("setHomeRegionValues", {'data': res.data})
+        })
+    },
 
     // Home Stats
     async fetchHomePieStats({ commit }, { year }) {

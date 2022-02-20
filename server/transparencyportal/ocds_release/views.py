@@ -370,14 +370,17 @@ class AllRecordValueGroupByRegion(APIView):
     def get(self, request):
         records = Record.objects.all()
         records = records.annotate(
+            locality_long=F('implementation_address__locality_longitude'),
+            locality_lat=F('implementation_address__locality_latitude'),
             name=Concat(
                 F('implementation_address__region'),
                 Value(', '),
                 F('implementation_address__country_name')
             )
-        ).values('name')
+        ).values('name', 'locality_long', 'locality_lat')
         records = records.annotate(value=Sum('implementation_value__amount'),
-                                   currency=F('implementation_value__currency'))
+                                   currency=F('implementation_value__currency'),
+                                   )
         data = RecordValueByGenericSerializer(records, many=True).data
         return Response(data)
 

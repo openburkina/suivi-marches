@@ -42,7 +42,9 @@ class RecordValueByGenericSerializer(serializers.Serializer):
     name = serializers.CharField()
     value = serializers.FloatField()
     currency = serializers.CharField()
-
+    locality_long = serializers.FloatField(allow_null=True)
+    locality_lat = serializers.FloatField(allow_null=True)
+# class RecordValueMapSerializer(serializers.Serializer):
 # End specific serializers.
 
 class AddressSerializer(serializers.ModelSerializer):
