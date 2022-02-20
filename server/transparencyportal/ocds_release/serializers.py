@@ -84,7 +84,7 @@ class RecordStageSerializer(serializers.Serializer):
 
 class RecordItemSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
+    # tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
     items = ItemSerializer(many=True)
 
 class RecordSumSerializer(serializers.ModelSerializer):

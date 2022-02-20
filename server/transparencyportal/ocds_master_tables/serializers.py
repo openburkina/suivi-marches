@@ -132,11 +132,11 @@ class UnitSerializer(serializers.ModelSerializer):
         exclude =['id']
 
 class ItemSerializer(serializers.ModelSerializer):
-    classification = ClassificationSerializer()
+    # classification = ClassificationSerializer()
     unit = UnitSerializer()
     class Meta:
         model = Item
-        fields = '__all__'
+        exclude = ['id', 'classification']
 
 class ProjetSerializer(serializers.ModelSerializer):
     class Meta:
