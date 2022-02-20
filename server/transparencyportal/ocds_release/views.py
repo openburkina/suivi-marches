@@ -120,7 +120,7 @@ class BuyerTransactionList(APIView):
     @swagger_auto_schema(responses={200: TransactionSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
-        transactions = buyer_instance.as_payer_transactions.all()
+        transactions = buyer_instance.as_payer_transactions.annotate(title=F('implementation__contract__ref_award__title'))
         data = TransactionSerializer(transactions, many=True).data
         return Response(data)
 
@@ -148,8 +148,8 @@ class BuyerRecordList(APIView):
 class RecordTransactionList(APIView):
     @swagger_auto_schema(responses={200: TransactionSerializer(many=True)})
     def get(self, request, record_id):
-        records_instance = get_object_or_404(Entity, pk=record_id)
-        transactions = records_instance.as_payer_transactions.all()
+        records_instance = get_object_or_404(Record, pk=record_id)
+        transactions = records_instance.compiled_release.buyer.as_payer_transactions.annotate(title=F('implementation__contract__ref_award__title'))
         data = TransactionSerializer(transactions, many=True).data
         return Response(data)
 
