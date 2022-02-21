@@ -65,16 +65,28 @@ class ReleaseSerializer(serializers.ModelSerializer):
         model = Release
         fields = '__all__'
 
-class RecordSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name="api:record-detail")
-    compiled_release = serializers.HyperlinkedRelatedField(view_name="api:release-detail", read_only=True)
-    releases = serializers.HyperlinkedRelatedField(view_name="api:published-release-detail", read_only=True, many=True)
-    target = TargetSerializer()
-    implementation_address = AddressSerializer()
+class RecordSerializer(serializers.Serializer):
+    record_ocid = serializers.CharField()
+    buyer_name = serializers.CharField()
+    procuring_entity = serializers.CharField()
+    sector = serializers.CharField()
+    country = serializers.CharField()
+    region = serializers.CharField()
+    value = serializers.FloatField()
+    currency = serializers.CharField()
+    step = serializers.CharField()
+    last_update = serializers.DateTimeField()
 
-    class Meta:
-        model = Record
-        fields = '__all__'
+# class RecordSerializer(serializers.ModelSerializer):
+#     url = serializers.HyperlinkedIdentityField(view_name="api:record-detail")
+#     compiled_release = serializers.HyperlinkedRelatedField(view_name="api:release-detail", read_only=True)
+#     releases = serializers.HyperlinkedRelatedField(view_name="api:published-release-detail", read_only=True, many=True)
+#     target = TargetSerializer()
+#     implementation_address = AddressSerializer()
+
+#     class Meta:
+#         model = Record
+#         fields = '__all__'
 
 class RecordStageSerializer(serializers.Serializer):
     id = serializers.IntegerField()
@@ -84,7 +96,7 @@ class RecordStageSerializer(serializers.Serializer):
 
 class RecordItemSerializer(serializers.Serializer):
     id = serializers.IntegerField()
-    tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
+    # tender = serializers.HyperlinkedRelatedField(view_name="api:tender-detail", read_only=True)
     items = ItemSerializer(many=True)
 
 class RecordSumSerializer(serializers.ModelSerializer):

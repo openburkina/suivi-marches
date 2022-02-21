@@ -5,7 +5,7 @@
     outlined
     tile
     elevation="5">
-    <v-card-title class="display-1" style="word-break: break-word">
+    <v-card-title class="text-h5" style="word-break: break-word">
         {{ title }}
     </v-card-title>
     <v-card-subtitle>

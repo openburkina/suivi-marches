@@ -1,34 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="64f477a8-eed2-4f71-9028-703168bb03de" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/node_modules/.bin/husky" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/.bin/husky.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/.bin/husky.ps1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/husky.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/lib/bin.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/lib/bin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/lib/index.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/lib/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/husky/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/front/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_awards/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_awards/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_contracts/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_contracts/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_implementation/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_implementation/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_master_tables/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_master_tables/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_master_tables/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_master_tables/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_master_tables/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_master_tables/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_planning/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_planning/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_release/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_release/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_release/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_release/serializers.py" afterDir="false" />
+    <list default="true" id="64f477a8-eed2-4f71-9028-703168bb03de" name="Default Changelist" comment="Release">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_release/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_release/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_release/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_release/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_tender/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_tender/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/transparencyportal/ocds_tender/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/transparencyportal/ocds_tender/serializers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +14,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="21dRvtfABblqN5vtuod1DqUnZKM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -46,6 +25,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -56,6 +36,36 @@
       <option name="presentableId" value="Default" />
       <updated>1638269212696</updated>
     </task>
+    <task id="LOCAL-00001" summary="Release">
+      <created>1644877853891</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1644877853891</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Release">
+      <created>1644877909951</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1644877909951</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Release" />
+    <option name="LAST_COMMIT_MESSAGE" value="Release" />
   </component>
 </project>

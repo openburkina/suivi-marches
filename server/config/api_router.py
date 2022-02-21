@@ -12,7 +12,6 @@ from transparencyportal.ocds_master_tables.urls import (
     region_urlpatterns
 )
 from transparencyportal.ocds_release.views import (
-    RecordViewSet,
     ReleaseViewSet,
     TargetViewSet,
 )
@@ -24,7 +23,6 @@ else:
     router = SimpleRouter()
 
 router.register("users", UserViewSet)
-router.register("records", RecordViewSet)
 router.register("targets", TargetViewSet)
 router.register("releases", ReleaseViewSet)
 router.register("plannings", PlanningViewSet)

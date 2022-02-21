@@ -38,110 +38,163 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 
-class RecordViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Record.objects.all()
-    serializer_class = RecordSerializer
+# class RecordViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = Record.objects.all()
+#     serializer_class = RecordSerializer
 
-    def get_queryset(self):
-        queryset = Record.objects.all()
-        country = self.request.query_params.get('country')
-        region = self.request.query_params.get('region')
-        target = self.request.query_params.get('target')
-        if country is not None:
-            queryset = queryset.filter(implementation_address__country_name__iexact=country)
-        if region is not None:
-            queryset = queryset.filter(implementation_address__region__iexact=region)
-        if target is not None:
-            queryset = queryset.filter(target__name__iexact=target)
-        return queryset
+#     def get_queryset(self):
+#         queryset = Record.objects.all()
+#         country = self.request.query_params.get('country')
+#         region = self.request.query_params.get('region')
+#         target = self.request.query_params.get('target')
+#         if country is not None:
+#             queryset = queryset.filter(implementation_address__country_name__iexact=country)
+#         if region is not None:
+#             queryset = queryset.filter(implementation_address__region__iexact=region)
+#         if target is not None:
+#             queryset = queryset.filter(target__name__iexact=target)
+#         return queryset
 
-    @swagger_auto_schema(manual_parameters=[
-        openapi.Parameter('country', openapi.IN_QUERY, type=openapi.TYPE_STRING),
-        openapi.Parameter('region', openapi.IN_QUERY, type=openapi.TYPE_STRING),
-        openapi.Parameter('target', openapi.IN_QUERY, type=openapi.TYPE_STRING),
-    ])
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+#     @swagger_auto_schema(manual_parameters=[
+#         openapi.Parameter('country', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+#         openapi.Parameter('region', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+#         openapi.Parameter('target', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+#     ])
+#     def list(self, request, *args, **kwargs):
+#         return super().list(request, *args, **kwargs)
+
 
 class ReleaseViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Release.objects.all()
     serializer_class = ReleaseSerializer
 
+
 class TargetViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Target.objects.all()
     serializer_class = TargetSerializer
 
+
 class BuyerList(APIView):
-    @swagger_auto_schema(responses={200:EntitySerializer(many=True)})
+    @swagger_auto_schema(responses={200: EntitySerializer(many=True)})
     def get(self, request):
         buyers = Entity.objects.filter(role__role__contains=["buyer"]).distinct()
         data = EntitySerializer(buyers, many=True).data
         return Response(data)
 
+
 class BuyerTotalRecordView(APIView):
-    @swagger_auto_schema(responses={200:BuyerTotalRecordSerializer})
+    @swagger_auto_schema(responses={200: BuyerTotalRecordSerializer})
     def get(self, request, buyer_id):
         buyers = Entity.objects.filter(role__role__contains=["buyer"])
         buyer_instance = get_object_or_404(buyers, pk=buyer_id)
         output_instance = {
-            'in_progress' : [],
+            'in_progress': [],
             'done': [],
             'total': []
         }
-        in_progress_sum = Record.objects\
-                        .filter(compiled_release__buyer = buyer_instance.pk)\
-                        .exclude(compiled_release__tag__contains = ['contractTermination'])\
-                        .annotate(currency=F('implementation_value__currency'))\
-                        .values('currency')\
-                        .annotate(amount=Sum('implementation_value__amount'))
-        done_sum = Record.objects\
-                        .filter(compiled_release__buyer = buyer_instance.pk)\
-                        .filter(compiled_release__tag__contains = ['contractTermination'])\
-                        .annotate(currency=F('implementation_value__currency'))\
-                        .values('currency')\
-                        .annotate(amount=Sum('implementation_value__amount'))
-        total = Record.objects\
-                        .filter(compiled_release__buyer = buyer_instance.pk)\
-                        .annotate(currency=F('implementation_value__currency'))\
-                        .values('currency')\
-                        .annotate(amount=Sum('implementation_value__amount'))
+        in_progress_sum = Record.objects \
+            .filter(compiled_release__buyer=buyer_instance.pk) \
+            .exclude(compiled_release__tag__contains=['contractTermination']) \
+            .annotate(currency=F('implementation_value__currency')) \
+            .values('currency') \
+            .annotate(amount=Sum('implementation_value__amount'))
+        done_sum = Record.objects \
+            .filter(compiled_release__buyer=buyer_instance.pk) \
+            .filter(compiled_release__tag__contains=['contractTermination']) \
+            .annotate(currency=F('implementation_value__currency')) \
+            .values('currency') \
+            .annotate(amount=Sum('implementation_value__amount'))
+        total = Record.objects \
+            .filter(compiled_release__buyer=buyer_instance.pk) \
+            .annotate(currency=F('implementation_value__currency')) \
+            .values('currency') \
+            .annotate(amount=Sum('implementation_value__amount'))
         output_instance['in_progress'] = in_progress_sum
         output_instance['done'] = done_sum
         output_instance['total'] = total
         data = BuyerTotalRecordSerializer(output_instance).data
         return Response(data)
 
+
 class BuyerTransactionList(APIView):
-    @swagger_auto_schema(responses={200:TransactionSerializer(many=True)})
+    @swagger_auto_schema(responses={200: TransactionSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
-        transactions = buyer_instance.as_payer_transactions.all()
+        transactions = buyer_instance.as_payer_transactions.annotate(title=F('implementation__contract__ref_award__title'))
         data = TransactionSerializer(transactions, many=True).data
         return Response(data)
 
+
 class BuyerRecordList(APIView):
-    @swagger_auto_schema(responses={200:BuyerRecordSerializer(many=True)})
+    @swagger_auto_schema(responses={200: BuyerRecordSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
-        releases = Release.objects\
+        releases = Release.objects \
             .filter(
-                buyer = buyer_instance,
-            ).annotate(
-                record_ocid = F('ref_record__ocid'),
-                title = F('tender__title'),
-                sector = F('ref_record__target__name'),
-                country = F('ref_record__implementation_address__country_name'),
-                region = F('ref_record__implementation_address__region'),
-                value = F('ref_record__implementation_value__amount'),
-                currency = F('ref_record__implementation_value__currency'),
-                last_update = F('date')
-            )
+            buyer=buyer_instance,
+        ).annotate(
+            record_ocid=F('ref_record__ocid'),
+            title=F('tender__title'),
+            sector=F('ref_record__target__name'),
+            country=F('ref_record__implementation_address__country_name'),
+            region=F('ref_record__implementation_address__region'),
+            value=F('ref_record__implementation_value__amount'),
+            currency=F('ref_record__implementation_value__currency'),
+            last_update=F('date')
+        )
         data = BuyerRecordSerializer(releases, many=True).data
-        return Response(data)        
+        return Response(data)
+
+class RecordTransactionList(APIView):
+    @swagger_auto_schema(responses={200: TransactionSerializer(many=True)})
+    def get(self, request, record_id):
+        records_instance = get_object_or_404(Record, pk=record_id)
+        transactions = records_instance.compiled_release.buyer.as_payer_transactions.annotate(title=F('implementation__contract__ref_award__title'))
+        data = TransactionSerializer(transactions, many=True).data
+        return Response(data)
+
+
+
+
+class RecordList(APIView):
+    @swagger_auto_schema(responses={200: RecordSerializer(many=True)})
+    def get(self, request):
+        releases = Release.objects.all(
+        ).annotate(
+            record_ocid=F('ref_record__ocid'),
+            buyer_name=F('buyer__name'),
+            procuring_entity=F('tender__procuring_entity__name'),
+            sector=F('ref_record__target__name'),
+            country=F('ref_record__implementation_address__country_name'),
+            region=F('ref_record__implementation_address__region'),
+            value=F('ref_record__implementation_value__amount'),
+            currency=F('ref_record__implementation_value__currency'),
+            last_update=F('date')
+        )
+        data = RecordSerializer(releases, many=True).data
+        return Response(data)
+
+class RecordDetail(APIView):
+    @swagger_auto_schema(responses={200: BuyerRecordSerializer(many=True)})
+    def get(self, request):
+        releases = Release.objects.all(
+        ).annotate(
+            record_ocid=F('ref_record__ocid'),
+            title=F('tender__title'),
+            sector=F('ref_record__target__name'),
+            country=F('ref_record__implementation_address__country_name'),
+            region=F('ref_record__implementation_address__region'),
+            value=F('ref_record__implementation_value__amount'),
+            currency=F('ref_record__implementation_value__currency'),
+            last_update=F('date')
+        )
+        data = BuyerRecordSerializer(releases, many=True).data
+        return Response(data)
+
 
 class BuyerRecordSectorValues(APIView):
     @swagger_auto_schema(
-        responses={200:BuyerRecordByStatusSerializer(many=True)},
+        responses={200: BuyerRecordByStatusSerializer(many=True)},
         manual_parameters=[
             openapi.Parameter('start_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
             openapi.Parameter('end_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True)
@@ -160,7 +213,7 @@ class BuyerRecordSectorValues(APIView):
             compiled_release__buyer=buyer_instance,
             compiled_release__tender__tender_period__start_date__year__gte=start_year,
             compiled_release__tender__tender_period__start_date__year__lte=end_year,
-        ).values('compiled_release__tender__tender_period__start_date__year', sector=F('target__name'))\
+        ).values('compiled_release__tender__tender_period__start_date__year', sector=F('target__name')) \
             .annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
         data = RecordSectorGroupedSerializer(records, many=True).data
         return Response(data)
@@ -168,7 +221,7 @@ class BuyerRecordSectorValues(APIView):
 
 class BuyerRecordByStatus(APIView):
     @swagger_auto_schema(
-        responses={200:BuyerRecordByStatusSerializer(many=True)},
+        responses={200: BuyerRecordByStatusSerializer(many=True)},
         manual_parameters=[
             openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING)
         ]
@@ -178,7 +231,7 @@ class BuyerRecordByStatus(APIView):
         if year is None:
             return Response('Year not specified', status=500)
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
-        releases = Release.objects.filter(buyer = buyer_instance,tender__tender_period__start_date__year=year)
+        releases = Release.objects.filter(buyer=buyer_instance, tender__tender_period__start_date__year=year)
         output = {
             'planning': 0,
             'tender': 0,
@@ -193,12 +246,14 @@ class BuyerRecordByStatus(APIView):
         data = BuyerRecordByStatusSerializer(output).data
         return Response(data)
 
+
 class BuyerRecordValuesGrouped(APIView):
     @swagger_auto_schema(
-        responses={200:BuyerRecordByStatusSerializer(many=True)},
+        responses={200: BuyerRecordByStatusSerializer(many=True)},
         manual_parameters=[
             openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
-            openapi.Parameter('group_by', openapi.IN_QUERY, type=openapi.TYPE_STRING, enum=['region', 'sector'], required=True)
+            openapi.Parameter('group_by', openapi.IN_QUERY, type=openapi.TYPE_STRING, enum=['region', 'sector'],
+                              required=True)
         ]
     )
     def get(self, request, buyer_id):
@@ -211,9 +266,9 @@ class BuyerRecordValuesGrouped(APIView):
 
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         records = Record.objects.filter(
-                compiled_release__buyer=buyer_instance,
-                compiled_release__tender__tender_period__start_date__year=year
-            )
+            compiled_release__buyer=buyer_instance,
+            compiled_release__tender__tender_period__start_date__year=year
+        )
         if group_by == 'region':
             records = records.annotate(
                 name=Concat(
@@ -224,22 +279,24 @@ class BuyerRecordValuesGrouped(APIView):
             ).values('name')
         if group_by == 'sector':
             records = records.annotate(name=F('target__name')).values('name')
-        records = records.annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        records = records.annotate(value=Sum('implementation_value__amount'),
+                                   currency=F('implementation_value__currency'))
         data = RecordValueGroupedSerializer(records, many=True).data
         return Response(data)
+
 
 # Accueil
 
 class RecordNumberByStatusYearView(APIView):
     @swagger_auto_schema(
-        responses={200:RecordNumberByStatusYearSerializer(many=True)},
+        responses={200: RecordNumberByStatusYearSerializer(many=True)},
         manual_parameters=[
             openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING),
-            ]
+        ]
     )
     def get(self, request):
         year = self.request.query_params.get('year')
-        
+
         if year is None:
             return Response('Year not specified', status=500)
 
@@ -259,10 +316,11 @@ class RecordNumberByStatusYearView(APIView):
             output[release.step] += 1
         data = RecordNumberByStatusYearSerializer(output).data
         return Response(data)
- 
+
+
 class RecordValueEvolutionBySectorView(APIView):
     @swagger_auto_schema(
-        responses={200:RecordValueEvolutionBySectorSerializer(many=True)},
+        responses={200: RecordValueEvolutionBySectorSerializer(many=True)},
         manual_parameters=[
             openapi.Parameter('start_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
             openapi.Parameter('end_year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
@@ -280,17 +338,19 @@ class RecordValueEvolutionBySectorView(APIView):
         records = Record.objects.filter(
             compiled_release__tender__tender_period__start_date__year__gte=start_year,
             compiled_release__tender__tender_period__start_date__year__lte=end_year,
-        ).values('compiled_release__tender__tender_period__start_date__year', sector=F('target__name'))\
+        ).values('compiled_release__tender__tender_period__start_date__year', sector=F('target__name')) \
             .annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
         data = RecordValueEvolutionBySectorSerializer(records, many=True).data
         return Response(data)
- 
+
+
 class RecordValueByGenericView(APIView):
     @swagger_auto_schema(
-        responses={200:RecordValueByGenericSerializer(many=True)},
+        responses={200: RecordValueByGenericSerializer(many=True)},
         manual_parameters=[
             openapi.Parameter('year', openapi.IN_QUERY, type=openapi.TYPE_STRING, required=True),
-            openapi.Parameter('group_by', openapi.IN_QUERY, type=openapi.TYPE_STRING, enum=['region', 'sector'], required=True),
+            openapi.Parameter('group_by', openapi.IN_QUERY, type=openapi.TYPE_STRING, enum=['region', 'sector'],
+                              required=True),
         ]
     )
     def get(self, request):
@@ -303,8 +363,8 @@ class RecordValueByGenericView(APIView):
             return Response('Group field not specified', status=500)
 
         records = Record.objects.filter(
-                compiled_release__tender__tender_period__start_date__year=year
-            )
+            compiled_release__tender__tender_period__start_date__year=year
+        )
         if group_by == 'region':
             records = records.annotate(
                 name=Concat(
@@ -315,26 +375,33 @@ class RecordValueByGenericView(APIView):
             ).values('name')
         if group_by == 'sector':
             records = records.annotate(name=F('target__name')).values('name')
-        records = records.annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        records = records.annotate(value=Sum('implementation_value__amount'),
+                                   currency=F('implementation_value__currency'))
         data = RecordValueByGenericSerializer(records, many=True).data
         return Response(data)
- 
+
+
 class AllRecordValueGroupByRegion(APIView):
     @swagger_auto_schema(
-        responses={200:RecordValueByGenericSerializer(many=True)},
+        responses={200: RecordValueByGenericSerializer(many=True)},
     )
     def get(self, request):
         records = Record.objects.all()
         records = records.annotate(
+            locality_long=F('implementation_address__locality_longitude'),
+            locality_lat=F('implementation_address__locality_latitude'),
             name=Concat(
                 F('implementation_address__region'),
                 Value(', '),
                 F('implementation_address__country_name')
             )
-        ).values('name')
-        records = records.annotate(value=Sum('implementation_value__amount'), currency=F('implementation_value__currency'))
+        ).values('name', 'locality_long', 'locality_lat')
+        records = records.annotate(value=Sum('implementation_value__amount'),
+                                   currency=F('implementation_value__currency'),
+                                   )
         data = RecordValueByGenericSerializer(records, many=True).data
         return Response(data)
+
 
 # End Accueil
 
@@ -343,8 +410,9 @@ class PublishedReleaseView(APIView):
         published_release_instance = get_object_or_404(PublishedRelease, pk=pk)
         return Response(json.loads(published_release_instance.release))
 
+
 class RecordItemList(APIView):
-    @swagger_auto_schema(responses={200:RecordItemSerializer})
+    @swagger_auto_schema(responses={200: RecordItemSerializer})
     def get(self, request, record_id):
         record_instance = get_object_or_404(Record, pk=record_id)
         output_instance = {
@@ -361,8 +429,9 @@ class RecordItemList(APIView):
         data = RecordItemSerializer(output_instance, context={'request': request}).data
         return Response(data)
 
+
 class RecordStageList(APIView):
-    @swagger_auto_schema(responses={200:RecordStageSerializer})
+    @swagger_auto_schema(responses={200: RecordStageSerializer})
     def get(self, request, record_id):
         record_instance = get_object_or_404(Record, pk=record_id)
         output_instance = {
@@ -381,24 +450,28 @@ class RecordStageList(APIView):
         data = RecordStageSerializer(output_instance).data
         return Response(data)
 
+
 class InProgressRecordList(APIView):
-    @swagger_auto_schema(responses={200:RecordSerializer(many=True)})
+    @swagger_auto_schema(responses={200: RecordSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
-        queryset = Record.objects.filter(compiled_release__buyer = buyer_instance.pk).exclude(compiled_release__tag__contains = ['contractTermination'])
+        queryset = Record.objects.filter(compiled_release__buyer=buyer_instance.pk).exclude(
+            compiled_release__tag__contains=['contractTermination'])
         data = RecordSerializer(queryset, many=True, context={'request': request}).data
         return Response(data)
 
+
 class DoneRecordList(APIView):
-    @swagger_auto_schema(responses={200:RecordSerializer(many=True)})
+    @swagger_auto_schema(responses={200: RecordSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         queryset = Record.objects.filter(
-            compiled_release__buyer = buyer_instance.pk,
-            compiled_release__tag__contains = ['contractTermination']
+            compiled_release__buyer=buyer_instance.pk,
+            compiled_release__tag__contains=['contractTermination']
         )
         data = RecordSerializer(queryset, many=True, context={'request': request}).data
         return Response(data)
+
 
 class SumRecord(APIView):
     @swagger_auto_schema(manual_parameters=[
@@ -407,28 +480,29 @@ class SumRecord(APIView):
     def get(self, request):
         region = self.request.query_params.get('region')
         queryset = Record.objects.filter(
-            implementation_address__region__iexact = region
+            implementation_address__region__iexact=region
         )
         data = RecordSumSerializer(queryset, many=True, context={'request': request}).data
         return Response({
             'entity': data
         })
 
+
 class BuyerTotalRecord(APIView):
-    @swagger_auto_schema(responses={200:RecordSerializer(many=True)})
+    @swagger_auto_schema(responses={200: RecordSerializer(many=True)})
     def get(self, request, buyer_id):
         buyer_instance = get_object_or_404(Entity, pk=buyer_id)
         queryset_progress = Release.objects.filter(
-            buyer = buyer_instance.pk).exclude(tag = ['contractTermination'])
+            buyer=buyer_instance.pk).exclude(tag=['contractTermination'])
         queryset_done = Release.objects.filter(
-            buyer = buyer_instance.pk,
-            tag = ['contractTermination']
+            buyer=buyer_instance.pk,
+            tag=['contractTermination']
         )
         total_in = queryset_progress.count()
         total_finish = queryset_done.count()
-        #output_instance['total'] = queryset_progress.count()+queryset_done.count()        
-        #data = BuyerRecordTotalSerializer(output_instance, many=True, context={'request': request}).data
+        # output_instance['total'] = queryset_progress.count()+queryset_done.count()
+        # data = BuyerRecordTotalSerializer(output_instance, many=True, context={'request': request}).data
         return Response({
             'In_progress': total_in,
-            'Finish' : total_finish
+            'Finish': total_finish
         })

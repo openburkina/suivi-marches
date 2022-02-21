@@ -30,7 +30,7 @@
       <v-tab-item>
        <v-container>
 
-         <Leaflet />
+         <Leaflet :regionValues=regionValues  />
        </v-container>
        <v-container>
         <ChartList 
@@ -74,6 +74,7 @@
       barOneStats: {'labels': [], 'data': []},
       barTwoStats: {'labels': [], 'data': []},
       lineStats: {'labels': [], 'data': []},
+      regionValues: {'data': []}
     },
     data () {
       return {

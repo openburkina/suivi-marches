@@ -8,6 +8,7 @@
         :barOneStats= barOneStats
         :barTwoStats= barTwoStats
         :lineStats= lineStats
+        :regionValues= regionValues
 
         v-on:pie-year-change="fetchPieStats($event)"
         v-on:line-years-change="fetchLineStats($event)"
@@ -20,6 +21,7 @@
 export default {
    mounted(){
     this.$store.dispatch('fetchBuyers')
+    this.fetchRegionValues()
     this.fetchPieStats(new Date().getFullYear())
     this.fetchBarOneStats(new Date().getFullYear())
     this.fetchBarTwoStats(new Date().getFullYear())
@@ -27,21 +29,21 @@ export default {
   },
   methods: {
     fetchPieStats(year) {
-      console.log("fetching pie...")
       this.$store.dispatch('fetchHomePieStats', { year: year })
     },
     fetchBarOneStats(year) {
-      console.log("fetching bar one...")
       this.$store.dispatch('fetchHomeBarOneStats', { year: year })
     },
     fetchBarTwoStats(year) {
-      console.log("fetching bar two...")
       this.$store.dispatch('fetchHomeBarTwoStats', { year: year })
     },
     fetchLineStats([startYear, endYear]) {
-      console.log("fetching line...")
       this.$store.dispatch('fetchHomeLineStats', { start_year: startYear, end_year: endYear })
     },
+    fetchRegionValues() {
+      console.log("fetching regions values")
+      this.$store.dispatch('fetchHomeRegionValues')
+    }
   },
   computed: {
     pieStats() {
@@ -55,6 +57,9 @@ export default {
     },
     lineStats() {
       return this.$store.state.homeLineStats
+    },
+    regionValues() {
+      return this.$store.state.homeRegionValues
     },
     done(){
       return this.$store.state.recordsDone.length
