@@ -38,30 +38,30 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
 
-class RecordViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Record.objects.all()
-    serializer_class = RecordSerializer
+# class RecordViewSet(viewsets.ReadOnlyModelViewSet):
+#     queryset = Record.objects.all()
+#     serializer_class = RecordSerializer
 
-    def get_queryset(self):
-        queryset = Record.objects.all()
-        country = self.request.query_params.get('country')
-        region = self.request.query_params.get('region')
-        target = self.request.query_params.get('target')
-        if country is not None:
-            queryset = queryset.filter(implementation_address__country_name__iexact=country)
-        if region is not None:
-            queryset = queryset.filter(implementation_address__region__iexact=region)
-        if target is not None:
-            queryset = queryset.filter(target__name__iexact=target)
-        return queryset
+#     def get_queryset(self):
+#         queryset = Record.objects.all()
+#         country = self.request.query_params.get('country')
+#         region = self.request.query_params.get('region')
+#         target = self.request.query_params.get('target')
+#         if country is not None:
+#             queryset = queryset.filter(implementation_address__country_name__iexact=country)
+#         if region is not None:
+#             queryset = queryset.filter(implementation_address__region__iexact=region)
+#         if target is not None:
+#             queryset = queryset.filter(target__name__iexact=target)
+#         return queryset
 
-    @swagger_auto_schema(manual_parameters=[
-        openapi.Parameter('country', openapi.IN_QUERY, type=openapi.TYPE_STRING),
-        openapi.Parameter('region', openapi.IN_QUERY, type=openapi.TYPE_STRING),
-        openapi.Parameter('target', openapi.IN_QUERY, type=openapi.TYPE_STRING),
-    ])
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
+#     @swagger_auto_schema(manual_parameters=[
+#         openapi.Parameter('country', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+#         openapi.Parameter('region', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+#         openapi.Parameter('target', openapi.IN_QUERY, type=openapi.TYPE_STRING),
+#     ])
+#     def list(self, request, *args, **kwargs):
+#         return super().list(request, *args, **kwargs)
 
 
 class ReleaseViewSet(viewsets.ReadOnlyModelViewSet):
@@ -157,6 +157,24 @@ class RecordTransactionList(APIView):
 
 
 class RecordList(APIView):
+    @swagger_auto_schema(responses={200: RecordSerializer(many=True)})
+    def get(self, request):
+        releases = Release.objects.all(
+        ).annotate(
+            record_ocid=F('ref_record__ocid'),
+            buyer_name=F('buyer__name'),
+            procuring_entity=F('tender__procuring_entity__name'),
+            sector=F('ref_record__target__name'),
+            country=F('ref_record__implementation_address__country_name'),
+            region=F('ref_record__implementation_address__region'),
+            value=F('ref_record__implementation_value__amount'),
+            currency=F('ref_record__implementation_value__currency'),
+            last_update=F('date')
+        )
+        data = RecordSerializer(releases, many=True).data
+        return Response(data)
+
+class RecordDetail(APIView):
     @swagger_auto_schema(responses={200: BuyerRecordSerializer(many=True)})
     def get(self, request):
         releases = Release.objects.all(
