@@ -37,6 +37,10 @@ export default {
     },
     methods:{
         formatValue(amount, currency) {
+            if (amount==null && currency==null){
+                amount = 0
+                currency = "$"
+            }
             return (
                 amount
                 .toFixed(2) // always two decimal digits
