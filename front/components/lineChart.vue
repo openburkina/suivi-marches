@@ -5,11 +5,7 @@
     tile
     elevation="5"
     max-width="500">
-<<<<<<< HEAD
-    <v-card-title class="display-1">Evolution des Montants par secteurs</v-card-title>
-=======
     <v-card-title class="text-h5" style="word-break: break-word">{{ title }}</v-card-title>
->>>>>>> 639abdf3a10b24d281c32fea155061b884d73226
     <v-card-subtitle>
         <v-row>
             <v-col cols=12 sm=4>

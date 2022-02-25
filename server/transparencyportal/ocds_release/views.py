@@ -161,6 +161,7 @@ class RecordList(APIView):
     def get(self, request):
         releases = Release.objects.all(
         ).annotate(
+            record_id=F('ref_record__id'),
             record_ocid=F('ref_record__ocid'),
             buyer_name=F('buyer__name'),
             procuring_entity=F('tender__procuring_entity__name'),

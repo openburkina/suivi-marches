@@ -33,7 +33,7 @@
             <v-list-item-title>Accueil</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="projet">
+          <v-list-item to="travaux">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -83,7 +83,7 @@
         <v-btn to="/" text>
           <span class="mr-2 white--text">Accueil</span>
         </v-btn>
-         <v-btn to="/projet" text>
+         <v-btn to="/travaux" text>
           <span class="mr-2 white--text">Travaux</span>
         </v-btn>
         <v-btn text to="/projet">

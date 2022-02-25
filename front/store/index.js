@@ -3,6 +3,7 @@ import { pieStatAdapter, lineStatAdapter, barStatAdapter } from '~/helpers/Adapt
 
 export const state = () => ({
     list: [],
+    records: [],
     recordsDone: [],
     recordsInprogress:[],
     totauxByBuyer:[],
@@ -17,6 +18,22 @@ export const state = () => ({
     particularName:'',
     listOfRegion: [],
     listRegions:[],
+    /**
+     * Travaux
+     */
+    travauxList: [],
+    travauxInfo: [],
+    travauxSpec:[],
+    travauxDecais:[],
+    travauxTime:[],
+    listTravaux:[],
+    infosTravaux:[],
+    specTravaux:[],
+    decaisTravaux:[],
+    timeTravaux:[],
+    /**
+     * End Travaux
+     */
     regionName:'',
     stataSerie:[],
     recordsTotalOfBuyeur:[],
@@ -170,7 +187,6 @@ export const mutations = {
     listTotauxBuyer(state,paylaod){
         state.totauxByBuyer = paylaod
         console.log(state.totauxByBuyer)
-
     },
     listOfRecords(state,paylaod){
         state.listOfRecords = paylaod
@@ -192,6 +208,154 @@ export const mutations = {
 
     },
 
+
+/**
+     * Liste des travaux
+     */
+     // setter de Liste de tous les travaux
+     listOfTravaux(state,paylaod){
+        state.listTravaux = paylaod
+        state.listTravaux.forEach((el) => {
+            console.log(el)
+            state.tmpList.push({
+                record_ocid: e1.record_ocid,
+                buyer_name: e1.buyer_name,
+                procuring_entity: e1.procuring_entity,
+                sector: e1.sector,
+                country: e1.country,
+                region: e1.region,
+                value: e1.value,
+                currency: e1.currency,
+                step: e1.step,
+                last_update: e1.last_update
+            })
+            
+        })
+        state.listTravaux = state.tmpList
+        state.tmpList = []
+    },
+
+    travauxInfo(state,paylaod){
+        state.infosTravaux = paylaod
+        state.infosTravaux.forEach((el) => {
+            console.log(el)
+            state.tmpList.push({
+                record_ocid: e1.record_ocid,
+                buyer_name: e1.buyer_name,
+                procuring_entity: e1.procuring_entity,
+                sector: e1.sector,
+                country: e1.country,
+                region: e1.region,
+                value: e1.value,
+                currency: e1.currency,
+                step: e1.step,
+                last_update: e1.last_update
+            })
+            
+        })
+        state.infosTravaux = state.tmpList
+        state.tmpList = []
+    },
+
+    travauxSpec(state,paylaod){
+        state.specTravaux = paylaod
+        state.specTravaux.forEach((el) => {
+            console.log(el)
+            state.tmpList.push({
+                record_ocid: e1.record_ocid,
+                buyer_name: e1.buyer_name,
+                procuring_entity: e1.procuring_entity,
+                sector: e1.sector,
+                country: e1.country,
+                region: e1.region,
+                value: e1.value,
+                currency: e1.currency,
+                step: e1.step,
+                last_update: e1.last_update
+            })
+            
+        })
+        state.specTravaux = state.tmpList
+        state.tmpList = []
+    },
+
+    travauxDecais(state,paylaod){
+        state.decaisTravaux = paylaod
+        state.decaisTravaux.forEach((el) => {
+            console.log(el)
+            state.tmpList.push({
+                record_ocid: e1.record_ocid,
+                buyer_name: e1.buyer_name,
+                procuring_entity: e1.procuring_entity,
+                sector: e1.sector,
+                country: e1.country,
+                region: e1.region,
+                value: e1.value,
+                currency: e1.currency,
+                step: e1.step,
+                last_update: e1.last_update
+            })
+            
+        })
+        state.decaisTravaux = state.tmpList
+        state.tmpList = []
+    },
+
+    travauxTime(state,paylaod){
+        state.timeTravaux = paylaod
+        state.timeTravaux.forEach((el) => {
+            console.log(el)
+            state.tmpList.push({
+                record_ocid: e1.record_ocid,
+                buyer_name: e1.buyer_name,
+                procuring_entity: e1.procuring_entity,
+                sector: e1.sector,
+                country: e1.country,
+                region: e1.region,
+                value: e1.value,
+                currency: e1.currency,
+                step: e1.step,
+                last_update: e1.last_update
+            })
+            
+        })
+        state.timeTravaux = state.tmpList
+        state.tmpList = []
+    },
+    /**
+     * 
+     * Travaux End
+     * 
+     */
+     travauxList(state,paylaod){
+        state.listTravaux = paylaod
+        console.log(state.listTravaux)
+
+    },
+     travauxInfo(state,paylaod){
+        state.infosTravaux = paylaod
+        console.log(state.infosTravaux)
+
+    },
+     travauxSpec(state,paylaod){
+        state.specTravaux = paylaod
+        console.log(state.specTravaux)
+
+    },
+     travauxDecais(state,paylaod){
+        state.decaisTravaux = paylaod
+        console.log(state.decaisTravaux)
+
+    },
+     travauxTime(state,paylaod){
+        state.timeTravaux = paylaod
+        console.log(state.timeTravaux)
+
+    },
+
+    /***
+     * End
+     */
     // setter de Liste de tous les tenders
     listSpecification(state,paylaod){
         state.records = paylaod
@@ -246,7 +410,6 @@ export const mutations = {
         state.tmpList = []
 
     }
-
 }
 export const actions = {
 
@@ -507,6 +670,52 @@ export const actions = {
                 commit("listBuyerByRegion",res.data)
         })
     },
+/**
+ * Start Travaux
+ *  
+ *  
+ */
+        // Liste de tous les travaux
+    async AllTravaux({commit}){
+        await axios.get(
+            `http://localhost:8000/api/records`)
+            .then(res=>{
+                commit("listOfTravaux",res.data)
+            })
+        },
+    
+        // Infos d'un travail
+    async infosTravaux({commit},id){
+        await axios.get(
+            `http://localhost:8000/api/records/${id}/`)
+            .then(res=>{
+                commit("travauxInfo",res.data)
+            })
+        },
+    // Specification d'un travail
+    async specificationTravaux({commit},id){
+        await axios.get(
+            `http://localhost:8000/api/records/${id}/items`)
+            .then(res=>{
+                commit("travauxSpec",res.data)
+            })
+        },
+    // Decaissement d'un travail
+    async decaissementTravaux({commit},id){
+        await axios.get(
+            `http://localhost:8000/api/records/${id}/transaction`)
+            .then(res=>{
+                commit("travauxDecais",res.data)
+            })
+        },
+    // Timeline d'un travail
+    async timelineTravaux({commit},id){
+        await axios.get(
+            `http://localhost:8000/api/records/${id}/stages`)
+            .then(res=>{
+                commit("travauxTime",res.data)
+            })
+        },
     
 
 }
