@@ -62,28 +62,42 @@ export const mutations = {
 
     setHomePieStats(state, payload) {
         state.homePieStats = payload.data
+        console.log(state.homePieStats)
+
     },
     setHomeBarOneStats(state, payload) {
         state.homeBarOneStats = payload.data
+        console.log(state.homeBarOneStats)
+
     },
     setHomeBarTwoStats(state, payload) {
         state.homeBarTwoStats = payload.data
+        console.log(state.homeBarTwoStats)
+
     },
     setHomeLineStats(state, payload) {
         state.homeLineStats = payload.data
+        console.log(state.homeLineStats)
+
     },
 
     setRegionPieStats(state, payload) {
         state.regionPieStats = payload.data
+        console.log(state.regionPieStats)
     },
     setRegionBarOneStats(state, payload) {
         state.regionBarOneStats = payload.data
+        console.log(state.regionBarOneStats)
+
     },
     setRegionBarTwoStats(state, payload) {
         state.regionBarTwoStats = payload.data
+        console.log(state.regionBarTwoStats)
+
     },
     setRegionLineStats(state, payload) {
         state.regionLineStats = payload.data
+        console.log(state.regionLineStats)
     },
 
     setBuyerPieStats(state, payload) {

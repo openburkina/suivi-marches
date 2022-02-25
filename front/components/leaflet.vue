@@ -1,7 +1,7 @@
 <template>
     <div style="height: 80vh ;" class="mt-5">
         <client-only>
-            <l-map class="map" :zoom=3 :center=firstDataLocality>
+            <l-map class="map" :zoom=3 :center=centerPoint>
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
                     <l-marker v-for="d in regionValues" :lat-lng="[d.locality_lat, d.locality_long]" @mouseenter="hovering(d.name)" @mouseleave="notHovering(d.name)" :ref="d.name" :key="d.id">
                         <l-popup ref="popup">
@@ -31,36 +31,35 @@ export default {
     },
     data(){
         return {
-           open:null
+            open:null,
+            centerPoint : [-3.993859, 29.371619]
         }
     },
-  
-  methods:{
-    formatValue(amount, currency) {
-        return (
-            amount
-            .toFixed(2) // always two decimal digits
-            .replace('.', ',') // replace decimal point character with ,
-            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' ' + currency
-        ) 
-    },
-    hovering(name){
-        this.$nextTick(() => {
-            this.$refs[name][0].mapObject.openPopup()
+    methods:{
+        formatValue(amount, currency) {
+            if (amount==null && currency==null){
+                amount = 0
+                currency = "$"
+            }
+            return (
+                amount
+                .toFixed(2) // always two decimal digits
+                .replace('.', ',') // replace decimal point character with ,
+                .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + ' ' + currency
+            ) 
+        },
+        hovering(name){
+            this.$nextTick(() => {
+                this.$refs[name][0].mapObject.openPopup()
 
-        }) 
-      },
-    notHovering(name){
-        this.$nextTick(() => {
-            this.$refs[name][0].mapObject.closePopup()
-        }) 
-      },
-  },
-  computed: {
-      firstDataLocality() {
-          return [this.regionValues[0].locality_lat, this.regionValues[0].locality_long]
-      }
-  }
+            }) 
+        },
+        notHovering(name){
+            this.$nextTick(() => {
+                this.$refs[name][0].mapObject.closePopup()
+            }) 
+        },
+    }
 }
 </script>
 <style scoop lang="scss">
