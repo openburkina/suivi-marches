@@ -1,9 +1,9 @@
 <template>
   <div>
-   <Titre title="Projets" />
+   <Titre title="Travaux" />
     <v-card color="indigo lighten-5 elevation-4 mx-4 mt-4 mb-16">
       <v-card-title>
-        Liste des projets
+        Liste des travaux
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"

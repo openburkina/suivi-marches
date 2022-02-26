@@ -10,40 +10,40 @@
         <v-tabs-slider></v-tabs-slider>
 
         <v-tab href="#tab-1">
-          Info
+          Infos
           <v-icon>mdi-axis-arrow-info</v-icon>
         </v-tab>
 
         <v-tab href="#tab-2">
-          Activités
-          <v-icon>mdi-archive</v-icon>
+          Spécifications
+          <v-icon>mdi-format-list-text</v-icon>
         </v-tab>
 
         <v-tab href="#tab-3">
           Décaissements
-          <v-icon>mdi-bank</v-icon>
+          <v-icon>mdi-cash</v-icon>
         </v-tab>
 
         <v-tab href="#tab-4">
-          Indicateurs
-          <v-icon>mdi-arrow-projectile</v-icon>
+          Chronologie
+          <v-icon>mdi-chart-timeline</v-icon>
         </v-tab>
       </v-tabs>
 
-      <!-- <v-tabs-items v-model="tab" class="mb-9">
+      <v-tabs-items v-model="tab" class="mb-9">
         <v-tab-item value="tab-1" class="mb-9">
-          <TabInfoProjet :projet="getProjet()" />
+          <ProjectInfo :project="getProjet()" />
         </v-tab-item>
         <v-tab-item value="tab-2">
-          <TabActiviteProjet  :search="search" />
+          <ProjectSpecification  :search="search" />
         </v-tab-item>
         <v-tab-item value="tab-3">
-          <TabDecaissementProjet :search="search"/>
+          <ProjectTransaction :search="search"/>
         </v-tab-item>
         <v-tab-item value="tab-4">
-          <TabIndicateurProjet :search="search"/>
+          <ProjectTimeline :search="search"/>
         </v-tab-item>
-      </v-tabs-items> -->
+      </v-tabs-items>
     </v-card>
   </div>
 </template>
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       search: '',
-      idProjet: this.$route.params.id,
+      id: this.$route.params.project,
       tab: null,
       projets: [
         {
@@ -90,10 +90,11 @@ export default {
   },
   methods: {
     getTitle(message) {
-      return `${message} sur le projet : ${this.idProjet}`
+      return `${message} sur le projet : ${this.id}`
     },
     getProjet() {
-      return this.projets.find((p) => p.id == this.idProjet)
+        console.log(this.id)
+      return this.projets.find((p) => p.id == this.id)
     },
     getColor(statut) {
       if (statut < 1) return '#00E396'
