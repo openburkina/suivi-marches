@@ -66,6 +66,7 @@ class ReleaseSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RecordSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     record_ocid = serializers.CharField()
     buyer_name = serializers.CharField()
     procuring_entity = serializers.CharField()
