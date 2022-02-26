@@ -33,21 +33,21 @@
             <v-list-item-title>Accueil</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="projet">
+          <v-list-item to="projects">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Travaux</v-list-item-title>
           </v-list-item>
           
-          <v-list-item to="projet">
+          <v-list-item to="buyers">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Bailleurs</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="region">
+          <v-list-item to="regions">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
@@ -83,14 +83,14 @@
         <v-btn to="/" text>
           <span class="mr-2 white--text">Accueil</span>
         </v-btn>
-         <v-btn to="/projet" text>
+         <v-btn to="/projects" text>
           <span class="mr-2 white--text">Travaux</span>
         </v-btn>
-        <v-btn text to="/projet">
+        <v-btn text to="/buyers">
           <span class="mr-2  white--text">Bailleurs</span>
         </v-btn>
         <!-- More menu -->
-        <v-btn text to="/region">
+        <v-btn text to="/regions">
           <span class="mr-2  white--text">Régions</span>
         </v-btn>
       </div>

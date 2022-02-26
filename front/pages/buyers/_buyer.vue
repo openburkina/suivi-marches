@@ -16,12 +16,9 @@
 
 <script>
 export default {
-   validate({ params }){
-       return /^\d+$/.test(params.projets)
-    },
   data(){
     return {
-        id: this.$route.params.projets
+        id: this.$route.params.buyer
     }
   },
   mounted(){

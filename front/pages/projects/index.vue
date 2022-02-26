@@ -1,9 +1,9 @@
 <template>
   <div>
-   <Titre title="Bailleurs" />
+   <Titre title="Projets" />
     <v-card color="indigo lighten-5 elevation-4 mx-4 mt-4 mb-16">
       <v-card-title>
-        Liste des bailleurs
+        Liste des projets
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -83,9 +83,9 @@ export default {
       if (statut < 1) return 'mdi-close'
       else return 'mdi-check'
     },
-    createEditLink(buyers) {
-      this.$store.state.particularName = `Travaux de : ${buyers.name }`
-      return this.$router.push({ path: '/projets/' + buyers.id})
+    createEditLink(buyer) {
+      this.$store.state.particularName = `Travaux de : ${buyer.name }`
+      return this.$router.push({ path: '/buyers/' + buyer.id})
     },
   },
 }
