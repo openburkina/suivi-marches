@@ -35,10 +35,33 @@ export const state = () => ({
     buyerPieStats: {'labels': [], 'data': []},
     buyerBarOneStats: {'labels': [], 'data': []},
     buyerBarTwoStats: {'labels': [], 'data': []},
-    buyerLineStats: {'labels': [], 'data': []}
+    buyerLineStats: {'labels': [], 'data': []},
+
+    projectList : [],
+    projectInfo : {},
+    projectItems : [],
+    projectTransactions : [],
+    projectStages : []
   })
 
 export const mutations = {
+    setProjectList(state, payload) {
+        state.projectList = payload
+    },
+    setProjectInfo(state, payload) {
+        state.projectInfo = payload
+    },
+    setProjectItems(state, payload) {
+        state.projectItems = payload
+    },
+    setProjectTransactions(state, payload) {
+        state.projectStages = payload
+    },
+    setProjectStages(state, payload) {
+        state.projectTransactions = payload
+    },
+
+
     setHomeRegionValues(state, payload) {
         state.homeRegionValues = payload.data
     },
@@ -263,7 +286,13 @@ export const mutations = {
 
 }
 export const actions = {
-
+    async fetchProjects({ commit }) {
+        await axios.get(
+            `http://localhost:8000/api/records`
+        ).then(res => {
+            commit("setProjectList", res.data)
+        })
+    },
     // Home map
     async fetchHomeRegionValues({ commit }) {
         await axios.get(

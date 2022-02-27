@@ -16,7 +16,7 @@
       </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="buyers"
+        :items="projects"
         :search="search"
         :items-per-page=5
         :options=
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data(){
     return {
@@ -47,35 +49,32 @@ export default {
             sortable: false,
          
           },
-        { text: 'ID', value: 'id' },
+        { text: 'ID', value: 'record_ocid' },
         { text: 'Titre', value: 'name' },
-        { text: 'Bailleur', value: 'email' },
-        { text: 'Bénéficiaire', value: 'country_name' },
-        { text: 'Budget', value: 'region' },
-        { text: 'Région', value: 'telephone' },
-        { text: 'Secteur', value: 'contact_name' },
-        { text: 'Statut', value: 'contact_name' },
+        { text: 'Bailleur', value: 'buyer_name' },
+        { text: 'Bénéficiaire', value: 'procuring_entity' },
+        { text: 'Budget', value: 'value' },
+        { text: 'Région', value: 'country' },
+        { text: 'Secteur', value: 'sector' },
+        { text: 'Statut', value: 'step' },
        
       ],
     }
   },
-
   mounted(){
-     this.$store.dispatch('fetchBuyers')
+    this.fetchProjects();
   },
  
   computed:{
-    buyers(){
-      return this.$store.state.list
+    projects(){
+      return this.$store.state.projectList
     },
-    done(){
-      return this.$store.state.recordsDone.length
-    },
-    pregress(){
-      return this.$store.state.recordsInprogress.length
-    }
   },
+
   methods: {
+    ...mapActions({
+      fetchProjects: "fetchProjects"
+    }),
     getColor(statut) {
       if (statut < 1) return '#00E396'
       else return '#008FFB'
@@ -84,9 +83,8 @@ export default {
       if (statut < 1) return 'mdi-close'
       else return 'mdi-check'
     },
-    createEditLink(buyer) {
-      this.$store.state.particularName = `Travaux de : ${buyer.name }`
-      return this.$router.push({ path: '/projects/' + buyer.id})
+    createEditLink(project) {
+      return this.$router.push({ path: '/projects/' + project.id})
     },
   },
 }
