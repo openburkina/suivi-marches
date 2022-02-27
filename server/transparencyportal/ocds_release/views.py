@@ -29,7 +29,8 @@ from ocds_master_tables.serializers import (
     RecordValueByGenericSerializer,
     RecordNumberByStatusYearSerializer,
     RecordValueBySectorYearSerializer,
-    RecordValueEvolutionBySectorSerializer
+    RecordValueEvolutionBySectorSerializer,
+    ItemSerializer
 )
 from rest_framework import status, viewsets
 from rest_framework.response import Response
@@ -176,9 +177,8 @@ class RecordList(APIView):
 
 class RecordDetail(APIView):
     @swagger_auto_schema(responses={200: BuyerRecordSerializer(many=True)})
-    def get(self, request):
-        releases = Release.objects.all(
-        ).annotate(
+    def get(self, request, record_id):
+        release = Release.objects.annotate(
             record_ocid=F('ref_record__ocid'),
             title=F('tender__title'),
             sector=F('ref_record__target__name'),
@@ -187,8 +187,8 @@ class RecordDetail(APIView):
             value=F('ref_record__implementation_value__amount'),
             currency=F('ref_record__implementation_value__currency'),
             last_update=F('date')
-        )
-        data = BuyerRecordSerializer(releases, many=True).data
+        ).get(ref_record__pk=record_id)
+        data = BuyerRecordSerializer(release).data
         return Response(data)
 
 
@@ -412,21 +412,15 @@ class PublishedReleaseView(APIView):
 
 
 class RecordItemList(APIView):
-    @swagger_auto_schema(responses={200: RecordItemSerializer})
+    @swagger_auto_schema(responses={200: ItemSerializer})
     def get(self, request, record_id):
         record_instance = get_object_or_404(Record, pk=record_id)
-        output_instance = {
-            'id': record_instance.pk,
-            'tender': '',
-            'items': []
-        }
         if record_instance.compiled_release is None:
-            return Response(data=output_instance, status=status.HTTP_501_NOT_IMPLEMENTED)
+            return Response(data={}, status=status.HTTP_501_NOT_IMPLEMENTED)
         if record_instance.compiled_release.tender is None:
-            return Response(data=output_instance, status=status.HTTP_501_NOT_IMPLEMENTED)
-        output_instance['tender'] = record_instance.compiled_release.tender
-        output_instance['items'] = record_instance.compiled_release.tender.items.all()
-        data = RecordItemSerializer(output_instance, context={'request': request}).data
+            return Response(data={}, status=status.HTTP_501_NOT_IMPLEMENTED)
+        items = record_instance.compiled_release.tender.items.all()
+        data = ItemSerializer(items, many=True).data
         return Response(data)
 
 

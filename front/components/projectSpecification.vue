@@ -4,7 +4,7 @@
   <v-card class="mx-auto px-3">
     <v-data-table
       :headers="headers"
-      :items="activities"
+      :items="items"
       :search="search"
       class="elevation-0"
     >
@@ -13,11 +13,8 @@
 </div>
 </template>
 <script>
-
-import {  mapState } from 'vuex'
-
 export default {
-  props: ['search'],
+  props: ['search', 'items'],
   data() {
     return {
       headers: [

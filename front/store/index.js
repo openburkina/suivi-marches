@@ -55,10 +55,10 @@ export const mutations = {
         state.projectItems = payload
     },
     setProjectTransactions(state, payload) {
-        state.projectStages = payload
+        state.projectTransactions = payload
     },
     setProjectStages(state, payload) {
-        state.projectTransactions = payload
+        state.projectStages = payload
     },
 
 
@@ -293,6 +293,35 @@ export const actions = {
             commit("setProjectList", res.data)
         })
     },
+    async fetchProjectInfo({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}`
+        ).then(res => {
+            commit("setProjectInfo", res.data)
+        })
+    },
+    async fetchProjectStages({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}/stages`
+        ).then(res => {
+            commit("setProjectStages", res.data)
+        })
+    },
+    async fetchProjectItems({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}/items`
+        ).then(res => {
+            commit("setProjectItems", res.data)
+        })
+    },
+    async fetchProjectTransactions({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}/transactions`
+        ).then(res => {
+            commit("setProjectTransactions", res.data)
+        })
+    },
+
     // Home map
     async fetchHomeRegionValues({ commit }) {
         await axios.get(

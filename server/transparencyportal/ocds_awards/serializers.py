@@ -30,4 +30,4 @@ class AwardPeriodSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Award
-        fields = ['date', 'contract_period']
+        fields = ['id', 'date', 'contract_period']

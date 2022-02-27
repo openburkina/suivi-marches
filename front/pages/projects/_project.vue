@@ -32,78 +32,71 @@
 
       <v-tabs-items v-model="tab" class="mb-9">
         <v-tab-item value="tab-1" class="mb-9">
-          <ProjectInfo :project="getProjet()" />
+          <ProjectInfo :info="info" />
         </v-tab-item>
         <v-tab-item value="tab-2">
-          <ProjectSpecification  :search="search" />
+          <ProjectSpecification  :search="search"  :items="items"/>
         </v-tab-item>
         <v-tab-item value="tab-3">
-          <ProjectTransaction :search="search"/>
+          <ProjectTransaction :search="search" :transactions="transactions"/>
         </v-tab-item>
         <v-tab-item value="tab-4">
-          <ProjectTimeline :search="search"/>
+          <ProjectTimeline :search="search" :dates="dates"/>
         </v-tab-item>
       </v-tabs-items>
     </v-card>
   </div>
 </template>
 <script>
-export default {
-  data() {
-    return {
-      search: '',
-      id: this.$route.params.project,
-      tab: null,
-      projets: [
-        {
-          id: 78366,
-          bailleur: 'UNSFC',
-          executant: 'EXC 780',
-          secteur: 'Santé',
-          région: 'Iraq',
-          statut: 1,
-          budget: 12849585.94,
-          dateDerniereMAJ: '2021-12-12',
-        },
-        {
-          id: 88466,
-          bailleur: 'JIJN',
-          executant: 'LONM 754',
-          secteur: 'Agricutlure',
-          région: 'Afghanistan',
-          statut: -1,
-          budget: 8779344.94,
-          dateDerniereMAJ: '2021-11-23',
-        },
-        {
-          id: 90475,
-          bailleur: 'NJDD',
-          executant: 'OLNM 098',
-          secteur: 'Sécurité',
-          région: 'Iraq',
-          statut: -1,
-          budget: 78578.94,
-          dateDerniereMAJ: '2021-09-12',
-        },
-      ],
-    }
-  },
-  methods: {
-    getTitle(message) {
-      return `${message} sur le projet : ${this.id}`
+  import { mapState, mapActions } from 'vuex';
+
+  export default {
+    computed: {
+      ...mapState({
+        info: 'projectInfo',
+        items: 'projectItems',
+        dates: 'projectStages',
+        transactions: 'projectTransactions'
+      })
     },
-    getProjet() {
-        console.log(this.id)
-      return this.projets.find((p) => p.id == this.id)
+
+    mounted() {
+      this.fetchProjectInfo(this.id);
+      this.fetchProjectItems(this.id);
+      this.fetchProjectStages(this.id);
+      this.fetchProjectTransactions(this.id);
     },
-    getColor(statut) {
-      if (statut < 1) return '#00E396'
-      else return '#008FFB'
+
+    data() {
+      return {
+        search: '',
+        id: this.$route.params.project,
+        tab: null,
+      }
     },
-    getValue(statut) {
-      if (statut < 1) return 'mdi-close'
-      else return 'mdi-check'
+
+    methods: {
+      ...mapActions([
+        'fetchProjectInfo',
+        'fetchProjectItems',
+        'fetchProjectStages',
+        'fetchProjectTransactions'
+      ]),
+      getTitle(message) {
+        return `${message} sur le projet : ${this.id}`
+      },
+      getProjet() {
+          console.log(this.id)
+        return this.projets.find((p) => p.id == this.id)
+      },
+      getColor(statut) {
+        if (statut < 1) return '#00E396'
+        else return '#008FFB'
+      },
+      getValue(statut) {
+        if (statut < 1) return 'mdi-close'
+        else return 'mdi-check'
+      },
     },
-  },
-}
+  }
 </script>
