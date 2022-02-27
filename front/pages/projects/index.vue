@@ -50,11 +50,13 @@ export default {
          
           },
         { text: 'ID', value: 'record_ocid' },
-        { text: 'Titre', value: 'name' },
+        { text: 'Titre', value: 'title' },
         { text: 'Bailleur', value: 'buyer_name' },
         { text: 'Bénéficiaire', value: 'procuring_entity' },
         { text: 'Budget', value: 'value' },
-        { text: 'Région', value: 'country' },
+        { text: 'Devise', value: 'currency' },
+        { text: 'Pays', value: 'country' },
+        { text: 'Région', value: 'region' },
         { text: 'Secteur', value: 'sector' },
         { text: 'Statut', value: 'step' },
        

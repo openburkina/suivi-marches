@@ -149,8 +149,10 @@ class BuyerRecordList(APIView):
 class RecordTransactionList(APIView):
     @swagger_auto_schema(responses={200: TransactionSerializer(many=True)})
     def get(self, request, record_id):
-        records_instance = get_object_or_404(Record, pk=record_id)
-        transactions = records_instance.compiled_release.buyer.as_payer_transactions.annotate(title=F('implementation__contract__ref_award__title'))
+        record_instance = get_object_or_404(Record, pk=record_id)
+        transactions = record_instance.compiled_release.buyer.as_payer_transactions.annotate(
+            title=F('implementation__contract__ref_award__title')
+        )
         data = TransactionSerializer(transactions, many=True).data
         return Response(data)
 
@@ -163,32 +165,33 @@ class RecordList(APIView):
         releases = Release.objects.all(
         ).annotate(
             record_ocid=F('ref_record__ocid'),
+            title=F('tender__title'),
             buyer_name=F('buyer__name'),
             procuring_entity=F('tender__procuring_entity__name'),
-            sector=F('ref_record__target__name'),
-            country=F('ref_record__implementation_address__country_name'),
-            region=F('ref_record__implementation_address__region'),
             value=F('ref_record__implementation_value__amount'),
             currency=F('ref_record__implementation_value__currency'),
-            last_update=F('date')
+            country=F('ref_record__implementation_address__country_name'),
+            region=F('ref_record__implementation_address__region'),
+            sector=F('ref_record__target__name'),
         )
         data = RecordSerializer(releases, many=True).data
         return Response(data)
 
 class RecordDetail(APIView):
-    @swagger_auto_schema(responses={200: BuyerRecordSerializer(many=True)})
+    @swagger_auto_schema(responses={200: RecordSerializer(many=True)})
     def get(self, request, record_id):
         release = Release.objects.annotate(
             record_ocid=F('ref_record__ocid'),
             title=F('tender__title'),
-            sector=F('ref_record__target__name'),
-            country=F('ref_record__implementation_address__country_name'),
-            region=F('ref_record__implementation_address__region'),
+            buyer_name=F('buyer__name'),
+            procuring_entity=F('tender__procuring_entity__name'),
             value=F('ref_record__implementation_value__amount'),
             currency=F('ref_record__implementation_value__currency'),
-            last_update=F('date')
+            country=F('ref_record__implementation_address__country_name'),
+            region=F('ref_record__implementation_address__region'),
+            sector=F('ref_record__target__name'),
         ).get(ref_record__pk=record_id)
-        data = BuyerRecordSerializer(release).data
+        data = RecordSerializer(release).data
         return Response(data)
 
 

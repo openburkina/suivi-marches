@@ -25,7 +25,7 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # In Windows, this must be set to your system time zone.
 TIME_ZONE = "UTC"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fr-FR"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
@@ -299,6 +299,8 @@ REST_FRAMEWORK = {
     ),
     # "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
+    "DATETIME_FORMAT" : "%d %B %Y",
+    "DATE_FORMAT" : "%d %B %Y"
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
@@ -309,3 +311,4 @@ CORS_ALLOW_ALL_ORIGINS = True
 # ]
 # Your stuff...
 # ------------------------------------------------------------------------------
+USE_THOUSAND_SEPARATOR = True

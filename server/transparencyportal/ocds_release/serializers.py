@@ -68,15 +68,15 @@ class ReleaseSerializer(serializers.ModelSerializer):
 class RecordSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     record_ocid = serializers.CharField()
+    title = serializers.CharField()
     buyer_name = serializers.CharField()
     procuring_entity = serializers.CharField()
-    sector = serializers.CharField()
-    country = serializers.CharField()
-    region = serializers.CharField()
     value = serializers.FloatField()
     currency = serializers.CharField()
+    country = serializers.CharField()
+    region = serializers.CharField()
+    sector = serializers.CharField()
     step = serializers.CharField()
-    last_update = serializers.DateTimeField()
 
 # class RecordSerializer(serializers.ModelSerializer):
 #     url = serializers.HyperlinkedIdentityField(view_name="api:record-detail")

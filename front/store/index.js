@@ -311,6 +311,10 @@ export const actions = {
         await axios.get(
             `http://localhost:8000/api/records/${record_id}/items`
         ).then(res => {
+            let output = res.data.map((r) => {
+                r['quantity'] = r.quantity + ' ' + r.unit.name;
+                r['unit_value'] = r.unit.value.amount + ' ' + r.unit.value.currency;
+            })
             commit("setProjectItems", res.data)
         })
     },

@@ -33,21 +33,21 @@
             <v-list-item-title>Accueil</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="projects">
+          <v-list-item to="/projects">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Travaux</v-list-item-title>
           </v-list-item>
           
-          <v-list-item to="buyers">
+          <v-list-item to="/buyers">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Bailleurs</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="regions">
+          <v-list-item to="/regions">
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>

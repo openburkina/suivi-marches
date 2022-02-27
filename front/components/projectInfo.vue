@@ -4,7 +4,7 @@
   <v-card class="mx-auto" max-width="900">
     <v-list-item>
       <v-list-item-title>ID</v-list-item-title>
-      <v-list-item-subtitle>{{ info.ocid }}</v-list-item-subtitle>
+      <v-list-item-subtitle>{{ info.record_ocid }}</v-list-item-subtitle>
     </v-list-item>
     <v-divider></v-divider>
     <v-list-item>
@@ -15,7 +15,7 @@
 
     <v-list-item>
       <v-list-item-title>Bailleur</v-list-item-title>
-      <v-list-item-subtitle>{{ info.buyer }}</v-list-item-subtitle>
+      <v-list-item-subtitle>{{ info.buyer_name }}</v-list-item-subtitle>
     </v-list-item>
     <v-divider></v-divider>
     <v-list-item>
@@ -25,12 +25,12 @@
     <v-divider></v-divider>
     <v-list-item>
       <v-list-item-title>Budget</v-list-item-title>
-      <v-list-item-subtitle>{{ info.budget }}</v-list-item-subtitle>
+      <v-list-item-subtitle>{{ info.value }} {{ info.currency }}</v-list-item-subtitle>
     </v-list-item>
     <v-divider></v-divider>
     <v-list-item>
       <v-list-item-title>Région</v-list-item-title>
-      <v-list-item-subtitle>{{ info.region }}</v-list-item-subtitle>
+      <v-list-item-subtitle>{{ info.region }}, {{ info.country }}</v-list-item-subtitle>
     </v-list-item>
     <v-divider></v-divider>
     <v-list-item>
@@ -40,7 +40,7 @@
     <v-divider></v-divider>
     <v-list-item>
       <v-list-item-title>Statut</v-list-item-title>
-      <v-list-item-subtitle>{{ info.status }}</v-list-item-subtitle>
+      <v-list-item-subtitle>{{ info.step }}</v-list-item-subtitle>
     </v-list-item>
     <v-divider></v-divider>
   </v-card>

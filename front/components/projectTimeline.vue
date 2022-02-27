@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Titre title="Phases du travail" />
-    <v-card class="mx-auto px-3">
+    <v-card v-if="dates.id" class="mx-auto px-3">
       <v-timeline>
         <v-timeline-item right :color="colorClass.stage" icon="mdi-calendar-check" fill-dot>
           <v-card>

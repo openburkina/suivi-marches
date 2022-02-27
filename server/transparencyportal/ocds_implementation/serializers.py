@@ -5,10 +5,11 @@ from ocds_master_tables.serializers import EntitySerializer, ValueSerializer
 from .models import Transaction
 
 class TransactionSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField()
     title = serializers.CharField()
     value = ValueSerializer()
-    payer = EntitySerializer()
-    payee = EntitySerializer()
+    # payer = EntitySerializer()
+    # payee = EntitySerializer()
 
     class Meta:
         model = Transaction

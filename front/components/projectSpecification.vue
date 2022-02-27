@@ -20,7 +20,7 @@ export default {
       headers: [
         { text: 'Description', value: 'description' },
         { text: 'Quantité', value: 'quantity' },
-        { text: 'Valeur unitaire', value: 'unitValue' }
+        { text: 'Valeur unitaire', value: 'unit_value' }
       ],
     }
   },
