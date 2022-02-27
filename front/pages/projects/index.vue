@@ -47,13 +47,14 @@ export default {
             sortable: false,
          
           },
-        { text: 'id', value: 'id' },
-        { text: 'Nom', value: 'name' },
-        { text: 'Email', value: 'email' },
-        { text: 'Pays', value: 'country_name' },
-        { text: 'Région', value: 'region' },
-        { text: 'telephone', value: 'telephone' },
-        { text: 'Nom du Contact', value: 'contact_name' },
+        { text: 'ID', value: 'id' },
+        { text: 'Titre', value: 'name' },
+        { text: 'Bailleur', value: 'email' },
+        { text: 'Bénéficiaire', value: 'country_name' },
+        { text: 'Budget', value: 'region' },
+        { text: 'Région', value: 'telephone' },
+        { text: 'Secteur', value: 'contact_name' },
+        { text: 'Statut', value: 'contact_name' },
        
       ],
     }
@@ -85,7 +86,7 @@ export default {
     },
     createEditLink(buyer) {
       this.$store.state.particularName = `Travaux de : ${buyer.name }`
-      return this.$router.push({ path: '/buyers/' + buyer.id})
+      return this.$router.push({ path: '/projects/' + buyer.id})
     },
   },
 }

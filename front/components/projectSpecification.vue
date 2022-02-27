@@ -1,6 +1,7 @@
 <template>
+<div>
+  <Titre title="Etapes du travail" />
   <v-card class="mx-auto px-3">
-    <Titre title="Etapes du travail" />
     <v-data-table
       :headers="headers"
       :items="activities"
@@ -9,6 +10,7 @@
     >
     </v-data-table>
   </v-card>
+</div>
 </template>
 <script>
 
@@ -19,12 +21,9 @@ export default {
   data() {
     return {
       headers: [
-        { text: 'Date début', value: 'start_date' },
-        { text: 'Date fin', value: 'finish_date' },
-        { text: 'Montant', value: 'amount_act' },
-        { text: "Acteurs d'éxecutions", value: 'Actors_execution' },
-        { text: 'Acteurs partenaires', value: 'Actors_partner' },
-        { text: 'Année de planifications', value: 'year_plan' },
+        { text: 'Description', value: 'description' },
+        { text: 'Quantité', value: 'quantity' },
+        { text: 'Valeur unitaire', value: 'unitValue' }
       ],
     }
   },

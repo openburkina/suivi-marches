@@ -22,9 +22,9 @@ export default {
     return {
       
       headersDecaissements: [
-        { text: 'Date', value: 'dec_date' },
-        { text: 'Montant', value: 'amount_dec' },
-        { text: 'Livrable', value: 'deliverable' },
+        { text: 'Date', value: 'date' },
+        { text: 'Montant', value: 'amount' },
+        { text: 'Livrable', value: 'item' },
       ],
     }
   },

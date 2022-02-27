@@ -1,6 +1,7 @@
 <template>
-  <v-card class="mx-auto" max-width="900">
+<div>
     <Titre title="A propos du travail" />
+  <v-card class="mx-auto" max-width="900">
     <v-list-item>
       <v-list-item-title>ID</v-list-item-title>
       <v-list-item-subtitle>{{ project.ocid }}</v-list-item-subtitle>
@@ -43,6 +44,8 @@
     </v-list-item>
     <v-divider></v-divider>
   </v-card>
+</div>
+
 </template>
 <script>
 import { mapState } from 'vuex'
