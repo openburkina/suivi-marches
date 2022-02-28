@@ -320,7 +320,11 @@ export const mutations = {
         state.timeTravaux.forEach((el) => {
             console.log(el)
             state.tmpList.push({
-                record_ocid: e1.record_ocid,
+                tender_start_period: e1.tender_period.start_date,
+                tender_end_period: e1.tender_period.end_date,
+                award_period: e1.award.date,
+                award_end_period: e1.tender_period.start_date,
+
                 buyer_name: e1.buyer_name,
                 procuring_entity: e1.procuring_entity,
                 sector: e1.sector,
