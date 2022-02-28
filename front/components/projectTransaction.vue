@@ -1,7 +1,7 @@
 <template>
   <div>
     <Titre title="Transactions liées au travail" />
-    <v-card class="mx-auto px-3">
+    <v-card class="container mx-auto px-3">
       <v-data-table
         :headers="headersDecaissements"
         :items="transactions"

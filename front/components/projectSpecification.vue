@@ -1,7 +1,7 @@
 <template>
 <div>
   <Titre title="Etapes du travail" />
-  <v-card class="mx-auto px-3">
+  <v-card class="container mx-auto px-3">
     <v-data-table
       :headers="headers"
       :items="items"
