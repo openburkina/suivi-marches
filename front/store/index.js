@@ -52,10 +52,33 @@ export const state = () => ({
     buyerPieStats: {'labels': [], 'data': []},
     buyerBarOneStats: {'labels': [], 'data': []},
     buyerBarTwoStats: {'labels': [], 'data': []},
-    buyerLineStats: {'labels': [], 'data': []}
+    buyerLineStats: {'labels': [], 'data': []},
+
+    projectList : [],
+    projectInfo : {},
+    projectItems : [],
+    projectTransactions : [],
+    projectStages : []
   })
 
 export const mutations = {
+    setProjectList(state, payload) {
+        state.projectList = payload
+    },
+    setProjectInfo(state, payload) {
+        state.projectInfo = payload
+    },
+    setProjectItems(state, payload) {
+        state.projectItems = payload
+    },
+    setProjectTransactions(state, payload) {
+        state.projectTransactions = payload
+    },
+    setProjectStages(state, payload) {
+        state.projectStages = payload
+    },
+
+
     setHomeRegionValues(state, payload) {
         state.homeRegionValues = payload.data
     },
@@ -430,6 +453,45 @@ export const mutations = {
     }
 }
 export const actions = {
+    async fetchProjects({ commit }) {
+        await axios.get(
+            `http://localhost:8000/api/records`
+        ).then(res => {
+            commit("setProjectList", res.data)
+        })
+    },
+    async fetchProjectInfo({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}`
+        ).then(res => {
+            commit("setProjectInfo", res.data)
+        })
+    },
+    async fetchProjectStages({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}/stages`
+        ).then(res => {
+            commit("setProjectStages", res.data)
+        })
+    },
+    async fetchProjectItems({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}/items`
+        ).then(res => {
+            let output = res.data.map((r) => {
+                r['quantity'] = r.quantity + ' ' + r.unit.name;
+                r['unit_value'] = r.unit.value.amount + ' ' + r.unit.value.currency;
+            })
+            commit("setProjectItems", res.data)
+        })
+    },
+    async fetchProjectTransactions({ commit }, record_id) {
+        await axios.get(
+            `http://localhost:8000/api/records/${record_id}/transactions`
+        ).then(res => {
+            commit("setProjectTransactions", res.data)
+        })
+    },
 
     // Home map
     async fetchHomeRegionValues({ commit }) {

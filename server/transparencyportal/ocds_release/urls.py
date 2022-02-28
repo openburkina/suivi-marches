@@ -40,6 +40,7 @@ buyer_urlpatterns = [
 
 record_urlpatterns = [
     path(r'', RecordList.as_view(), name='record-list'),
+    path(r'<int:record_id>', RecordDetail.as_view(), name='record-detail'),
     path(r'<int:record_id>/items', RecordItemList.as_view(), name='record-item-list'),
     path(r'<int:record_id>/stages', RecordStageList.as_view(), name='record-stage-list'),
     path(r'amount_value', SumRecord.as_view(), name='record-count-all'),
@@ -47,7 +48,6 @@ record_urlpatterns = [
     path(r'sector_values', RecordValueEvolutionBySectorView.as_view(), name='record-count-all'),
     path(r'values', RecordValueByGenericView.as_view(), name='record-count-all'),
     path(r'amountvalue', AllRecordValueGroupByRegion.as_view(), name='record-count-region'),
-    path(r'relaeselist', RecordDetail.as_view(), name='record-detail'),
     path(r'<int:record_id>/transactions/', RecordTransactionList.as_view(), name='record-transactions-list'),
 
 ]

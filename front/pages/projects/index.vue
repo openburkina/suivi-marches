@@ -1,9 +1,9 @@
 <template>
   <div>
-   <Titre title="Bailleurs" />
-    <v-card color="indigo lighten-5 elevation-4 mx-4 mt-4 mb-16">
+   <Titre title="Travaux" />
+    <v-card color="indigo lighten-5 elevation-0 mx-4 mt-4 mb-16">
       <v-card-title>
-        Liste des bailleurs
+        Liste des travaux
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -16,7 +16,7 @@
       </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="buyers"
+        :items="projects"
         :search="search"
         :items-per-page=5
         :options=
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data(){
     return {
@@ -47,34 +49,34 @@ export default {
             sortable: false,
          
           },
-        { text: 'id', value: 'id' },
-        { text: 'Nom', value: 'name' },
-        { text: 'Email', value: 'email' },
-        { text: 'Pays', value: 'country_name' },
+        { text: 'ID', value: 'record_ocid' },
+        { text: 'Titre', value: 'title' },
+        { text: 'Bailleur', value: 'buyer_name' },
+        { text: 'Bénéficiaire', value: 'procuring_entity' },
+        { text: 'Budget', value: 'value' },
+        { text: 'Devise', value: 'currency' },
+        { text: 'Pays', value: 'country' },
         { text: 'Région', value: 'region' },
-        { text: 'telephone', value: 'telephone' },
-        { text: 'Nom du Contact', value: 'contact_name' },
+        { text: 'Secteur', value: 'sector' },
+        { text: 'Statut', value: 'step' },
        
       ],
     }
   },
-
   mounted(){
-     this.$store.dispatch('fetchBuyers')
+    this.fetchProjects();
   },
  
   computed:{
-    buyers(){
-      return this.$store.state.list
+    projects(){
+      return this.$store.state.projectList
     },
-    done(){
-      return this.$store.state.recordsDone.length
-    },
-    pregress(){
-      return this.$store.state.recordsInprogress.length
-    }
   },
+
   methods: {
+    ...mapActions({
+      fetchProjects: "fetchProjects"
+    }),
     getColor(statut) {
       if (statut < 1) return '#00E396'
       else return '#008FFB'
@@ -83,9 +85,8 @@ export default {
       if (statut < 1) return 'mdi-close'
       else return 'mdi-check'
     },
-    createEditLink(buyers) {
-      this.$store.state.particularName = `Travaux de : ${buyers.name }`
-      return this.$router.push({ path: '/projets/' + buyers.id})
+    createEditLink(project) {
+      return this.$router.push({ path: '/projects/' + project.id})
     },
   },
 }

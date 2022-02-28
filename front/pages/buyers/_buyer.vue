@@ -16,12 +16,29 @@
 
 <script>
 export default {
-   validate({ params }){
-       return /^\d+$/.test(params.projets)
-    },
   data(){
     return {
-        id: this.$route.params.projets
+        id: this.$route.params.buyer
+    }
+  },
+  computed:{
+    done(){
+      return this.$store.state.listOfRecords
+    },
+    inprogress(){
+      return this.$store.state.recordsInprogress
+    },
+    pieStats() {
+      return this.$store.state.buyerPieStats
+    },
+    barOneStats() {
+      return this.$store.state.buyerBarOneStats
+    },
+    barTwoStats() {
+      return this.$store.state.buyerBarTwoStats
+    },
+    lineStats() {
+      return this.$store.state.buyerLineStats
     }
   },
   mounted(){
@@ -46,25 +63,5 @@ export default {
       this.$store.dispatch('fetchBuyerLineStats', { buyer_id: this.id, start_year: startYear, end_year: endYear })
     },
   },
-  computed:{
-    done(){
-      return this.$store.state.listOfRecords
-    },
-    inprogress(){
-      return this.$store.state.recordsInprogress
-    },
-    pieStats() {
-      return this.$store.state.buyerPieStats
-    },
-    barOneStats() {
-      return this.$store.state.buyerBarOneStats
-    },
-    barTwoStats() {
-      return this.$store.state.buyerBarTwoStats
-    },
-    lineStats() {
-      return this.$store.state.buyerLineStats
-    }
-  }
 }
 </script>
