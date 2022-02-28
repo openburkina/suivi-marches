@@ -21,6 +21,26 @@ export default {
         id: this.$route.params.buyer
     }
   },
+  computed:{
+    done(){
+      return this.$store.state.listOfRecords
+    },
+    inprogress(){
+      return this.$store.state.recordsInprogress
+    },
+    pieStats() {
+      return this.$store.state.buyerPieStats
+    },
+    barOneStats() {
+      return this.$store.state.buyerBarOneStats
+    },
+    barTwoStats() {
+      return this.$store.state.buyerBarTwoStats
+    },
+    lineStats() {
+      return this.$store.state.buyerLineStats
+    }
+  },
   mounted(){
     this.$store.dispatch('records',this.id)
     this.$store.dispatch('statasOfBuyer',this.id)
@@ -43,25 +63,5 @@ export default {
       this.$store.dispatch('fetchBuyerLineStats', { buyer_id: this.id, start_year: startYear, end_year: endYear })
     },
   },
-  computed:{
-    done(){
-      return this.$store.state.listOfRecords
-    },
-    inprogress(){
-      return this.$store.state.recordsInprogress
-    },
-    pieStats() {
-      return this.$store.state.buyerPieStats
-    },
-    barOneStats() {
-      return this.$store.state.buyerBarOneStats
-    },
-    barTwoStats() {
-      return this.$store.state.buyerBarTwoStats
-    },
-    lineStats() {
-      return this.$store.state.buyerLineStats
-    }
-  }
 }
 </script>
