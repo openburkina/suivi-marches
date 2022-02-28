@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-card>
       <v-tabs
         v-model="tab"
         background-color="indigo lighten-5"
@@ -44,7 +43,6 @@
           <ProjectTimeline :search="search" :dates="dates"/>
         </v-tab-item>
       </v-tabs-items>
-    </v-card>
   </div>
 </template>
 <script>

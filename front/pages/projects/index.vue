@@ -1,7 +1,7 @@
 <template>
   <div>
    <Titre title="Travaux" />
-    <v-card color="indigo lighten-5 elevation-4 mx-4 mt-4 mb-16">
+    <v-card color="indigo lighten-5 elevation-0 mx-4 mt-4 mb-16">
       <v-card-title>
         Liste des travaux
         <v-spacer></v-spacer>
