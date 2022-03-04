@@ -4,7 +4,7 @@
     outlined
     tile
     elevation="5"
-    max-width="500">
+   >
     <v-card-title class="text-h5" style="word-break: break-word">{{ title }}</v-card-title>
     <v-card-subtitle>
         <v-row>
@@ -33,7 +33,6 @@
             type="line"
             :options="chartOptionsLine"
             :series="lineSeries"
-            :max-width="500"
             :height="300">
         </apexchart>
     </v-card>

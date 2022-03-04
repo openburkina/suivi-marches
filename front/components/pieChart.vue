@@ -1,7 +1,6 @@
 <template>
   <v-card
     class="my-5"
-    max-width="500"
     outlined
     tile
     elevation="5">
@@ -23,7 +22,6 @@
         type="donut"
         :options="pieOptions"
         :series="pieChartData"
-        :max-width="500"
         :height="300">
     </apexchart> 
     </v-card>
