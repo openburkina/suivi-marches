@@ -52,6 +52,8 @@ class Organisation(models.Model):
 
     def __str__(self):
         return "%s" % self.ref_id
+    
+    
 
 
 class Sector(models.Model):
