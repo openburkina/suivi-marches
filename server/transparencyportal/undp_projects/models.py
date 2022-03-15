@@ -2,7 +2,7 @@ from django.db import models
 from master_tables.models import Organisation, Sector, DocumentCategory, OperatingUnit, Sdg, SdgTargets
 from django.contrib.postgres.search import SearchVectorField
 from django.contrib.postgres.indexes import GinIndex
-
+from transparencyportal.api_doc import send
 
 class Project(models.Model):
     project_id = models.CharField(max_length=100, db_index=True, primary_key=True)
@@ -25,6 +25,9 @@ class Project(models.Model):
     def __str__(self):
         return "%s" % self.project_id
 
+    def save(self, *args, **kwargs):
+        broadcastMsgToWhatsapp()
+        super(Project,self).save(*args, **kwargs) # Call the real save() method
 
 class ProjectParticipatingOrganisations(models.Model):
     project = models.ForeignKey(Project, on_delete=models.DO_NOTHING)

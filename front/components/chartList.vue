@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <div>
         <v-row>
             <v-col order="6">
                 <PieChart 
@@ -40,7 +40,7 @@
                 </v-col>
             </v-col>
         </v-row>
-    </v-container>
+    </div>
 </template>
 
 <script>
