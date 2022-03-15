@@ -26,8 +26,8 @@ class Project(models.Model):
         return "%s" % self.project_id
 
     def save(self, *args, **kwargs):
-       send()
-       super(Project,self).save(*args, **kwargs) # Call the real save() method
+        broadcastMsgToWhatsapp()
+        super(Project,self).save(*args, **kwargs) # Call the real save() method
 
 class ProjectParticipatingOrganisations(models.Model):
     project = models.ForeignKey(Project, on_delete=models.DO_NOTHING)
