@@ -1,19 +1,23 @@
-import pywhatkit
-import datetime as t
+import os
+from twilio.rest import Client
+
+
+# Find your Account SID and Auth Token at twilio.com/console
+# and set the environment variables. See http://twil.io/secure
+account_sid = "AC6c401b26a6594367ea84e1c328a21767"
+auth_token = "329ac07d5d800eb7a5c79e30ee0600fa"
+
+
+
 def broadcastMsgToWhatsapp():
-   # using Exception Handling to avoid
-   # unprecedented errors
-   try:
-   # sending message to receiver
-   # using pywhatkit
-      pywhatkit.sendwhatmsg("+22666020547",
-                              "Hello from cafdo test",
-                              13,
-                              35
-                            )
-      print("Successfully Sent!")
+   client = Client(account_sid, auth_token)
+   message = client.messages.create(
+      from_='whatsapp:+15049107543',
+      body='Hello, from cafdo!',
+      to='whatsapp:+23565574029'
+   )
+   print(message.sid)   
+   print("Envoi avec succés")
    
-   except:
-      # handling exception
-      # and printing error message
-      print("An Unexpected Error!")
+broadcastMsgToWhatsapp()
+
