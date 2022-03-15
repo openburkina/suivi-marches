@@ -10,16 +10,15 @@ auth_token = "329ac07d5d800eb7a5c79e30ee0600fa"
 
 
 def broadcastMsgToWhatsapp():
-   client = Client(account_sid, auth_token)
-   message = client.messages.create(
-      from_='whatsapp:+15049107543',
-      body='Hello, from cafdo!',
-      to='whatsapp:+23565574029'
-   )
-   print(message.sid)   
+   # client = Client(account_sid, auth_token)
+   # message = client.messages.create(
+   #    from_='whatsapp:+15049107543',
+   #    body='Hello, from cafdo!',
+   #    to='whatsapp:+23565574029'
+   # )
+   # print(message.sid)   
    print("Envoi avec succés")
    
-broadcastMsgToWhatsapp()
 
 
 
