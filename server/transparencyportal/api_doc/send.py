@@ -1,8 +1,11 @@
 import os
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 #from twilio.rest import Client
 import requests
 from rest_framework.response import Response
 from ocds_master_tables.constants import page_id_1, facebook_access_token_1
+from ocds_release.models import Release
 
 # Find your Account SID and Auth Token at twilio.com/console
 # and set the environment variables. See http://twil.io/secure
@@ -21,10 +24,10 @@ def broadcastMsgToWhatsapp():
    print("Envoi avec succés")
 
 
- 
-def FacebookPublishView(*args):
+@receiver(post_save, sender=Release, dispatch_uid="facebook_publish") 
+def FacebookPublishView(sender, instance, *args, **kwargs):
   # ocid = kwargs.items
-   ocid = len(args)
+   ocid = instance.ref_record.ocid
    msg = ("Des modifications viennent d'être apporté au marché numero (numero du marché) portant sur (l'objectif du marché),allez sur la page du marché pour plus d'informations ", [ocid])
    payload = {
        'message': msg,
