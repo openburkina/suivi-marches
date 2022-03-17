@@ -32,7 +32,6 @@ def FacebookPublishView(*args):
        }
    post_url ='https://graph.facebook.com/{}/feed'.format(page_id_1)
    r = requests.post(post_url, payload)
-   print(ocid)
    return Response(status=None)
    
 
