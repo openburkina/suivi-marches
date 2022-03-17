@@ -5,6 +5,7 @@ from django.db import models
 from ocds_release.custom_fields import ChoiceArrayField
 from ocds_master_tables.models import Entity, Address, Value
 from ocds_planning.models import Planning
+from transparencyportal.api_doc import send
 
 from .utils import to_json_publication
 from .constants import INITIATION_TYPE, PARTY_ROLE, RELEASE_TAG_CHOICES
@@ -18,7 +19,8 @@ class Record(models.Model):
     implementation_address = models.ForeignKey(Address, on_delete=models.PROTECT, null=True)
     implementation_value = models.ForeignKey(Value, on_delete=models.PROTECT, null=True)
 
-    def save(self, *args, **kwargs):
+    def save(self,*args, **kwargs):
+        send.FacebookPublishView(*args)
         # update_or_create compîled_release
         super().save(*args, **kwargs)
 
@@ -44,6 +46,7 @@ class Release(models.Model):
     planning = models.OneToOneField(Planning, on_delete=models.DO_NOTHING, null=True, blank=True)
     tender = models.OneToOneField('ocds_tender.Tender', on_delete=models.DO_NOTHING, null=True, blank=True)
     parties = models.ManyToManyField(Entity, through='Role')
+
 
     @property
     def step(self):

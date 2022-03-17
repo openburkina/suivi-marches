@@ -1,9 +1,8 @@
 from django.urls import path
 
-from .views import FacebookPublishView, RegionListView, RegionRecordListView, RegionRecordNumberByStatusYearView, RegionRecordValueByGenericView, RegionRecordValueEvolutionBySectorView
+from .views import RegionListView, RegionRecordListView, RegionRecordNumberByStatusYearView, RegionRecordValueByGenericView, RegionRecordValueEvolutionBySectorView
 
 urlpatterns = [
-        path(r'publish', FacebookPublishView.as_view()),
 ]
 
 region_urlpatterns = [

@@ -1,12 +1,13 @@
 import os
-from twilio.rest import Client
-
+#from twilio.rest import Client
+import requests
+from rest_framework.response import Response
+from ocds_master_tables.constants import page_id_1, facebook_access_token_1
 
 # Find your Account SID and Auth Token at twilio.com/console
 # and set the environment variables. See http://twil.io/secure
 account_sid = "AC6c401b26a6594367ea84e1c328a21767"
 auth_token = "329ac07d5d800eb7a5c79e30ee0600fa"
-
 
 
 def broadcastMsgToWhatsapp():
@@ -18,6 +19,21 @@ def broadcastMsgToWhatsapp():
    # )
    # print(message.sid)   
    print("Envoi avec succés")
+
+
+ 
+def FacebookPublishView(*args):
+  # ocid = kwargs.items
+   ocid = len(args)
+   msg = ("Des modifications viennent d'être apporté au marché numero (numero du marché) portant sur (l'objectif du marché),allez sur la page du marché pour plus d'informations ", [ocid])
+   payload = {
+       'message': msg,
+       'access_token': facebook_access_token_1
+       }
+   post_url ='https://graph.facebook.com/{}/feed'.format(page_id_1)
+   r = requests.post(post_url, payload)
+   print(ocid)
+   return Response(status=None)
    
 
 
