@@ -5,7 +5,6 @@ from django.db.models.signals import post_save
 import requests
 from rest_framework.response import Response
 from ocds_master_tables.constants import page_id_1, facebook_access_token_1
-from ocds_release.models import Release
 
 # Find your Account SID and Auth Token at twilio.com/console
 # and set the environment variables. See http://twil.io/secure
@@ -24,18 +23,7 @@ def broadcastMsgToWhatsapp():
    print("Envoi avec succés")
 
 
-@receiver(post_save, sender=Release, dispatch_uid="facebook_publish") 
-def FacebookPublishView(sender, instance, *args, **kwargs):
-  # ocid = kwargs.items
-   ocid = instance.ref_record.ocid
-   msg = ("Des modifications viennent d'être apporté au marché numero (numero du marché) portant sur (l'objectif du marché),allez sur la page du marché pour plus d'informations ", [ocid])
-   payload = {
-       'message': msg,
-       'access_token': facebook_access_token_1
-       }
-   post_url ='https://graph.facebook.com/{}/feed'.format(page_id_1)
-   r = requests.post(post_url, payload)
-   return Response(status=None)
+
    
 
 

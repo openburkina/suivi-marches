@@ -5,7 +5,12 @@ from django.db import models
 from ocds_release.custom_fields import ChoiceArrayField
 from ocds_master_tables.models import Entity, Address, Value
 from ocds_planning.models import Planning
-from transparencyportal.api_doc import send
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+#from twilio.rest import Client
+import requests
+from rest_framework.response import Response
+from ocds_master_tables.constants import page_id_1, facebook_access_token_1
 
 from .utils import to_json_publication
 from .constants import INITIATION_TYPE, PARTY_ROLE, RELEASE_TAG_CHOICES
@@ -20,7 +25,6 @@ class Record(models.Model):
     implementation_value = models.ForeignKey(Value, on_delete=models.PROTECT, null=True)
 
     def save(self,*args, **kwargs):
-        send.FacebookPublishView(*args)
         # update_or_create compîled_release
         super().save(*args, **kwargs)
 
@@ -102,3 +106,16 @@ class Release(models.Model):
 
     def __str__(self):
         return '%s' % (self.ocid)
+
+@receiver(post_save, sender=Release, dispatch_uid="facebook_publish") 
+def FacebookPublishView(sender, instance,**kwargs):
+  # ocid = kwargs.items
+   ocid = instance.ref_record.ocid
+   msg = ("Des modifications viennent d'être apporté au marché numero %s portant sur (l'objectif du marché),allez sur la page du marché pour plus d'informations ",[ocid])
+   payload = {
+       'message': msg,
+       'access_token': facebook_access_token_1
+       }
+   post_url ='https://graph.facebook.com/{}/feed'.format(page_id_1)
+   r = requests.post(post_url, payload)
+   return Response(status=None)
