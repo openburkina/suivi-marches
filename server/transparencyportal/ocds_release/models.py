@@ -7,7 +7,6 @@ from ocds_master_tables.models import Entity, Address, Value
 from ocds_planning.models import Planning
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-#from twilio.rest import Client
 import requests
 from rest_framework.response import Response
 from ocds_master_tables.constants import page_id_1, facebook_access_token_1
@@ -111,7 +110,16 @@ class Release(models.Model):
 def FacebookPublishView(sender, instance,**kwargs):
   # ocid = kwargs.items
    ocid = instance.ref_record.ocid
-   msg = ("Des modifications viennent d'être apporté au marché numero %s portant sur (l'objectif du marché),allez sur la page du marché pour plus d'informations ",[ocid])
+   ide = instance.id
+   target = instance.ref_record.target.name
+   adresse = instance.ref_record.implementation_address
+   valeur = instance.ref_record.implementation_value
+   dates = instance.date
+   bailleur = instance.buyer
+   msg = ("Bonjour/Bonsoir cher(e) tous.Honneur vous informer qu'une modification vient\
+   d'être apporté au marché numero %s.Marché portant sur le domaine de %s lancée le %s.Informations complémentaire\
+   le bailleur de ce marché est %s et le marche couvre la ville de %s pour une valeur de %s.\
+   Rendez vous sur le https://localhost:3000/projects/%d , pour plus d'informations" %(ocid,target,dates,bailleur,adresse,valeur,ide))
    payload = {
        'message': msg,
        'access_token': facebook_access_token_1
