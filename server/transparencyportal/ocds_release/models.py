@@ -14,6 +14,8 @@ from ocds_master_tables.constants import page_id_1, facebook_access_token_1
 from .utils import to_json_publication
 from .constants import INITIATION_TYPE, PARTY_ROLE, RELEASE_TAG_CHOICES
 
+# TODO: When you have your own Client ID and secret, put down their values here:
+
 class Target(models.Model):
     name = models.CharField(max_length=255)
 
@@ -116,6 +118,26 @@ def FacebookPublishView(sender, instance,**kwargs):
    valeur = instance.ref_record.implementation_value
    dates = instance.date
    bailleur = instance.buyer
+   instanceId = "40"
+   clientId = "tinto.jean@openburkina.bf"
+   clientSecret = "9d787b21a3164a99bdbc04a3a1461daa"
+# TODO: Customize the following 3 lines
+   groupName = 'Cafdotest'  # FIXME
+   groupAdmin = "22666020547"  # FIXME
+   message = "Bonjour/Bonsoir cher(e) tous.Honneur vous informer qu'une modification vient\
+   d'être apporté au marché numero %s.Marché portant sur le domaine de %s lancée le %s.Informations complémentaire\
+   le bailleur de ce marché est %s et le marche couvre la ville de %s pour une valeur de %s.\
+   Rendez vous sur le https://localhost:3000/projects/%d , pour plus d'informations" %(ocid,target,dates,bailleur,adresse,valeur,ide)  # FIXME
+   headers = {
+    'X-WM-CLIENT-ID': clientId, 
+    'X-WM-CLIENT-SECRET': clientSecret
+   }
+   jsonBody = {
+    'group_name': groupName,
+    'group_admin': groupAdmin,
+    'message': message
+   }
+
    msg = ("Bonjour/Bonsoir cher(e) tous.Honneur vous informer qu'une modification vient\
    d'être apporté au marché numero %s.Marché portant sur le domaine de %s lancée le %s.Informations complémentaire\
    le bailleur de ce marché est %s et le marche couvre la ville de %s pour une valeur de %s.\
@@ -125,5 +147,12 @@ def FacebookPublishView(sender, instance,**kwargs):
        'access_token': facebook_access_token_1
        }
    post_url ='https://graph.facebook.com/{}/feed'.format(page_id_1)
-   r = requests.post(post_url, payload)
+   #r = requests.post(post_url, payload)
+   r = requests.post('http://api.whatsmate.net/v3/whatsapp/group/text/message/%s' %instanceId, headers=headers, json=jsonBody)
    return Response(status=None)
+
+
+
+
+
+
