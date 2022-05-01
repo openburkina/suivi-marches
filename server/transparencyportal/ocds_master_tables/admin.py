@@ -1,7 +1,8 @@
 from django.contrib import admin
 
-from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Period, Unit, Value, Projet, Budget
+from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Period, Region, Unit, Value, Projet, Budget
 admin.site.register(Address)
+admin.site.register(Region)
 admin.site.register(Amendment)
 admin.site.register(Change)
 admin.site.register(Classification)

@@ -49,9 +49,9 @@ from drf_yasg import openapi
 #         region = self.request.query_params.get('region')
 #         target = self.request.query_params.get('target')
 #         if country is not None:
-#             queryset = queryset.filter(implementation_address__country_name__iexact=country)
+#             queryset = queryset.filter(implementation_address__region_object__country__iexact=country)
 #         if region is not None:
-#             queryset = queryset.filter(implementation_address__region__iexact=region)
+#             queryset = queryset.filter(implementation_address__region_object__name__iexact=region)
 #         if target is not None:
 #             queryset = queryset.filter(target__name__iexact=target)
 #         return queryset
@@ -137,8 +137,8 @@ class BuyerRecordList(APIView):
             record_ocid=F('ref_record__ocid'),
             title=F('tender__title'),
             sector=F('ref_record__target__name'),
-            country=F('ref_record__implementation_address__country_name'),
-            region=F('ref_record__implementation_address__region'),
+            country=F('ref_record__implementation_address__region_object__country'),
+            region=F('ref_record__implementation_address__region_object__name'),
             value=F('ref_record__implementation_value__amount'),
             currency=F('ref_record__implementation_value__currency'),
             last_update=F('date')
@@ -171,8 +171,8 @@ class RecordList(APIView):
             procuring_entity=F('tender__procuring_entity__name'),
             value=F('ref_record__implementation_value__amount'),
             currency=F('ref_record__implementation_value__currency'),
-            country=F('ref_record__implementation_address__country_name'),
-            region=F('ref_record__implementation_address__region'),
+            country=F('ref_record__implementation_address__region_object__country'),
+            region=F('ref_record__implementation_address__region_object__name'),
             sector=F('ref_record__target__name'),
         )
         data = RecordSerializer(releases, many=True).data
@@ -188,8 +188,8 @@ class RecordDetail(APIView):
             procuring_entity=F('tender__procuring_entity__name'),
             value=F('ref_record__implementation_value__amount'),
             currency=F('ref_record__implementation_value__currency'),
-            country=F('ref_record__implementation_address__country_name'),
-            region=F('ref_record__implementation_address__region'),
+            country=F('ref_record__implementation_address__region_object__country'),
+            region=F('ref_record__implementation_address__region_object__name'),
             sector=F('ref_record__target__name'),
         ).get(ref_record__pk=record_id)
         data = RecordSerializer(release).data
@@ -276,9 +276,9 @@ class BuyerRecordValuesGrouped(APIView):
         if group_by == 'region':
             records = records.annotate(
                 name=Concat(
-                    F('implementation_address__region'),
+                    F('implementation_address__region_object__name'),
                     Value(', '),
-                    F('implementation_address__country_name')
+                    F('implementation_address__region_object__country')
                 )
             ).values('name')
         if group_by == 'sector':
@@ -372,9 +372,9 @@ class RecordValueByGenericView(APIView):
         if group_by == 'region':
             records = records.annotate(
                 name=Concat(
-                    F('implementation_address__region'),
+                    F('implementation_address__region_object__name'),
                     Value(', '),
-                    F('implementation_address__country_name')
+                    F('implementation_address__region_object__country')
                 )
             ).values('name')
         if group_by == 'sector':
@@ -395,9 +395,9 @@ class AllRecordValueGroupByRegion(APIView):
             locality_long=F('implementation_address__locality_longitude'),
             locality_lat=F('implementation_address__locality_latitude'),
             name=Concat(
-                F('implementation_address__region'),
+                F('implementation_address__region_object__name'),
                 Value(', '),
-                F('implementation_address__country_name')
+                F('implementation_address__region_object__country')
             )
         ).values('name', 'locality_long', 'locality_lat')
         records = records.annotate(value=Sum('implementation_value__amount'),
@@ -478,7 +478,7 @@ class SumRecord(APIView):
     def get(self, request):
         region = self.request.query_params.get('region')
         queryset = Record.objects.filter(
-            implementation_address__region__iexact=region
+            implementation_address__region_object__name__iexact=region
         )
         data = RecordSumSerializer(queryset, many=True, context={'request': request}).data
         return Response({

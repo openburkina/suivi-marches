@@ -87,5 +87,6 @@ def import_data(filename):
 
     t_milestones.join()
     t_documents.start()
+    t_documents.join()
 
     return output_message

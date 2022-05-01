@@ -9,6 +9,7 @@ from ocds_master_tables.models import (
     Milestone,
     Period,
     Projet,
+    Region,
     Unit,
     Value,
 )
@@ -20,6 +21,11 @@ from ocds_contracts.models import Contract
 from ocds_implementation.models import Implementation, Transaction
 
 from openpyxl.worksheet import worksheet
+
+def parse_region_from_text(text):
+    id = text.split(":")[-1]
+    region = Region.objects.get(pk=id)
+    return region
 
 def match_values(db_instance, local_instance):
     if not type(db_instance) == type(local_instance):
@@ -100,19 +106,17 @@ def create_records(ws: worksheet):
     key_map = {
         "ocid": 0,
         "target": 1,
-        "address_country": 2,
-        "address_region": 3,
-        "address_locality": 4,
-        "address_postalcode": 5,
-        "address_longitude": 6,
-        "address_latitude": 7
+        "address_region": 2,
+        "address_locality": 3,
+        "address_postalcode": 4,
+        "address_longitude": 5,
+        "address_latitude": 6
     }
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
         if not flat_object[0]:
             continue
         incoming_address = Address(
-            country_name=flat_object[key_map["address_country"]],
-            region=flat_object[key_map["address_region"]],
+            region_object=parse_region_from_text(flat_object[key_map["address_region"]]),
             locality=flat_object[key_map["address_locality"]],
             postal_code=flat_object[key_map["address_postalcode"]],
             locality_longitude=flat_object[key_map["address_longitude"]],
@@ -150,17 +154,16 @@ def create_parties(ws: worksheet):
         "id_schema": 3,
         "id_legal_name": 4,
         "id_uri": 5,
-        "address_country": 6,
-        "address_region": 7,
-        "address_locality": 8,
-        "address_postalcode": 9,
-        "address_longitude": 10,
-        "address_latitude": 11,
-        "contact_name": 12,
-        "contact_mail": 13,
-        "contact_phone": 14,
-        "contact_fax": 15,
-        "contact_url": 16
+        "address_region": 6,
+        "address_locality": 7,
+        "address_postalcode": 8,
+        "address_longitude": 9,
+        "address_latitude": 10,
+        "contact_name": 11,
+        "contact_mail": 12,
+        "contact_phone": 13,
+        "contact_fax": 14,
+        "contact_url": 15
     }
     releases = get_engaged_objects(Release, ws, 2, 'ref_record__ocid')
     for flat_object in ws.iter_rows(min_row=4, values_only=True):
@@ -172,8 +175,7 @@ def create_parties(ws: worksheet):
             print("Release reference not found")
             continue
         incoming_address = Address(
-            country_name=flat_object[key_map["address_country"]],
-            region=flat_object[key_map["address_region"]],
+            region_object=parse_region_from_text(flat_object[key_map["address_region"]]),
             locality=flat_object[key_map["address_locality"]],
             postal_code=flat_object[key_map["address_postalcode"]],
             locality_longitude=flat_object[key_map["address_longitude"]],

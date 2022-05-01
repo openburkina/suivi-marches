@@ -27,10 +27,10 @@ class RegionListView(APIView):
     @swagger_auto_schema(responses={200:RegionSerializer(many=True)})
     def get(self, request):
         regions = Record.objects.values(
-            'implementation_address__country_name',
-            'implementation_address__region'
+            'implementation_address__region_object__country',
+            'implementation_address__region_object__name'
         ).annotate(
-            number = Count('implementation_address__region')
+            number = Count('implementation_address__region_object__name')
             )
         data = RegionSerializer(regions, many=True).data
         return Response(data)
@@ -49,8 +49,8 @@ class RegionRecordListView(APIView):
         if country is None or region is None:
             return Response("Country and region are required", 400)
         releases = Release.objects.filter(
-            ref_record__implementation_address__country_name__iexact = country,
-            ref_record__implementation_address__region__iexact = region
+            ref_record__implementation_address__region_object__country__iexact = country,
+            ref_record__implementation_address__region_object__name__iexact = region
         ).annotate(
                 record_ocid = F('ref_record__ocid'),
                 title = F('tender__title'),
@@ -82,8 +82,8 @@ class RegionRecordNumberByStatusYearView(APIView):
             return Response('Year not specified', status=500)
 
         releases = Release.objects.filter(
-            ref_record__implementation_address__country_name__iexact = country,
-            ref_record__implementation_address__region__iexact = region,
+            ref_record__implementation_address__region_object__country__iexact = country,
+            ref_record__implementation_address__region_object__name__iexact = region,
             tender__tender_period__start_date__year=year
         )
         output = {
@@ -123,8 +123,8 @@ class RegionRecordValueEvolutionBySectorView(APIView):
             return Response('Start year is after end year', status=500)
 
         records = Record.objects.filter(
-            implementation_address__country_name__iexact=country,
-            implementation_address__region__iexact=region,
+            implementation_address__region_object__country__iexact=country,
+            implementation_address__region_object__name__iexact=region,
             compiled_release__tender__tender_period__start_date__year__gte=start_year,
             compiled_release__tender__tender_period__start_date__year__lte=end_year,
         ).values('compiled_release__tender__tender_period__start_date__year', sector=F('target__name'))\
@@ -155,8 +155,8 @@ class RegionRecordValueByGenericView(APIView):
             return Response('Group field not specified', status=500)
 
         records = Record.objects.filter(
-                implementation_address__country_name__iexact=country,
-                implementation_address__region__iexact=region,
+                implementation_address__region_object__country__iexact=country,
+                implementation_address__region_object__name__iexact=region,
                 compiled_release__tender__tender_period__start_date__year=year
             )
         if group_by == 'buyer':
