@@ -8,7 +8,7 @@
         :barOneStats= barOneStats
         :barTwoStats= barTwoStats
         :lineStats= lineStats
-        :regionValues= regionValues
+        :activeRegions= regionValues
 
         v-on:pie-year-change="fetchPieStats($event)"
         v-on:line-years-change="fetchLineStats($event)"

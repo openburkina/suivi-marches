@@ -2,8 +2,9 @@ from rest_framework import serializers
 from .models import Address, Amendment, Change, Classification, ContactPoint, Document, Entity, Identifier, EntityAdditionalIdentifier, Item, ItemAdditionalClassification, Milestone, MilestoneDocument, Period, Unit, Value, Projet, Budget
 
 class RegionSerializer(serializers.Serializer):
-    country = serializers.CharField(source='implementation_address__region_object__country')
-    region = serializers.CharField(source='implementation_address__region_object__name')
+    id = serializers.IntegerField()
+    country = serializers.CharField()
+    region = serializers.CharField(source='name')
 
 # Specific serializers. 
 class RecordAggregateSerializer(serializers.Serializer):
@@ -40,6 +41,7 @@ class RecordValueEvolutionBySectorSerializer(serializers.Serializer):
 
 class RecordValueByGenericSerializer(serializers.Serializer):
     name = serializers.CharField()
+    region_id = serializers.IntegerField(allow_null=True)
     value = serializers.FloatField()
     currency = serializers.CharField()
     locality_long = serializers.FloatField(allow_null=True)

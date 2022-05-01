@@ -17,7 +17,7 @@ from ocds_master_tables.serializers import (
     RecordValueEvolutionBySectorSerializer
 )
 from ocds_release.models import Record, Release
-from ocds_master_tables.models import Address
+from ocds_master_tables.models import Region
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
@@ -26,12 +26,7 @@ from drf_yasg import openapi
 class RegionListView(APIView):
     @swagger_auto_schema(responses={200:RegionSerializer(many=True)})
     def get(self, request):
-        regions = Record.objects.values(
-            'implementation_address__region_object__country',
-            'implementation_address__region_object__name'
-        ).annotate(
-            number = Count('implementation_address__region_object__name')
-            )
+        regions = Region.objects.all()
         data = RegionSerializer(regions, many=True).data
         return Response(data)
 

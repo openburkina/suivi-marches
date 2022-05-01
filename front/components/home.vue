@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <Leaflet :regionValues=regionValues  />
+        <Leaflet :activeRegions=activeRegions  />
         <ChartList 
             :pieTitle="pieTitle" :pieChartLabels="pieStats.labels" :pieChartData="pieStats.data" v-on:pie-year-change="$emit('pie-year-change', $event)"
             :lineTitle="lineTitle" :lineChartLabels="lineStats.labels" :lineChartData="lineStats.data" v-on:line-years-change="$emit('line-years-change', $event)"
@@ -16,7 +16,7 @@
       barOneStats: {'labels': [], 'data': []},
       barTwoStats: {'labels': [], 'data': []},
       lineStats: {'labels': [], 'data': []},
-      regionValues: {'data': []}
+      activeRegions: {'data': []}
     },
     data () {
       return {
