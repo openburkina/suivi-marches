@@ -1,7 +1,7 @@
 <template>
     <div>
         <Caroussel />
-        <p class="display-2 text-center font-weight-bold mb-5 mt-5">Maps <span id="explore"></span></p>
+        <p class="display-2 text-center font-weight-bold mb-5 mt-5">Maps</p><span id="explore"></span>
        
         <Home
         :pieStats= pieStats

@@ -77,6 +77,7 @@ def import_data(filename):
 
     t_tenders.join()
     t_tenderers.start()
+    t_tenderers.join()
     t_awards.join()
     t_suppliers.start()
 

@@ -393,7 +393,7 @@ def create_tenderers(ws: worksheet):
             tender_release = tender.release
             incoming_tenderer = tenderers[flat_object[key_map["tenderer_id"]]]
         except Release.DoesNotExist:
-            print("Release object does not refer to a release")
+            print("Tender object (id:%s) does not refer to a release"%tender.pk)
             continue
         except:
             print("Reference not found")
