@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Titre title="Régions" />
+    <Titre title="Liste des régions du pays" />
     <v-card color="indigo lighten-5 elevation-4 mx-4 mt-4 mb-16">
       <v-card-title>
         Liste des régions

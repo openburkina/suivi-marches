@@ -10,7 +10,7 @@ class Implementation(models.Model):
 
 class Transaction(models.Model):
     implementation = models.ForeignKey(Implementation, related_name='transactions', on_delete=models.CASCADE, null=True, blank=True)
-    source = models.CharField(max_length=255, null=True, blank=True)
+    source = models.CharField(max_length=500, null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
     value = models.OneToOneField(Value, null=True, blank=True, on_delete=models.CASCADE)
     payer = models.ForeignKey(Entity, related_name='as_payer_transactions', null=True, blank=True, on_delete=models.DO_NOTHING)

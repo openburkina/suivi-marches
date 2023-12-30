@@ -33,23 +33,23 @@
             <v-list-item-title>Accueil</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/projects">
+          <v-list-item to="/travaux">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-domain</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Travaux</v-list-item-title>
+            <v-list-item-title>Projet</v-list-item-title>
           </v-list-item>
           
-          <v-list-item to="/buyers">
+          <v-list-item to="/bailleurs">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-cash</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Bailleurs</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="/regions">
             <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
+              <v-icon>mdi-map</v-icon>
             </v-list-item-icon>
             <v-list-item-title>Régions</v-list-item-title>
           </v-list-item>
@@ -67,7 +67,7 @@
         
         <a href="/">
         <img
-          :src="require('~/assets/img/logo.png')" height="60" width="50"
+          :src="require('~/assets/img/travaux.png')" height="120" width="136"
         >
         </a>
   
@@ -83,10 +83,10 @@
         <v-btn to="/" text>
           <span class="mr-2 white--text">Accueil</span>
         </v-btn>
-         <v-btn to="/projects" text>
+         <v-btn to="/travaux" text>
           <span class="mr-2 white--text">Travaux</span>
         </v-btn>
-        <v-btn text to="/buyers">
+        <v-btn text to="/bailleurs">
           <span class="mr-2  white--text">Bailleurs</span>
         </v-btn>
         <!-- More menu -->

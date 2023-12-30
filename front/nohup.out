@@ -1,0 +1,143 @@
+
+> cafdo@1.0.0 dev
+> nuxt
+
+ℹ Listening on: http://142.93.230.88:3000/
+ℹ Preparing project for development
+ℹ Initial build may take a while
+ℹ Discovered Components: .nuxt/components/readme.md
+✔ Builder initialized
+✔ Nuxt files generated
+
+ WARN  Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 14.01s
+✔ Client: Compiled successfully in 16.76s
+ℹ Waiting for file changes
+ℹ Memory usage: 573 MB (RSS: 721 MB)
+ℹ Listening on: http://142.93.230.88:3000/
+
+> cafdo@1.0.0 dev
+> nuxt
+
+ℹ Listening on: http://142.93.230.88:3000/
+ℹ Preparing project for development
+ℹ Initial build may take a while
+ℹ Discovered Components: .nuxt/components/readme.md
+✔ Builder initialized
+✔ Nuxt files generated
+
+ WARN  Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 14.48s
+✔ Client: Compiled successfully in 17.28s
+ℹ Waiting for file changes
+ℹ Memory usage: 584 MB (RSS: 735 MB)
+ℹ Listening on: http://142.93.230.88:3000/
+
+> cafdo@1.0.0 dev
+> nuxt
+
+ℹ Listening on: http://142.93.230.88:3000/
+ℹ Preparing project for development
+ℹ Initial build may take a while
+ℹ Discovered Components: .nuxt/components/readme.md
+✔ Builder initialized
+✔ Nuxt files generated
+
+ WARN  Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 14.90s
+✔ Client: Compiled successfully in 17.94s
+ℹ Waiting for file changes
+ℹ Memory usage: 390 MB (RSS: 543 MB)
+ℹ Listening on: http://142.93.230.88:3000/
+[]
+↻ Updated store/index.js
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 3.21s
+✔ Client: Compiled successfully in 3.20s
+↻ Updated components/home.vue
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 1.13s
+✔ Client: Compiled successfully in 1.31s
+
+> cafdo@1.0.0 dev
+> nuxt
+
+ℹ Listening on: http://142.93.230.88:3000/
+ℹ Preparing project for development
+ℹ Initial build may take a while
+ℹ Discovered Components: .nuxt/components/readme.md
+✔ Builder initialized
+✔ Nuxt files generated
+
+ WARN  Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 15.82s
+✔ Client: Compiled successfully in 18.56s
+ℹ Waiting for file changes
+ℹ Memory usage: 297 MB (RSS: 594 MB)
+ℹ Listening on: http://142.93.230.88:3000/
+
+> cafdo@1.0.0 dev
+> nuxt
+
+ℹ Listening on: http://142.93.230.88:3000/
+ℹ Preparing project for development
+ℹ Initial build may take a while
+ℹ Discovered Components: .nuxt/components/readme.md
+✔ Builder initialized
+✔ Nuxt files generated
+
+ WARN  Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 14.02s
+✔ Client: Compiled successfully in 16.81s
+ℹ Waiting for file changes
+ℹ Memory usage: 281 MB (RSS: 561 MB)
+ℹ Listening on: http://142.93.230.88:3000/
+
+> cafdo@1.0.0 dev
+> nuxt
+
+ℹ Listening on: http://142.93.230.88:3000/
+ℹ Preparing project for development
+ℹ Initial build may take a while
+ℹ Discovered Components: .nuxt/components/readme.md
+✔ Builder initialized
+✔ Nuxt files generated
+
+ WARN  Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+ℹ Compiling Server
+ℹ Compiling Client
+✔ Server: Compiled successfully in 13.69s
+✔ Client: Compiled successfully in 16.65s
+ℹ Waiting for file changes
+ℹ Memory usage: 286 MB (RSS: 552 MB)
+ℹ Listening on: http://142.93.230.88:3000/

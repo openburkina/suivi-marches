@@ -134,16 +134,19 @@ class BuyerRecordList(APIView):
             .filter(
             buyer=buyer_instance,
         ).annotate(
+            record_id=F('ref_record__id'),
             record_ocid=F('ref_record__ocid'),
             title=F('tender__title'),
-            sector=F('ref_record__target__name'),
-            country=F('ref_record__implementation_address__region_object__country'),
-            region=F('ref_record__implementation_address__region_object__name'),
+            buyer_name=F('buyer__name'),
+            procuring_entity=F('tender__procuring_entity__name'),
             value=F('ref_record__implementation_value__amount'),
             currency=F('ref_record__implementation_value__currency'),
-            last_update=F('date')
+            country=F('ref_record__implementation_address__region_object__country'),
+            region=F('ref_record__implementation_address__region_object__name'),
+            sector=F('ref_record__target__name'),
+            tenderers=F('role__entity__name')
         )
-        data = BuyerRecordSerializer(releases, many=True).data
+        data = RecordSerializer(releases, many=True).data
         return Response(data)
 
 class RecordTransactionList(APIView):
@@ -174,6 +177,7 @@ class RecordList(APIView):
             country=F('ref_record__implementation_address__region_object__country'),
             region=F('ref_record__implementation_address__region_object__name'),
             sector=F('ref_record__target__name'),
+            tenderers=F('role__entity__name')
         )
         data = RecordSerializer(releases, many=True).data
         return Response(data)
@@ -182,6 +186,7 @@ class RecordDetail(APIView):
     @swagger_auto_schema(responses={200: RecordSerializer(many=True)})
     def get(self, request, record_id):
         release = Release.objects.annotate(
+            record_id=F('ref_record__id'),
             record_ocid=F('ref_record__ocid'),
             title=F('tender__title'),
             buyer_name=F('buyer__name'),
@@ -191,6 +196,7 @@ class RecordDetail(APIView):
             country=F('ref_record__implementation_address__region_object__country'),
             region=F('ref_record__implementation_address__region_object__name'),
             sector=F('ref_record__target__name'),
+            tenderers=F('role__entity__name'),
         ).get(ref_record__pk=record_id)
         data = RecordSerializer(release).data
         return Response(data)

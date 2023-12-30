@@ -43,6 +43,11 @@
       <v-list-item-subtitle>{{ info.step }}</v-list-item-subtitle>
     </v-list-item>
     <v-divider></v-divider>
+    <v-list-item>
+      <v-list-item-title>Entreprise exécutante</v-list-item-title>
+      <v-list-item-subtitle>{{ info.tenderers }}</v-list-item-subtitle>
+    </v-list-item>
+    <v-divider></v-divider>
   </v-card>
 </div>
 

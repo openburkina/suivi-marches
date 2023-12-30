@@ -78,6 +78,7 @@ class RecordSerializer(serializers.Serializer):
     region = serializers.CharField()
     sector = serializers.CharField()
     step = serializers.CharField()
+    tenderers = serializers.CharField()
 
 # class RecordSerializer(serializers.ModelSerializer):
 #     url = serializers.HyperlinkedIdentityField(view_name="api:record-detail")

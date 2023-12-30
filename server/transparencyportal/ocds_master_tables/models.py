@@ -13,8 +13,8 @@ class Address(models.Model):
     region_object = models.ForeignKey(to=Region, on_delete=models.SET_NULL, null=True)
     locality = models.CharField(max_length=255) # Town
     postal_code = models.CharField(max_length=255)
-    locality_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
-    locality_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    locality_longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True,blank=True)
+    locality_latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True,blank=True)
 
     @property
     def region(self):
@@ -140,18 +140,18 @@ class Value(models.Model):
         return '%s %s' % (self.amount, self.currency)
 
 class Projet(models.Model):
-    titre_projet = models.CharField(max_length=100)
+    titre_projet = models.CharField(max_length=500)
     description = models.TextField()
 
     def __str__(self):
         return '%s - %s' % (self.id, self.titre_projet)
 
 class Budget(models.Model):
-    source = models.CharField(max_length=255, null=True, blank=True)
-    description = models.CharField(max_length=255, null=True, blank=True)
+    source = models.CharField(max_length=500, null=True, blank=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
     amount = models.ForeignKey(Value, on_delete=models.DO_NOTHING, null=True, blank=True)
     projet = models.ForeignKey(Projet, on_delete=models.DO_NOTHING, null=True, blank=True)
-    uri = models.CharField(max_length=255, null=True, blank=True)
+    uri = models.CharField(max_length=500, null=True, blank=True)
 
     def __str__(self):
-        return '%s - %s (%s)' % (self.id, self.source, str(self.amount))
+        return '%s - %s (%s)' % (self.id, self.projet.titre_projet, str(self.amount))

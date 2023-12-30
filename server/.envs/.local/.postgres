@@ -2,6 +2,8 @@
 # ------------------------------------------------------------------------------
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
-POSTGRES_DB=transparencyportal
+#POSTGRES_DB=transparencyportal
+POSTGRES_DB=dbopen
+#POSTGRES_DB=opentest
 POSTGRES_USER=debug
 POSTGRES_PASSWORD=debug

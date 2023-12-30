@@ -23,7 +23,8 @@
       "{sortBy: []}"
       :footer-props="{
         'items-per-page-text':'Liste de travaux'
-      }">
+      }"
+       @click:row="createEditLink">
    
     </v-data-table>
   </v-card>
@@ -51,13 +52,14 @@ export default {
             value: 'name',
           },
          
+          { text: 'ID', value: 'record_ocid' },
           { text: 'Titre', value: 'title' },
           { text: 'Bailleur', value: 'buyer_name' },
+          { text: 'Bénéficiaire', value: 'procuring_entity' },
+          { text: 'Région', value: 'region' },
           { text: 'Secteur', value: 'sector' },
-          { text: 'Montants', value: 'value' },
-          { text: 'Dévise', value: 'currency' },
-          { text: 'Etape', value: 'step' },
-          { text: 'Dernière Modifications', value: 'last_update' },
+          { text: 'Statut', value: 'step' },
+          { text: 'Entreprise exécutante', value: 'tenderers' },
         ],
     }
   },
@@ -73,7 +75,10 @@ export default {
        console.log(this.$store.state.idRegion)
       //  this.$store.dispatch('',this.$store.state.idRegion)
      }
-    }
+    },
+    createEditLink(project) {
+      return this.$router.push({ path: '/travaux/' + project.id})
+    },
   }
 }
 </script>

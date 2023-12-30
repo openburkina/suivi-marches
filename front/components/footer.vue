@@ -27,7 +27,7 @@
         text
         rounded
         class="my-2"
-        to="/"
+        to="/about"
         >
        A propos
       </v-btn>
@@ -36,7 +36,7 @@
         text
         rounded
         class="my-2"
-        to="/projet"
+        to="/approche"
         >
        Partenaires
       </v-btn>
@@ -45,7 +45,7 @@
         text
         rounded
         class="my-2"
-        to="/donors"
+        to="/termes"
         >
         Termes d’utilisation
       </v-btn>
@@ -54,7 +54,7 @@
         text
         rounded
         class="my-2"
-        
+        to="/download"
         >
        Telecharger
       </v-btn>

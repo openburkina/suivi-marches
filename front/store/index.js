@@ -455,28 +455,28 @@ export const mutations = {
 export const actions = {
     async fetchProjects({ commit }) {
         await axios.get(
-            `http://localhost:8000/api/records`
+            `https://travaux-django.openburkina.bf/api/records`
         ).then(res => {
             commit("setProjectList", res.data)
         })
     },
     async fetchProjectInfo({ commit }, record_id) {
         await axios.get(
-            `http://localhost:8000/api/records/${record_id}`
+            `https://travaux-django.openburkina.bf/api/records/${record_id}`
         ).then(res => {
             commit("setProjectInfo", res.data)
         })
     },
     async fetchProjectStages({ commit }, record_id) {
         await axios.get(
-            `http://localhost:8000/api/records/${record_id}/stages`
+            `https://travaux-django.openburkina.bf/api/records/${record_id}/stages`
         ).then(res => {
             commit("setProjectStages", res.data)
         })
     },
     async fetchProjectItems({ commit }, record_id) {
         await axios.get(
-            `http://localhost:8000/api/records/${record_id}/items`
+            `https://travaux-django.openburkina.bf/api/records/${record_id}/items`
         ).then(res => {
             let output = res.data.map((r) => {
                 r['quantity'] = r.quantity + ' ' + r.unit.name;
@@ -487,7 +487,7 @@ export const actions = {
     },
     async fetchProjectTransactions({ commit }, record_id) {
         await axios.get(
-            `http://localhost:8000/api/records/${record_id}/transactions`
+            `https://travaux-django.openburkina.bf/api/records/${record_id}/transactions`
         ).then(res => {
             commit("setProjectTransactions", res.data)
         })
@@ -496,7 +496,7 @@ export const actions = {
     // Home map
     async fetchHomeRegionValues({ commit }) {
         await axios.get(
-            `http://localhost:8000/api/records/amountvalue`
+            `https://travaux-django.openburkina.bf/api/records/amountvalue`
         ).then(res => {
             commit("setHomeRegionValues", {'data': res.data})
         })
@@ -505,28 +505,28 @@ export const actions = {
     // Home Stats
     async fetchHomePieStats({ commit }, { year }) {
         await axios.get(
-            `http://localhost:8000/api/records/by_status?year=${year}`
+            `https://travaux-django.openburkina.bf/api/records/by_status?year=${year}`
         ).then(res => {
             commit("setHomePieStats", {name: "pie", data : pieStatAdapter(res.data)})
         })
     },
     async fetchHomeBarOneStats({ commit }, { year }) {
         axios.get(
-            `http://localhost:8000/api/records/values?group_by=region&year=${year}`
+            `https://travaux-django.openburkina.bf/api/records/values?group_by=region&year=${year}`
         ).then(res => {
             commit("setHomeBarOneStats", {name: "barOne", data : barStatAdapter(res.data)})
         })
     },
     async fetchHomeBarTwoStats({ commit }, { year }) {
         axios.get(
-            `http://localhost:8000/api/records/values?group_by=sector&year=${year}`
+            `https://travaux-django.openburkina.bf/api/records/values?group_by=sector&year=${year}`
         ).then(res => {
             commit("setHomeBarTwoStats", {name: "barTwo", data : barStatAdapter(res.data)})
         })
     },
     async fetchHomeLineStats({ commit }, { start_year, end_year }) {
         await axios.get(
-            `http://localhost:8000/api/records/sector_values?start_year=${start_year}&end_year=${end_year}`
+            `https://travaux-django.openburkina.bf/api/records/sector_values?start_year=${start_year}&end_year=${end_year}`
         ).then(res => {
             commit("setHomeLineStats", {name: "line", data : lineStatAdapter(res.data, start_year, end_year)})
         })
@@ -536,28 +536,28 @@ export const actions = {
     // Region Stats
     async fetchRegionPieStats({ commit }, { country, region, year }) {
         await axios.get(
-            `http://localhost:8000/api/regions/records/by_status?country=${country}&region=${region}&year=${year}`
+            `https://travaux-django.openburkina.bf/api/regions/records/by_status?country=${country}&region=${region}&year=${year}`
         ).then(res => {
             commit("setRegionPieStats", {name: "pie", data : pieStatAdapter(res.data)})
         })
     },
     async fetchRegionBarOneStats({ commit }, { country, region, year }) {
         axios.get(
-            `http://localhost:8000/api/regions/records/values?country=${country}&region=${region}&group_by=buyer&year=${year}`
+            `https://travaux-django.openburkina.bf/api/regions/records/values?country=${country}&region=${region}&group_by=buyer&year=${year}`
         ).then(res => {
             commit("setRegionBarOneStats", {name: "barOne", data : barStatAdapter(res.data)})
         })
     },
     async fetchRegionBarTwoStats({ commit }, { country, region, year }) {
         axios.get(
-            `http://localhost:8000/api/regions/records/values?country=${country}&region=${region}&group_by=sector&year=${year}`
+            `https://travaux-django.openburkina.bf/api/regions/records/values?country=${country}&region=${region}&group_by=sector&year=${year}`
         ).then(res => {
             commit("setRegionBarTwoStats", {name: "barTwo", data : barStatAdapter(res.data)})
         })
     },
     async fetchRegionLineStats({ commit }, { country, region, start_year, end_year }) {
         await axios.get(
-            `http://localhost:8000/api/regions/records/sector_values?country=${country}&region=${region}&start_year=${start_year}&end_year=${end_year}`
+            `https://travaux-django.openburkina.bf/api/regions/records/sector_values?country=${country}&region=${region}&start_year=${start_year}&end_year=${end_year}`
         ).then(res => {
             commit("setRegionLineStats", {name: "line", data : lineStatAdapter(res.data, start_year, end_year)})
         })
@@ -567,28 +567,28 @@ export const actions = {
     // Buyer Stats
     async fetchBuyerPieStats({ commit }, { buyer_id, year }) {
         await axios.get(
-            `http://localhost:8000/api/buyers/${buyer_id}/records/by_status?year=${year}`
+            `https://travaux-django.openburkina.bf/api/buyers/${buyer_id}/records/by_status?year=${year}`
         ).then(res => {
             commit("setBuyerPieStats", {name: "pie", data : pieStatAdapter(res.data)})
         })
     },
     async fetchBuyerBarOneStats({ commit }, { buyer_id, year }) {
         axios.get(
-            `http://localhost:8000/api/buyers/${buyer_id}/records/values?group_by=region&year=${year}`
+            `https://travaux-django.openburkina.bf/api/buyers/${buyer_id}/records/values?group_by=region&year=${year}`
         ).then(res => {
             commit("setBuyerBarOneStats", {name: "barOne", data : barStatAdapter(res.data)})
         })
     },
     async fetchBuyerBarTwoStats({ commit }, { buyer_id, year }) {
         axios.get(
-            `http://localhost:8000/api/buyers/${buyer_id}/records/values?group_by=sector&year=${year}`
+            `https://travaux-django.openburkina.bf/api/buyers/${buyer_id}/records/values?group_by=sector&year=${year}`
         ).then(res => {
             commit("setBuyerBarTwoStats", {name: "barTwo", data : barStatAdapter(res.data)})
         })
     },
     async fetchBuyerLineStats({ commit }, { buyer_id, start_year, end_year }) {
         await axios.get(
-            `http://localhost:8000/api/buyers/${buyer_id}/records/sector_values?start_year=${start_year}&end_year=${end_year}`
+            `https://travaux-django.openburkina.bf/api/buyers/${buyer_id}/records/sector_values?start_year=${start_year}&end_year=${end_year}`
         ).then(res => {
             commit("setBuyerLineStats", {name: "line", data : lineStatAdapter(res.data, start_year, end_year)})
         })
@@ -602,7 +602,7 @@ export const actions = {
     async fetchBuyers({ commit }){
       
         await axios.get(
-            "http://localhost:8000/api/buyers",
+            "https://travaux-django.openburkina.bf/api/buyers",
           ).then(res=>{
               commit("listOfBuyers",res.data)}
         )
@@ -616,7 +616,7 @@ export const actions = {
     async recordsTotalByBuyeur({ commit },id){
        
         await axios.get(
-            `http://localhost:8000/api/buyers/${id}/records/total/`,
+            `https://travaux-django.openburkina.bf/api/buyers/${id}/records/total/`,
           ).then(res=>{
               commit("recordsTotalBuyeur",res.data)}
         )
@@ -628,7 +628,7 @@ export const actions = {
     // Liste de tous les travaux fait par un buyers
     async region({commit}){
         await axios.get(
-            "http://localhost:8000/api/regions")
+            "https://travaux-django.openburkina.bf/api/regions")
             .then(res=>{
                 commit("getRegion",res.data)
             })
@@ -643,7 +643,7 @@ export const actions = {
     // Liste de tous les travaux fait par un buyers
     async recordsDone({commit},id){
         await axios.get(
-            `http://localhost:8000/api/buyers/${id}/records/done/`)
+            `https://travaux-django.openburkina.bf/api/buyers/${id}/records/done/`)
             .then(res=>{
                 commit("listRecordsDone",res.data)
             })
@@ -659,7 +659,7 @@ export const actions = {
     // Une region en particulier
     async oneRegion({commit}, {country, region}){
         await axios.get(
-            `http://localhost:8000/api/regions/records?country=${country}&region=${region}`)
+            `https://travaux-django.openburkina.bf/api/regions/records?country=${country}&region=${region}`)
             .then(res=>{
                 commit("particularRegion",res.data)
             })
@@ -671,7 +671,7 @@ export const actions = {
     // Une region en particulier
     async statasOfBuyer({commit},id){
         await axios.get(
-            `http://localhost:8000/api/buyers/${id}/total/`)
+            `https://travaux-django.openburkina.bf/api/buyers/${id}/total/`)
             .then(res=>{
                 commit("statasBuyer",res.data)
             })
@@ -683,15 +683,16 @@ export const actions = {
     // Liste de tous les travaux en cours par buyers
     async recordsInprogress({commit},id){
         await axios.get(
-            `http://localhost:8000/api/buyers/${id}/records/in_progress/`)
+            `hhttps://travaux-django.openburkina.bf/api/buyers/${id}/records/in_progress/`)
             .then(res=>{
                 commit("listRecordsInprogress",res.data)
         })
     },
     async records({commit},id){
         await axios.get(
-            `http://localhost:8000/api/buyers/${id}/records/`)
+            `https://travaux-django.openburkina.bf/api/buyers/${id}/records/`)
             .then(res=>{
+                console.log(res.data)
                 commit("listOfRecords",res.data)
         });
     },
@@ -699,7 +700,7 @@ export const actions = {
 
     async allRecordsInprogress({commit}){
         await axios.get(
-            `http://localhost:8000/api/buyers/records/in_progress/`)
+            `https://travaux-django.openburkina.bf/api/buyers/records/in_progress/`)
             .then(res=>{
                 commit("listRecordsInprogress",res.data)
         })
@@ -711,7 +712,7 @@ export const actions = {
     // Liste de tous les totaux encore et terminé par buyers
     async tendersBuyer({commit},id){
         await axios.get(
-            `http://localhost:8000/api/buyers/${id}/records/total`)
+            `https://travaux-django.openburkina.bf/api/buyers/${id}/records/total`)
             .then(res=>{
                 commit("listTotauxBuyer",res.data)
         })
@@ -722,7 +723,7 @@ export const actions = {
     // Liste de tous les specification
     async specification({commit}){
         await axios.get(
-            `http://localhost:8000/api/records`)
+            `https://travaux-django.openburkina.bf/api/records`)
             .then(res=>{
                 commit("listSpecification",res.data)
         })
@@ -733,7 +734,7 @@ export const actions = {
     // Liste de tous les marchés et leurs etats
     async tendersByYear({commit},year){
         await axios.get(
-            `http://localhost:8000/api/tenders/year/${year}/tender_state`)
+            `https://travaux-django.openburkina.bf/api/tenders/year/${year}/tender_state`)
             .then(res=>{
                 commit("listTendersByYear",res.data)
         })
@@ -745,7 +746,7 @@ export const actions = {
     // Liste de tous les buyers par regions
     async buyerByRegion({commit},year){
         await axios.get(
-            `http://localhost:8000/api/buyers/${year}/total_by_region`)
+            `https://travaux-django.openburkina.bf/api/buyers/${year}/total_by_region`)
             .then(res=>{
                 commit("listBuyerByRegion",res.data)
         })
@@ -758,7 +759,7 @@ export const actions = {
         // Liste de tous les travaux
     async AllTravaux({commit}){
         await axios.get(
-            `http://localhost:8000/api/records`)
+            `https://travaux-django.openburkina.bf/api/records`)
             .then(res=>{
                 commit("listOfTravaux",res.data)
             })
@@ -767,7 +768,7 @@ export const actions = {
         // Infos d'un travail
     async infosTravaux({commit},id){
         await axios.get(
-            `http://localhost:8000/api/records/${id}/`)
+            `https://travaux-django.openburkina.bf/api/records/${id}/`)
             .then(res=>{
                 commit("travauxInfo",res.data)
             })
@@ -775,7 +776,7 @@ export const actions = {
     // Specification d'un travail
     async specificationTravaux({commit},id){
         await axios.get(
-            `http://localhost:8000/api/records/${id}/items`)
+            `https://travaux-django.openburkina.bf/api/records/${id}/items`)
             .then(res=>{
                 commit("travauxSpec",res.data)
             })
@@ -783,7 +784,7 @@ export const actions = {
     // Decaissement d'un travail
     async decaissementTravaux({commit},id){
         await axios.get(
-            `http://localhost:8000/api/records/${id}/transaction`)
+            `https://travaux-django.openburkina.bf/api/records/${id}/transaction`)
             .then(res=>{
                 commit("travauxDecais",res.data)
             })
@@ -791,7 +792,7 @@ export const actions = {
     // Timeline d'un travail
     async timelineTravaux({commit},id){
         await axios.get(
-            `http://localhost:8000/api/records/${id}/stages`)
+            `https://travaux-django.openburkina.bf/api/records/${id}/stages`)
             .then(res=>{
                 commit("travauxTime",res.data)
             })

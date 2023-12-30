@@ -2,16 +2,6 @@
   <v-card>
     <v-card-title>
       {{title}}
-       <v-combobox
-          v-model="select"
-          :items="items"
-          label="Choisir l'intervalle des années"
-          multiple
-          chips
-          counter="2"
-          @change="onChange"
-          auto-select-first
-        ></v-combobox>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -33,7 +23,8 @@
       "{sortBy: []}"
       :footer-props="{
         'items-per-page-text':'Liste de travaux'
-      }">
+      }"
+       @click:row="createEditLink">
    
     </v-data-table>
   </v-card>
@@ -60,16 +51,15 @@ export default {
             sortable: false,
             value: 'name',
           },
-          { text: 'Codage OCID', value: 'record_ocid' },
-          { text: 'Pays', value: 'country' },
-          { text: 'Region', value: 'region' },
-          { text: 'Secteur', value: 'sector' },
+          { text: 'ID', value: 'record_ocid' },
           { text: 'Titre', value: 'title' },
-          { text: 'Montant', value: 'value' },
-          { text: 'Dévise', value: 'currency' },
-          { text: 'Etape', value: 'step' },
-          { text: 'Dernière mise à jour', value: 'last_update' },
-        ],
+          { text: 'Bailleur', value: 'buyer_name' },
+          { text: 'Bénéficiaire', value: 'procuring_entity' },
+          { text: 'Région', value: 'region' },
+          { text: 'Secteur', value: 'sector' },
+          { text: 'Statut', value: 'step' },
+          { text: 'Entreprise exécutante', value: 'tenderers' },
+          ],
     }
   },
   mounted(){
@@ -84,7 +74,10 @@ export default {
        console.log(this.$store.state.idRegion)
       //  this.$store.dispatch('',this.$store.state.idRegion)
      }
-    }
+    },
+    createEditLink(project) {
+      return this.$router.push({ path: '/travaux/' + project.id})
+    },
   }
 }
 </script>

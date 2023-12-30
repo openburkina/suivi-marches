@@ -1,7 +1,7 @@
 <template>
     <div style="height: 80vh ;" class="mt-5">
         <client-only>
-            <l-map class="map" :zoom=3 :center=centerPoint>
+            <l-map class="map" :zoom=7 :center=centerPoint>
                 <l-tile-layer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></l-tile-layer>
                 <l-polygon v-for="d in regions" :lat-lngs="d.boundary.coordinates" :weight="0.5" color="#000" :fillColor="getRegionColor(d.id)" :fillOpacity="1" @mouseenter="hovering(d.region)" @mouseleave="notHovering(d.region)" :ref="d.region" :key="d.id">
                         <l-popup ref="popup">
@@ -45,7 +45,7 @@ export default {
     data(){
         return {
             open:null,
-            centerPoint : [-3.993859, 29.371619],
+            centerPoint : [11.665030, -1.063402],
             regions: regions.data,
         }
     },

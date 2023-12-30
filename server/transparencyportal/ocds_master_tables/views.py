@@ -16,6 +16,7 @@ from ocds_master_tables.serializers import (
     RecordValueBySectorYearSerializer,
     RecordValueEvolutionBySectorSerializer
 )
+from ocds_release.serializers import RecordSerializer
 from ocds_release.models import Record, Release
 from ocds_master_tables.models import Region
 from drf_yasg.utils import swagger_auto_schema
@@ -47,15 +48,19 @@ class RegionRecordListView(APIView):
             ref_record__implementation_address__region_object__country__iexact = country,
             ref_record__implementation_address__region_object__name__iexact = region
         ).annotate(
-                record_ocid = F('ref_record__ocid'),
-                title = F('tender__title'),
-                sector = F('ref_record__target__name'),
-                buyer_name = F('buyer__name'),
-                value = F('ref_record__implementation_value__amount'),
-                currency = F('ref_record__implementation_value__currency'),
-                last_update = F('date')
-            )
-        data = RecordAggregateSerializer(releases, many=True).data
+            record_id=F('ref_record__id'),
+            record_ocid=F('ref_record__ocid'),
+            title=F('tender__title'),
+            buyer_name=F('buyer__name'),
+            procuring_entity=F('tender__procuring_entity__name'),
+            value=F('ref_record__implementation_value__amount'),
+            currency=F('ref_record__implementation_value__currency'),
+            country=F('ref_record__implementation_address__region_object__country'),
+            region=F('ref_record__implementation_address__region_object__name'),
+            sector=F('ref_record__target__name'),
+            tenderers=F('role__entity__name')
+        )
+        data = RecordSerializer(releases, many=True).data
         return Response(data)
  
 class RegionRecordNumberByStatusYearView(APIView):

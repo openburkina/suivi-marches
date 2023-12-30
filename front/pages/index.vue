@@ -1,7 +1,6 @@
 <template>
     <div>
-        <Caroussel />
-        <p class="display-2 text-center font-weight-bold mb-5 mt-5">Maps</p><span id="explore"></span>
+        <p class="display-2 text-center font-weight-bold mb-5 mt-5">Carte régionale des travaux publics financés par la Banque Mondiale et la BAD</p><span id="explore"></span>
        
         <Home
         :pieStats= pieStats

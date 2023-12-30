@@ -2,10 +2,10 @@
     <div>
         <v-row>
             <v-col order="6">
-                <PieChart 
+                <PieChart
                 :title="pieTitle" 
                 :pieOptions="pieChart.options" 
-                :pieChartData="pieChart.series" 
+                :pieChartData="pieChart.series"
                 v-on:year-change="pieYearChange"
                 />
             </v-col>
@@ -25,6 +25,7 @@
                     :title="barOneTitle" 
                     :chartOptionsBar="barChartOne.options" 
                     :seriesBar="barChartOne.series" 
+                    :verif="barChartOne.test"
                     v-on:year-change="barOneYearChange"
                     />
                 </v-col>
@@ -34,7 +35,8 @@
                     <BarChart 
                     :title="barTwoTitle" 
                     :chartOptionsBar="barChartTwo.options" 
-                    :seriesBar="barChartTwo.series" 
+                    :seriesBar="barChartTwo.series"
+                    :verif="barChartTwo.test"                  
                     v-on:year-change="barTwoYearChange"
                     />
                 </v-col>
@@ -48,8 +50,8 @@ export default {
     props : {
         pieTitle: "", pieChartLabels: Array, pieChartData: Array,
         lineTitle: "", lineChartLabels: Array, lineChartData: Array,
-        barOneTitle: "", barChartOneLabels: Array, barChartOneData: Array,
-        barTwoTitle: "", barChartTwoLabels: Array, barChartTwoData: Array
+        barOneTitle: "", barChartOneLabels: Array, barChartOneData: Array, 
+        barTwoTitle: "", barChartTwoLabels: Array, barChartTwoData: Array,
     },
     computed: {
         pieChart() { 
@@ -57,7 +59,7 @@ export default {
                 options : {
                     labels: this.pieChartLabels
                 },
-                series : this.pieChartData
+                series : this.pieChartData,
             }
         },
         lineChart() {
@@ -84,6 +86,7 @@ export default {
                     },
                     colors: '#008FFB',
                 },
+                test:this.barChartOneData,
                 series : [{
                     name: 'Montant',
                     data: this.barChartOneData
@@ -101,6 +104,7 @@ export default {
                     },
                     colors: '#008FFB',
                 },
+                test:this.barChartTwoData,
                 series : [{
                     name: 'Montant',
                     data: this.barChartTwoData,
@@ -111,6 +115,8 @@ export default {
     methods: {
         pieYearChange(value) {
             this.$emit("pie-year-change", value)
+            console.log( this.pieChartData)
+            
         },
         barOneYearChange(value) {
             this.$emit("barone-year-change", value)

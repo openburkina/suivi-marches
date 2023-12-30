@@ -1,6 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  server: {
+      port: 80,     // default : 3000
+      host: '0.0.0.0' // do not put localhost (only accessible from the host machine)
+      },
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   
@@ -18,7 +22,6 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],

@@ -19,8 +19,8 @@ from .constants import (
 
 class Tender(models.Model):
     buyer = models.ForeignKey(Entity, related_name='as_buyer_tenders', on_delete=models.DO_NOTHING)
-    title = models.CharField(max_length=255, null=True, blank=True)
-    description = models.CharField(max_length=255, null=True, blank=True)
+    title = models.CharField(max_length=500, null=True, blank=True)
+    description = models.CharField(max_length=500, null=True, blank=True)
     status = models.CharField(max_length=255, choices=TENDER_STATUS, null=True, blank=True)
     procurement_method = models.CharField(max_length=255, choices=PROCUREMENT_METHOD, null=True, blank=True)
     procurement_method_rationale = models.TextField(null=True, blank=True)
